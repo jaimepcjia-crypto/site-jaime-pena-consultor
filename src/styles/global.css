@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    @apply bg-cream-50 text-ink font-sans;
+    font-feature-settings: 'ss01', 'ss02';
+  }
+  h1, h2, h3, h4 {
+    @apply font-serif;
+    font-feature-settings: 'liga', 'kern';
+  }
+  ::selection {
+    @apply bg-gold/30 text-ink;
+  }
+}
+
+@layer components {
+  .container-x {
+    @apply mx-auto w-full max-w-7xl px-6 lg:px-10;
+  }
+  .eyebrow {
+    @apply font-sans uppercase tracking-widest text-[11px] md:text-xs text-gold-600 font-medium;
+  }
+  .btn-primary {
+    @apply inline-flex items-center gap-3 bg-ink text-cream-50 px-7 py-4 uppercase text-xs tracking-wider font-medium transition-all hover:bg-ink-700 hover:gap-4;
+  }
+  .btn-outline {
+    @apply inline-flex items-center gap-3 border border-ink text-ink px-7 py-4 uppercase text-xs tracking-wider font-medium transition-all hover:bg-ink hover:text-cream-50 hover:gap-4;
+  }
+  .btn-ghost-light {
+    @apply inline-flex items-center gap-3 text-cream-50 border-b border-cream-50/40 pb-1 uppercase text-xs tracking-wider hover:border-gold transition-colors;
+  }
+  .link-underline {
+    @apply relative inline-block uppercase tracking-wider text-xs after:absolute after:left-0 after:-bottom-1 after:h-px after:w-full after:bg-current after:origin-right after:scale-x-0 hover:after:origin-left hover:after:scale-x-100 after:transition-transform after:duration-500;
+  }
+}
+
+/* Reveal on scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s ease-out, transform 0.9s ease-out;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Image hover effect */
+.img-zoom-wrap {
+  overflow: hidden;
+}
+.img-zoom-wrap img {
+  transition: transform 1.2s cubic-bezier(0.2, 0.6, 0.2, 1);
+}
+.img-zoom-wrap:hover img {
+  transform: scale(1.06);
+}

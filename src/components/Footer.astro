@@ -1,0 +1,47 @@
+---
+import { consultor, whatsappUrl } from '../config/consultor';
+---
+
+<footer class="bg-ink text-cream-50 mt-32">
+  <div class="container-x py-20 md:py-24 grid md:grid-cols-3 gap-12 md:gap-16">
+    <div>
+      <h3 class="font-serif text-3xl md:text-4xl leading-tight mb-6">{consultor.nome}</h3>
+      <p class="text-cream-50/70 text-sm leading-relaxed max-w-xs">{consultor.bioCurta}</p>
+      <p class="mt-6 text-[11px] uppercase tracking-widest text-gold">{consultor.creci}</p>
+    </div>
+
+    <div>
+      <p class="eyebrow text-gold/80 mb-5">Navegação</p>
+      <ul class="space-y-3 text-sm">
+        <li><a href="/" class="hover:text-gold transition-colors">Início</a></li>
+        <li><a href="/#empreendimentos" class="hover:text-gold transition-colors">Empreendimentos</a></li>
+        <li><a href="/sobre" class="hover:text-gold transition-colors">Sobre</a></li>
+        <li><a href="/#contato" class="hover:text-gold transition-colors">Contato</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p class="eyebrow text-gold/80 mb-5">Contato</p>
+      <ul class="space-y-3 text-sm">
+        <li>
+          <a href={whatsappUrl()} target="_blank" rel="noopener" class="hover:text-gold transition-colors">
+            WhatsApp · {consultor.whatsappFormatado}
+          </a>
+        </li>
+        <li>
+          <a href={`mailto:${consultor.email}`} class="hover:text-gold transition-colors break-all">
+            {consultor.email}
+          </a>
+        </li>
+        <li class="text-cream-50/60">{consultor.cidade}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-cream-50/10">
+    <div class="container-x py-6 flex flex-col md:flex-row gap-3 items-center justify-between text-[11px] uppercase tracking-widest text-cream-50/40">
+      <p>© {new Date().getFullYear()} {consultor.nome} · {consultor.creci}</p>
+      <p>Empreendimentos Moura Dubeux · Salvador / BA</p>
+    </div>
+  </div>
+</footer>

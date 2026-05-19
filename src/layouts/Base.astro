@@ -1,0 +1,154 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import { consultor } from '../config/consultor';
+
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+}
+
+const {
+  title = `${consultor.nome} · Especialista Moura Dubeux`,
+  description = consultor.bio,
+  ogImage = '/images/consultor/jaime.jpg',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#0A0A0A" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="bg-cream-50 text-ink antialiased overflow-x-hidden">
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+    <WhatsAppFloat />
+
+    <script>
+      // Reveal on scroll
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12, rootMargin: '0px 0px -60px 0px' }
+      );
+      document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+      // Header shrink on scroll
+      const header = document.querySelector('[data-header]');
+      if (header) {
+        const onScroll = () => {
+          if (window.scrollY > 40) header.classList.add('is-scrolled');
+          else header.classList.remove('is-scrolled');
+        };
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+      }
+
+      // ============ MOBILE MENU — explicit state tracking ============
+      const burger = document.querySelector('[data-burger]');
+      const menu = document.querySelector('[data-menu]');
+      let menuOpen = false;
+
+      function applyMenuState() {
+        if (!burger || !menu) return;
+        if (menuOpen) {
+          menu.classList.add('is-open');
+          burger.classList.add('is-open');
+          document.body.classList.add('overflow-hidden');
+          burger.setAttribute('aria-expanded', 'true');
+        } else {
+          menu.classList.remove('is-open');
+          burger.classList.remove('is-open');
+          document.body.classList.remove('overflow-hidden');
+          burger.setAttribute('aria-expanded', 'false');
+        }
+      }
+      function setMenu(open) {
+        menuOpen = !!open;
+        applyMenuState();
+      }
+      function toggleMenu() { setMenu(!menuOpen); }
+
+      if (burger && menu) {
+        // Initialize aria + classes consistent
+        applyMenuState();
+
+        // Use 'click' — handled correctly on touch too.
+        // No stopPropagation/preventDefault; keep handler minimal and reliable.
+        burger.addEventListener('click', () => toggleMenu());
+
+        // Defensive: pointerdown as backup (some browsers swallow click after fast-tap)
+        burger.addEventListener('pointerup', (e) => {
+          // Only act if click event isn't going to fire (rare edge case)
+          if (e.pointerType !== 'mouse' && !e.target.closest('[data-burger]')) return;
+        });
+
+        // Menu link handler — close menu first, then scroll
+        menu.querySelectorAll('a').forEach((a) => {
+          a.addEventListener('click', (e) => {
+            const href = a.getAttribute('href') || '';
+            // Close immediately — synchronous state update
+            setMenu(false);
+
+            // Smooth scroll for same-page hash anchors
+            const hashIdx = href.indexOf('#');
+            if (hashIdx > -1 && (href.startsWith('/#') || href.startsWith('#'))) {
+              const hash = href.substring(hashIdx + 1);
+              const target = hash ? document.getElementById(hash) : null;
+              if (target) {
+                e.preventDefault();
+                // Wait for menu fade (400ms) so scroll happens against clean view
+                setTimeout(() => {
+                  target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  try { history.replaceState(null, '', '/#' + hash); } catch (_) {}
+                }, 250);
+              }
+            }
+          });
+        });
+
+        // ESC closes
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && menuOpen) setMenu(false);
+        });
+
+        // Back/forward navigation: ensure menu closed
+        window.addEventListener('pageshow', () => setMenu(false));
+
+        // Window resize to desktop: close mobile menu
+        window.addEventListener('resize', () => {
+          if (window.innerWidth >= 1024 && menuOpen) setMenu(false);
+        });
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,157 @@
+---
+import type { Empreendimento } from '../lib/properties';
+import { statusBadge, shortLocation } from '../lib/properties';
+
+interface Props {
+  e: Empreendimento;
+  index: number;
+}
+const { e, index } = Astro.props;
+const status = statusBadge(e.statusObra);
+const local = shortLocation(e.localizacao);
+
+const toneClass =
+  status.tone === 'ready' ? 'text-emerald-700' :
+  status.tone === 'sold' ? 'text-ink-500' :
+  status.tone === 'building' ? 'text-gold-600' :
+  'text-ink-500';
+
+const words = e.title.split(/\s+/);
+const baseDelay = (index % 6) * 60;
+---
+
+<a
+  href={`/empreendimento/${e.slug}/`}
+  class="reveal property-card group relative block bg-cream-50 overflow-hidden"
+  style={`--base:${baseDelay}ms`}
+>
+  <!-- Pulsing gold accent line (top) -->
+  <span class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent animate-pulse-line"></span>
+
+  <!-- Hover wash -->
+  <span class="absolute inset-0 bg-gradient-to-b from-transparent to-cream-200/40 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></span>
+
+  <!-- Content — shorter vertical aspect -->
+  <div class="relative aspect-[4/3] sm:aspect-[5/4] md:aspect-[4/3] flex flex-col px-5 sm:px-6 md:px-7 py-5 sm:py-6 md:py-7">
+
+    <!-- TOP -->
+    <div class="space-y-2.5">
+      <span class={`bloom-fade inline-block text-[10px] uppercase tracking-widest font-medium border-b border-current pb-1 ${toneClass}`} style="--bloom-d:80ms">
+        {status.label}
+      </span>
+      <p class="bloom-fade eyebrow" style="--bloom-d:160ms">{local} · Salvador</p>
+    </div>
+
+    <!-- CENTER: bloom-from-dot title -->
+    <div class="flex-1 flex items-center">
+      <h3 class="font-serif text-[clamp(1.4rem,3vw,2.2rem)] leading-[0.98] tracking-tight text-ink select-none">
+        {words.map((word, wi) => {
+          const wordStartDelay = wi * 90;
+          return (
+            <span class="block">
+              {word.split('').map((ch, ci) => (
+                <span
+                  class="bloom-char inline-block"
+                  style={`--bloom-d:${260 + wordStartDelay + ci * 45}ms`}
+                >{ch}</span>
+              ))}
+              {wi < words.length - 1 && <span class="inline-block w-[0.25em]"></span>}
+            </span>
+          );
+        })}
+      </h3>
+    </div>
+
+    <!-- BOTTOM -->
+    <div class="bloom-fade flex items-center gap-3 text-[11px] uppercase tracking-widest text-ink-500" style="--bloom-d:1100ms">
+      <span class="font-medium group-hover:text-ink transition-colors">Conhecer</span>
+      <span class="relative block h-px w-10 bg-ink-500/40 overflow-hidden">
+        <span class="absolute inset-y-0 left-0 w-full bg-gold origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-out"></span>
+      </span>
+      <span class="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 text-gold">→</span>
+    </div>
+
+    <!-- Corner marks (more visible) -->
+    <span class="absolute top-3 right-3 w-3 h-3 border-t-2 border-r-2 border-gold/60 group-hover:border-gold transition-colors duration-500"></span>
+    <span class="absolute bottom-3 left-3 w-3 h-3 border-b-2 border-l-2 border-gold/60 group-hover:border-gold transition-colors duration-500"></span>
+  </div>
+</a>
+
+<style>
+  /* STRONGER BORDER — visible in both light/dark backgrounds */
+  .property-card {
+    border: 2px solid rgba(10, 10, 10, 0.18);
+    box-shadow: 0 1px 0 rgba(201,169,97,0.15);
+    transition: border-color 0.5s ease, transform 0.45s ease, box-shadow 0.5s ease;
+  }
+  .property-card:hover {
+    border-color: #C9A961; /* solid gold on hover */
+    transform: translateY(-4px);
+    box-shadow:
+      0 18px 40px -22px rgba(10, 10, 10, 0.4),
+      0 0 0 1px rgba(201, 169, 97, 0.5),
+      0 1px 0 rgba(201, 169, 97, 0.4);
+  }
+
+  /* Pulsing gold accent line */
+  @keyframes pulseLineAnim {
+    0%, 100% { opacity: 0.35; transform: scaleX(0.6); }
+    50%      { opacity: 1;    transform: scaleX(1); }
+  }
+  .animate-pulse-line {
+    animation: pulseLineAnim 4.8s ease-in-out infinite;
+    transform-origin: center;
+  }
+  .property-card:hover .animate-pulse-line { animation-duration: 1.6s; }
+
+  /* BLOOM-FROM-DOT — 2s reveal */
+  .bloom-char {
+    opacity: 0;
+    transform: scale(0.04);
+    filter: blur(6px);
+    transform-origin: center 60%;
+    transition:
+      opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 2s cubic-bezier(0.16, 1, 0.28, 1),
+      filter 1.6s ease-out;
+    transition-delay: calc(var(--base, 0ms) + var(--bloom-d, 0ms));
+    will-change: transform, opacity, filter;
+  }
+  .property-card.is-visible .bloom-char {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+
+  .bloom-fade {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 1s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: calc(var(--base, 0ms) + var(--bloom-d, 0ms));
+  }
+  .property-card.is-visible .bloom-fade {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Subtle breath after bloom on hover */
+  @keyframes letterBreath {
+    0%, 100% { transform: scale(1) translateY(0); }
+    50%      { transform: scale(1.015) translateY(-0.5px); }
+  }
+  .property-card:hover.is-visible .bloom-char {
+    animation: letterBreath 1.8s ease-in-out infinite;
+    animation-delay: calc(var(--bloom-d, 0ms) * 0.3);
+  }
+
+  /* Mobile: even shorter and tighter padding */
+  @media (max-width: 639px) {
+    .property-card {
+      border-width: 1.5px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bloom-char, .bloom-fade, .animate-pulse-line { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+  }
+</style>

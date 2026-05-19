@@ -1,0 +1,92 @@
+---
+import { consultor, whatsappUrl } from '../config/consultor';
+---
+
+<header
+  data-header
+  class="fixed top-0 left-0 right-0 z-30 transition-all duration-500
+    text-cream-50
+    [&.is-scrolled]:bg-cream-50/95 [&.is-scrolled]:backdrop-blur-md
+    [&.is-scrolled]:shadow-[0_1px_0_rgba(0,0,0,0.06)]
+    [&.is-scrolled]:text-ink"
+  style="--header-shadow: 0 1px 14px rgba(0,0,0,0.55);"
+>
+  <!-- Gradient overlay for legibility -->
+  <div
+    class="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-ink/55 via-ink/25 to-transparent pointer-events-none transition-opacity duration-500 [.is-scrolled_&]:opacity-0"
+  ></div>
+
+  <div class="relative container-x flex items-center justify-between py-5 md:py-6 transition-all [.is-scrolled_&]:py-3">
+    <a href="/" class="group flex flex-col leading-none relative z-10" style="text-shadow: var(--header-shadow);">
+      <span class="font-serif text-xl md:text-2xl tracking-tight transition-colors">Jaime Pena</span>
+      <span
+        class="font-sans text-[10px] md:text-[11px] uppercase tracking-widest mt-1 transition-colors
+          text-cream-50/80 [.is-scrolled_&]:text-ink-500"
+      >
+        Especialista · Moura Dubeux
+      </span>
+    </a>
+
+    <nav class="hidden lg:flex items-center gap-10" style="text-shadow: var(--header-shadow);">
+      <a href="/" class="link-underline [.is-scrolled_&]:[text-shadow:none]">Início</a>
+      <a href="/#empreendimentos" class="link-underline [.is-scrolled_&]:[text-shadow:none]">Empreendimentos</a>
+      <a href="/#sobre" class="link-underline [.is-scrolled_&]:[text-shadow:none]">Sobre</a>
+      <a href="/#contato" class="link-underline [.is-scrolled_&]:[text-shadow:none]">Contato</a>
+      <a
+        href={whatsappUrl()}
+        target="_blank"
+        rel="noopener"
+        class="inline-flex items-center gap-3 px-5 py-3 uppercase text-xs tracking-wider font-medium transition-all
+          bg-gold text-ink hover:bg-gold-400 hover:gap-4
+          [.is-scrolled_&]:bg-ink [.is-scrolled_&]:text-cream-50 [.is-scrolled_&]:hover:bg-ink-700
+          [text-shadow:none]"
+      >
+        WhatsApp
+      </a>
+    </nav>
+
+    <!-- PLACEHOLDER for burger position (real burger is outside header for proper z-stacking) -->
+    <div class="lg:hidden w-12 h-12"></div>
+  </div>
+</header>
+
+<!-- BURGER — FIXED outside header for proper z-stacking, always on top -->
+<button
+  data-burger
+  type="button"
+  aria-label="Menu"
+  aria-expanded="false"
+  style="touch-action: manipulation; pointer-events: auto; -webkit-tap-highlight-color: transparent;"
+  class="lg:hidden fixed top-5 right-5 md:top-6 md:right-6 w-12 h-12 flex flex-col justify-center items-center gap-[6px] z-[100] rounded-full
+    bg-ink text-cream-50 cursor-pointer shadow-lg shadow-ink/40
+    ring-1 ring-gold/40
+    hover:bg-ink-700 active:scale-95
+    [&.is-open]:bg-cream-50 [&.is-open]:text-ink [&.is-open]:ring-ink/20
+    transition-all duration-300
+    [&.is-open>span:nth-child(1)]:translate-y-[7px] [&.is-open>span:nth-child(1)]:rotate-45
+    [&.is-open>span:nth-child(2)]:opacity-0
+    [&.is-open>span:nth-child(3)]:-translate-y-[7px] [&.is-open>span:nth-child(3)]:-rotate-45"
+>
+  <span class="block w-5 h-[2px] bg-current transition-all duration-300 pointer-events-none"></span>
+  <span class="block w-5 h-[2px] bg-current transition-all duration-300 pointer-events-none"></span>
+  <span class="block w-5 h-[2px] bg-current transition-all duration-300 pointer-events-none"></span>
+</button>
+
+<!-- MOBILE MENU — FIXED outside header, covers everything except burger -->
+<div
+  data-menu
+  class="lg:hidden fixed inset-0 bg-ink text-cream-50 opacity-0 pointer-events-none transition-opacity duration-400 [&.is-open]:opacity-100 [&.is-open]:pointer-events-auto z-[90] flex flex-col items-center justify-center gap-8 text-center"
+>
+  <a href="/" class="font-serif text-3xl">Início</a>
+  <a href="/#empreendimentos" class="font-serif text-3xl">Empreendimentos</a>
+  <a href="/#sobre" class="font-serif text-3xl">Sobre</a>
+  <a href="/#contato" class="font-serif text-3xl">Contato</a>
+  <a
+    href={whatsappUrl()}
+    target="_blank"
+    rel="noopener"
+    class="mt-4 inline-flex items-center gap-3 bg-gold text-ink px-7 py-4 uppercase text-xs tracking-wider hover:bg-gold-400 transition-colors"
+  >
+    WhatsApp · {consultor.whatsappFormatado}
+  </a>
+</div>

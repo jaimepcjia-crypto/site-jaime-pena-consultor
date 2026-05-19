@@ -1,0 +1,238 @@
+---
+import Base from '../layouts/Base.astro';
+import PropertyCard from '../components/PropertyCard.astro';
+import LeadForm from '../components/LeadForm.astro';
+import { empreendimentos } from '../lib/properties';
+import { consultor, whatsappUrl } from '../config/consultor';
+
+const heroImage = empreendimentos.find((e) => e.slug === 'infinity-salvador')?.images[1] || empreendimentos[0].images[0];
+---
+
+<Base>
+  <!-- HERO -->
+  <section class="relative h-screen min-h-[640px] max-h-[900px] w-full overflow-hidden bg-ink">
+    <div class="absolute inset-0 animate-slow-zoom">
+      <img src={heroImage} alt="" class="w-full h-full object-cover opacity-70" loading="eager" fetchpriority="high" />
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/30 to-ink/80"></div>
+
+    <div class="relative h-full container-x flex flex-col justify-end pb-44 sm:pb-44 md:pb-44 lg:pb-48">
+      <h1 class="hero-title font-serif text-cream-50 leading-[0.95] max-w-5xl animate-fade-up opacity-0" style="animation-delay:0.4s">
+        <span class="whitespace-nowrap">Endereços que <em class="text-gold italic">marcam</em></span><br />
+        uma geração.
+      </h1>
+      <p class="mt-12 md:mt-8 max-w-xl text-cream-50/80 text-base md:text-lg font-light leading-relaxed animate-fade-up opacity-0" style="animation-delay:0.7s">
+        Escolha seu imóvel da Construtora Moura Dubeux em Salvador com quem acompanha de perto os produtos, compara as melhores opções e conduz sua decisão com mais segurança, clareza e precisão.
+      </p>
+      <div class="hero-cta-group mt-16 md:mt-10 flex flex-wrap items-center gap-5 animate-fade-up opacity-0" style="animation-delay:0.9s">
+        <a href="#empreendimentos" class="inline-flex items-center gap-3 bg-gold text-ink px-7 py-4 uppercase text-xs tracking-wider font-medium hover:bg-gold-400 transition-all hover:gap-4">
+          Ver Empreendimentos
+          <span aria-hidden="true">↓</span>
+        </a>
+        <a href={whatsappUrl()} target="_blank" rel="noopener" class="hero-contact-link btn-ghost-light">
+          Falar com {consultor.primeiroNome}
+        </a>
+      </div>
+    </div>
+
+    <!-- 'Role para explorar' — HIDDEN on mobile to avoid overlap with CTA buttons -->
+    <div class="hidden md:flex absolute bottom-6 left-1/2 -translate-x-1/2 text-cream-50/60 text-[10px] uppercase tracking-widest flex-col items-center gap-3 animate-fade-in opacity-0" style="animation-delay:1.4s">
+      <span>Role para explorar</span>
+      <span class="block w-px h-10 bg-cream-50/40"></span>
+    </div>
+  </section>
+
+  <!-- INTRO / APRESENTAÇÃO — unified paragraph sizes -->
+  <section class="py-24 md:py-32 bg-cream-50">
+    <div class="container-x grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
+      <div class="lg:col-span-5 reveal">
+        <p class="eyebrow mb-6">Apresentação</p>
+        <h2 class="font-serif text-4xl md:text-5xl leading-tight">
+          O imóvel certo<br /> exige o especialista certo.
+        </h2>
+      </div>
+      <div class="lg:col-span-7 lg:pt-4 space-y-6 reveal">
+        <p class="text-lg md:text-xl text-ink font-light leading-relaxed">
+          {consultor.bio}
+        </p>
+        <p class="text-lg md:text-xl text-ink font-light leading-relaxed">
+          Atuo lado a lado com cada cliente, do primeiro contato à entrega das chaves — esclarecendo plantas, projetos, condições de pagamento e oportunidades de personalização junto à construtora.
+        </p>
+        <div class="pt-4 flex flex-wrap items-center gap-6">
+          <a href={whatsappUrl()} target="_blank" rel="noopener" class="btn-primary">
+            Conversar no WhatsApp
+            <span aria-hidden="true">→</span>
+          </a>
+          <a href="#sobre" class="link-underline">Mais sobre Jaime Pena</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOBRE — INLINE (was a separate page) -->
+  <section id="sobre" class="py-20 md:py-28 bg-cream-100">
+    <div class="container-x grid lg:grid-cols-12 gap-12 lg:gap-20 items-center">
+      <div class="lg:col-span-7 order-2 lg:order-1">
+        <p class="eyebrow mb-5 reveal">Sobre</p>
+        <h2
+          class="font-serif leading-[1.02] mb-8 reveal whitespace-nowrap"
+          style="font-size: clamp(1.5rem, 5vw, 3.2rem);"
+        >
+          {consultor.nome}.
+        </h2>
+        <p class="text-lg md:text-xl text-ink font-light leading-relaxed mb-6 reveal">
+          Atendimento focado em assessoria especializada — do primeiro briefing à entrega das chaves. Curadoria de empreendimentos Moura Dubeux, esclarecimento de plantas, projetos, condições de pagamento e oportunidades de personalização via MD Store.
+        </p>
+        <div class="mt-8 grid grid-cols-2 gap-6 reveal">
+          <div>
+            <p class="eyebrow text-gold-600 mb-2">Registro</p>
+            <p class="font-serif text-xl md:text-2xl">{consultor.creci}</p>
+          </div>
+          <div>
+            <p class="eyebrow text-gold-600 mb-2">Atuação</p>
+            <p class="font-serif text-xl md:text-2xl">Salvador / BA</p>
+          </div>
+        </div>
+        <div class="mt-10 flex flex-wrap gap-5 reveal">
+          <a href={whatsappUrl()} target="_blank" rel="noopener" class="btn-primary">
+            Conversar no WhatsApp
+            <span aria-hidden="true">→</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Smaller photo: col-span-5 + max-w + reduced aspect ratio + quote at smaller font -->
+      <div class="lg:col-span-5 order-1 lg:order-2 reveal">
+        <div class="img-zoom-wrap aspect-[3/4] bg-ink-800 relative max-w-[440px] mx-auto">
+          <img src={consultor.foto} alt={consultor.nome} class="w-full h-full object-cover" style="object-position: 75% center;" loading="lazy" />
+          <div class="absolute bottom-4 left-4 right-4 bg-cream-50/95 backdrop-blur-sm px-4 py-3 md:px-5 md:py-4">
+            <p class="eyebrow text-gold-600 mb-1.5 text-[10px]">Especialista · Moura Dubeux</p>
+            <p
+              class="font-serif leading-snug"
+              style="font-size: clamp(0.72rem, 1.45vw, 0.92rem);"
+            >"O imóvel certo conta sua história. Meu trabalho é encontrá-lo."</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Diferenciais 3-col -->
+    <div class="container-x mt-20 md:mt-24 grid md:grid-cols-3 gap-10 md:gap-14">
+      {[
+        { n: '01', t: 'Curadoria personalizada', d: 'Conheço cada empreendimento Moura Dubeux em Salvador — plantas, posições, vistas e oportunidades. Indico o que faz sentido para o seu perfil.' },
+        { n: '02', t: 'Acesso fácil', d: 'Negociação ágil, condições especiais e participação no programa MD Store de personalização de plantas e acabamentos.' },
+        { n: '03', t: 'Acompanhamento integral', d: 'Estou presente em cada etapa: visita ao stand, fechamento, acompanhamento de obra e suporte pós-entrega.' },
+      ].map((item) => (
+        <div class="reveal">
+          <p class="font-serif text-5xl text-gold mb-6">{item.n}</p>
+          <h3 class="font-serif text-2xl md:text-3xl leading-tight mb-4">{item.t}</h3>
+          <p class="text-ink-500 leading-relaxed">{item.d}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- EMPREENDIMENTOS -->
+  <section id="empreendimentos" class="py-20 md:py-28 bg-cream-50">
+    <div class="container-x">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-8 mb-16 md:mb-20 reveal">
+        <div class="max-w-2xl">
+          <p class="eyebrow mb-5">Portfólio · {empreendimentos.length} Empreendimentos</p>
+          <h2 class="font-serif text-4xl md:text-6xl leading-[1.02]">
+            Os endereços mais<br /> desejados de Salvador.
+          </h2>
+        </div>
+        <p class="text-ink-500 max-w-sm text-sm leading-relaxed">
+          Cada empreendimento abaixo conecta arquitetura assinada, localização privilegiada e o padrão construtivo Moura Dubeux. Clique em qualquer um para conhecer em detalhes.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
+        {empreendimentos.map((e, i) => <PropertyCard e={e} index={i} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contato" class="py-24 md:py-32 bg-ink text-cream-50">
+    <div class="container-x grid lg:grid-cols-12 gap-12 lg:gap-20">
+      <div class="lg:col-span-5 reveal">
+        <p class="eyebrow text-gold mb-5">Contato</p>
+        <h2 class="font-serif text-4xl md:text-6xl leading-tight mb-8">
+          Vamos<br /> conversar.
+        </h2>
+        <p class="text-cream-50/70 leading-relaxed mb-10 max-w-md">
+          Preencha o formulário ao lado ou fale diretamente comigo no WhatsApp. Respondo pessoalmente cada solicitação.
+        </p>
+        <div class="space-y-5">
+          <a href={whatsappUrl()} target="_blank" rel="noopener" class="flex items-center gap-4 hover:text-gold transition-colors group">
+            <span class="w-10 h-10 border border-cream-50/30 group-hover:border-gold rounded-full flex items-center justify-center text-sm transition-colors">W</span>
+            <span>
+              <span class="block text-[10px] uppercase tracking-widest text-cream-50/50">WhatsApp</span>
+              <span class="block">{consultor.whatsappFormatado}</span>
+            </span>
+          </a>
+          <a href={`mailto:${consultor.email}`} class="flex items-center gap-4 hover:text-gold transition-colors group">
+            <span class="w-10 h-10 border border-cream-50/30 group-hover:border-gold rounded-full flex items-center justify-center text-sm transition-colors">@</span>
+            <span class="break-all">
+              <span class="block text-[10px] uppercase tracking-widest text-cream-50/50">E-mail</span>
+              <span class="block">{consultor.email}</span>
+            </span>
+          </a>
+        </div>
+      </div>
+      <div class="lg:col-span-7 bg-cream-50 text-ink p-8 md:p-12 reveal">
+        <h3 class="font-serif text-2xl md:text-3xl mb-2">Solicitar informações</h3>
+        <p class="text-ink-500 text-sm mb-8">Retorno em até 24h úteis.</p>
+        <LeadForm />
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero-title {
+    font-size: clamp(2.05rem, 9.4vw, 5.5rem);
+  }
+
+  @media (min-width: 640px) {
+    .hero-title {
+      font-size: clamp(3.15rem, 8.2vw, 5.5rem);
+    }
+  }
+
+  @media (max-width: 767px) {
+    .hero-cta-group {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .hero-contact-link {
+      align-self: flex-start;
+      margin-left: clamp(4.5rem, 32vw, 8rem);
+      margin-top: 2rem;
+      white-space: nowrap;
+    }
+  }
+
+  /* Larger hero eyebrow (overrides .eyebrow size) */
+  .hero-eyebrow {
+    font-family: 'Inter', system-ui, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.25em;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  @media (min-width: 768px) {
+    .hero-eyebrow {
+      font-size: 15px;
+      letter-spacing: 0.28em;
+    }
+  }
+  @media (min-width: 1280px) {
+    .hero-eyebrow {
+      font-size: 16px;
+    }
+  }
+</style>

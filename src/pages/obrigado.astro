@@ -1,0 +1,35 @@
+---
+import Base from '../layouts/Base.astro';
+import { consultor, whatsappUrl } from '../config/consultor';
+---
+
+<Base title={`Obrigado · ${consultor.nome}`} description="Solicitação recebida com sucesso.">
+  <section class="min-h-screen flex items-center justify-center bg-cream-50 pt-32 pb-20">
+    <div class="container-x max-w-3xl text-center">
+      <p class="eyebrow text-gold-600 mb-6">Solicitação Recebida</p>
+
+      <h1 class="font-serif text-5xl md:text-7xl leading-[1.02] mb-8">
+        Obrigado.<br />
+        <em class="text-gold italic">Em breve falo com você.</em>
+      </h1>
+
+      <p class="text-lg md:text-xl text-ink-700 leading-relaxed max-w-xl mx-auto mb-12">
+        Sua mensagem foi enviada com sucesso. Retorno pessoalmente, em até 24h úteis, com todas as informações que você precisa sobre o empreendimento.
+      </p>
+
+      <div class="inline-flex flex-col items-center gap-6">
+        <a href={whatsappUrl()} target="_blank" rel="noopener" class="btn-primary">
+          Acelerar pelo WhatsApp
+          <span aria-hidden="true">→</span>
+        </a>
+        <a href="/" class="link-underline">Voltar ao início</a>
+      </div>
+
+      <div class="mt-20 pt-10 border-t border-ink/10 max-w-md mx-auto">
+        <p class="eyebrow mb-3">Especialista</p>
+        <p class="font-serif text-2xl">{consultor.nome}</p>
+        <p class="text-xs uppercase tracking-widest text-ink-500 mt-1">{consultor.creci}</p>
+      </div>
+    </div>
+  </section>
+</Base>

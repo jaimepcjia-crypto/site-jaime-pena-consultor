@@ -1,0 +1,78 @@
+---
+interface Props {
+  empreendimento?: string;
+}
+const { empreendimento } = Astro.props;
+// SINGLE form name for Netlify Forms detection; empreendimento goes as hidden field
+const FORM_NAME = 'contato';
+---
+
+<form
+  name={FORM_NAME}
+  method="POST"
+  action="/obrigado/"
+  data-netlify="true"
+  netlify-honeypot="bot-field"
+  class="space-y-6"
+>
+  <input type="hidden" name="form-name" value={FORM_NAME} />
+  <input type="hidden" name="empreendimento" value={empreendimento ?? 'Geral'} />
+  <p class="hidden">
+    <label>Não preencha: <input name="bot-field" /></label>
+  </p>
+
+  <div class="grid md:grid-cols-2 gap-6">
+    <div>
+      <label class="block text-[11px] uppercase tracking-widest text-ink-500 mb-2" for="nome">Nome completo</label>
+      <input
+        id="nome"
+        type="text"
+        name="nome"
+        required
+        class="w-full bg-transparent border-b border-ink/20 py-3 focus:border-ink focus:outline-none transition-colors placeholder:text-ink-500/50"
+        placeholder="Seu nome"
+      />
+    </div>
+    <div>
+      <label class="block text-[11px] uppercase tracking-widest text-ink-500 mb-2" for="telefone">Telefone / WhatsApp</label>
+      <input
+        id="telefone"
+        type="tel"
+        name="telefone"
+        required
+        class="w-full bg-transparent border-b border-ink/20 py-3 focus:border-ink focus:outline-none transition-colors placeholder:text-ink-500/50"
+        placeholder="(71) 9 0000-0000"
+      />
+    </div>
+  </div>
+
+  <div>
+    <label class="block text-[11px] uppercase tracking-widest text-ink-500 mb-2" for="email">E-mail</label>
+    <input
+      id="email"
+      type="email"
+      name="email"
+      required
+      class="w-full bg-transparent border-b border-ink/20 py-3 focus:border-ink focus:outline-none transition-colors placeholder:text-ink-500/50"
+      placeholder="seu@email.com"
+    />
+  </div>
+
+  <div>
+    <label class="block text-[11px] uppercase tracking-widest text-ink-500 mb-2" for="mensagem">Mensagem</label>
+    <textarea
+      id="mensagem"
+      name="mensagem"
+      rows="4"
+      class="w-full bg-transparent border-b border-ink/20 py-3 focus:border-ink focus:outline-none transition-colors placeholder:text-ink-500/50 resize-none"
+      placeholder={empreendimento ? `Gostaria de mais informações sobre o ${empreendimento}` : 'Como posso ajudar?'}
+    ></textarea>
+  </div>
+
+  <div class="pt-4">
+    <button type="submit" class="btn-primary w-full md:w-auto">
+      Enviar Solicitação
+      <span aria-hidden="true">→</span>
+    </button>
+  </div>
+</form>
