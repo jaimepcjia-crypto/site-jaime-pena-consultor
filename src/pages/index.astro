@@ -17,7 +17,7 @@ const heroImage = empreendimentos.find((e) => e.slug === 'infinity-salvador')?.i
     <div class="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/30 to-ink/80"></div>
 
     <div class="relative h-full container-x flex flex-col justify-end pb-44 sm:pb-44 md:pb-44 lg:pb-48">
-      <p class="hero-construtora font-serif text-gold leading-[0.95] max-w-5xl mb-3 sm:mb-4 md:mb-5 animate-fade-up opacity-0" style="animation-delay:0.3s">
+      <p class="hero-construtora font-serif text-gold leading-tight mb-4 md:mb-5 animate-fade-up opacity-0" style="animation-delay:0.3s">
         Construtora Moura Dubeux
       </p>
       <h1 class="hero-title font-serif text-cream-50 leading-[0.95] max-w-5xl animate-fade-up opacity-0" style="animation-delay:0.4s">
@@ -204,13 +204,8 @@ const heroImage = empreendimentos.find((e) => e.slug === 'infinity-salvador')?.i
   }
 
   .hero-construtora {
-    font-size: clamp(2.35rem, 10.5vw, 6.2rem);
-  }
-
-  @media (min-width: 640px) {
-    .hero-construtora {
-      font-size: clamp(3.55rem, 9.2vw, 6.2rem);
-    }
+    font-size: clamp(1.5rem, 4.5vw, 3.25rem);
+    letter-spacing: 0.01em;
   }
 
   @media (max-width: 767px) {
