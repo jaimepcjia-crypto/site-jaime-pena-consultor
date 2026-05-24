@@ -2034,7 +2034,13 @@
       "/images/empreendimentos/cyano/14.jpg",
       "/images/empreendimentos/cyano/15.jpg"
     ],
-    "videos": [],
+    "videos": [
+      {
+        "provider": "youtube",
+        "id": "BBmzZPOAWqw",
+        "title": "Cyano Filme"
+      }
+    ],
     "sections": [
       {
         "heading": "Vagas e Acessos",
