@@ -35,7 +35,8 @@ export function getEmpreendimento(slug: string): Empreendimento | undefined {
 export function statusBadge(raw: string): { label: string; tone: 'soon' | 'ready' | 'sold' | 'building' } {
   const s = raw.toUpperCase();
   if (s.includes('PRONTO')) return { label: 'Pronto para Morar', tone: 'ready' };
-  if (s.includes('VENDIDO') || s.includes('ENTREGUE')) return { label: 'Entregue', tone: 'sold' };
+  if (s.includes('ENTREGUE')) return { label: 'Entregue', tone: 'sold' };
+  if (s.includes('VENDIDO')) return { label: 'Vendido', tone: 'sold' };
   if (s.includes('PREVISÃO') || s.includes('CONCLUSÃO')) {
     const m = raw.match(/(JANEIRO|FEVEREIRO|MARÇO|ABRIL|MAIO|JUNHO|JULHO|AGOSTO|SETEMBRO|OUTUBRO|NOVEMBRO|DEZEMBRO)[\/\s]*(\d{2,4})/i);
     if (m) return { label: `Entrega ${m[1]}/${m[2]}`, tone: 'building' };
