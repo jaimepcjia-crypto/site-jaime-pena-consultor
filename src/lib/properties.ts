@@ -5,6 +5,12 @@ export interface SectionBlock {
   items: string[];
 }
 
+export interface VideoBlock {
+  provider: 'youtube' | 'vimeo';
+  id: string;
+  title: string;
+}
+
 export interface Empreendimento {
   slug: string;
   title: string;
@@ -16,6 +22,7 @@ export interface Empreendimento {
   description: string;
   heroImage?: string;
   images: string[];
+  videos?: VideoBlock[];
   sections?: SectionBlock[];
 }
 

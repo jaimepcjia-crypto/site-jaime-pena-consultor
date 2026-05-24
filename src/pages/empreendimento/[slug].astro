@@ -201,6 +201,43 @@ const difMercado = findSection('Diferenciais de Mercado');
     </section>
   )}
 
+  <!-- VIDEOS -->
+  {e.videos && e.videos.length > 0 && (
+    <section id="videos" class="py-20 md:py-28 bg-cream-50">
+      <div class="container-x">
+        <div class="mb-12 md:mb-16 reveal">
+          <p class="eyebrow mb-4">Vídeos</p>
+          <h2 class="font-serif text-4xl md:text-5xl leading-tight">{e.title} em movimento.</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          {e.videos.map((v, i) => {
+            const src = v.provider === 'youtube'
+              ? `https://www.youtube-nocookie.com/embed/${v.id}?rel=0&modestbranding=1`
+              : `https://player.vimeo.com/video/${v.id}?dnt=1`;
+            return (
+              <div class="reveal" style={`transition-delay:${(i % 4) * 70}ms`}>
+                <div class="relative aspect-video w-full overflow-hidden bg-ink-900 shadow-lg">
+                  <iframe
+                    src={src}
+                    title={v.title}
+                    class="absolute inset-0 w-full h-full"
+                    loading="lazy"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <p class="mt-3 text-[11px] md:text-xs uppercase tracking-[0.16em] text-ink-500">
+                  {v.title}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  )}
+
   <!-- GALLERY -->
   {galleryImages.length > 0 && (
     <section id="galeria" class="py-20 md:py-28 bg-cream-100">
