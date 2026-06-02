@@ -46,8 +46,15 @@ export function statusBadge(raw: string): { label: string; tone: 'soon' | 'ready
 }
 
 export function shortLocation(raw: string): string {
-  const m = raw.match(/–\s*([A-Za-zÀ-ú\s]+?),\s*Salvador/i) || raw.match(/–\s*([A-Za-zÀ-ú\s]+)\s*–\s*Salvador/i);
-  if (m) return m[1].trim();
+  const patterns = [
+    /–\s*([A-Za-zÀ-ú\s().]+?)\s*,\s*Salvador/i,
+    /–\s*([A-Za-zÀ-ú\s().]+?)\s*–\s*Salvador/i,
+    /•\s*([A-Za-zÀ-ú\s().]+?)\s*–\s*Salvador/i,
+  ];
+  for (const p of patterns) {
+    const m = raw.match(p);
+    if (m) return m[1].trim().replace(/\s+/g, ' ');
+  }
   const fallback = raw.match(/no\s+([A-Za-zÀ-ú\s]+?)(?:,|\.)/);
   if (fallback) return fallback[1].trim();
   return 'Salvador';
