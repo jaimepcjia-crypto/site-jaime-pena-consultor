@@ -5,6 +5,18 @@
 [build.environment]
   NODE_VERSION = "20"
 
+[[redirects]]
+  from = "https://jaimepenacaljunior.com.br/*"
+  to = "https://www.jaimepena-mouradubeux.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.jaimepenacaljunior.com.br/*"
+  to = "https://www.jaimepena-mouradubeux.com/:splat"
+  status = 301
+  force = true
+
 [[headers]]
   for = "/images/*"
   [headers.values]
