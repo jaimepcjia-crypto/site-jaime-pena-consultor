@@ -859,8 +859,7 @@
           "Selo IPTU Verde, placas solares, irrigação automatizada, sensores de presença, medição individual de água/energia/gás, iluminação em LED e 2 vagas para carregamento de carro elétrico."
         ]
       }
-    ],
-    "_verificar": "<!-- VERIFICAR --> Endereço idêntico ao Poème Horto (Rua da Sapucaia, Quadra 2, Lote 22 – Horto Florestal). Confirmar endereço correto deste empreendimento."
+    ]
   },
   {
     "slug": "infinity-salvador",
@@ -1240,8 +1239,7 @@
           "Segurança, tecnologia e personalização com guarita blindada, clausura para pedestres, controle eletrônico, TAG, fechadura eletrônica, Wi-Fi nas áreas comuns, esquadrias com tratamento acústico e MD Store."
         ]
       }
-    ],
-    "_verificar": "<!-- VERIFICAR --> Mesma rua do Mood Costa Azul (Rua Arthur de Azevedo Machado, S/N – Costa Azul). Confirmar número/lote específico deste empreendimento."
+    ]
   },
   {
     "slug": "mood-colina",
@@ -1375,7 +1373,7 @@
     "slug": "mood-costa-azul",
     "title": "Mood Costa Azul",
     "construtora": "Moura Dubeux",
-    "localizacao": "Endereço e acessos\n• Endereço Principal: Rua Arthur de Azevedo Machado, S/N – Costa Azul, Salvador – BA.\n• Acessos Secundários: O terreno possui confrontação com a Rua Professor Isaias Alves de Almeida e Rua Monsenhor Gaspar Sadoc.\n• Logística: Fácil ligação com as avenidas Magalhães Neto e Octávio Mangabeira.\nReferências e entorno\n• Vizinhança e Facilidades: Posicionado em bairro residencial seguro, próximo ao Hospital da Bahia, Salvador Shopping, Shopping da Bahia, Supermercado G. Barbosa, Academias Selfit e Alpha Fitness, e diversas instituições de ensino (Colégios Módulo, Gregor Mendel, Anchietinha, Oficina e Land School Gurilândia).\nOutras informações relevantes\n• Proximidade do Mar: Localizado a apenas 170 metros da praia.",
+    "localizacao": "Endereço e acessos\n• Endereço Principal: Rua Professor Isaías Alves de Almeida, 1315 – Costa Azul, Salvador – BA.\n• Acessos Secundários: O terreno possui confrontação com a Rua Arthur de Azevedo Machado e Rua Monsenhor Gaspar Sadoc.\n• Logística: Fácil ligação com as avenidas Magalhães Neto e Octávio Mangabeira.\nReferências e entorno\n• Vizinhança e Facilidades: Posicionado em bairro residencial seguro, próximo ao Hospital da Bahia, Salvador Shopping, Shopping da Bahia, Supermercado G. Barbosa, Academias Selfit e Alpha Fitness, e diversas instituições de ensino (Colégios Módulo, Gregor Mendel, Anchietinha, Oficina e Land School Gurilândia).\nOutras informações relevantes\n• Proximidade do Mar: Localizado a apenas 170 metros da praia.",
     "statusObra": "Previsão de entrega: JULHO/2028",
     "metragens": "Terreno e áreas gerais\n• Área Total do Terreno: 5.438,84 m².\n• Piscina Adulto: Raia de 20 metros.\nÁreas privativas das unidades\n• Unidades Tipo: 73 m², 80 m² e 100 m².\nUnidades Garden (Área Interna + Garden)\n• Apartamento 02 (Torre Brisa): 254 m² (100 m² internos + 154 m² de garden).\n• Apartamento 03 (Torre Brisa): 176,95 m² (80 m² internos + 96,95 m² de garden).\n• Apartamento 04 (Torre Brisa): 126,42 m² (73 m² internos + 53,42 m² de garden).\n• Apartamento 05 (Torre Coral): 114,46 m² (73 m² internos + 41,46 m² de garden).\n• Apartamento 06 (Torre Coral): 162 m² (80 m² internos + 82 m² de garden).",
     "tipologia": "Produto e configuração\n• Apartamento residencial padrão e unidades com Garden privativo.\n• Configurações por Pavimento: 6 apartamentos por andar.\nDormitórios\n• Planta 73 m²: 3 quartos (sendo 1 suíte).\n• Planta 80 m²: 3 quartos (sendo 1 suíte).\n• Planta 100 m²: 3 quartos (sendo 1 suíte) + home office dedicado.\nEstrutura, torres e distribuição\n• Estrutura do Empreendimento: 2 Torres (Torre Coral com 19 pavimentos e Torre Brisa com 20 pavimentos).\n• Total de Unidades: 239 unidades residenciais.\nOutras informações relevantes\n• Orientação: Todas as unidades são nascentes e possuem vista panorâmica para o mar.",
@@ -1498,14 +1496,13 @@
           "Apartamentos com esquadria de correr entre sala e varanda, infraestrutura para bancada gourmet nas varandas, esquadrias com tratamento acústico superior e MD Store para personalização antes da entrega."
         ]
       }
-    ],
-    "_verificar": "<!-- VERIFICAR --> Mesma rua do Mood Club (Rua Arthur de Azevedo Machado, S/N – Costa Azul). Confirmar número/lote específico deste empreendimento."
+    ]
   },
   {
     "slug": "poeme-horto",
     "title": "Poème Horto",
     "construtora": "Moura Dubeux",
-    "localizacao": "Endereço e acessos\n• Rua da Sapucaia, 445 (Quadra 2, Lote 22) – Horto Florestal, Salvador – BA.\n• Entorno e Referências: Situado em rua arborizada no Horto Florestal, próximo\n• ao Almacen Pepe, Pátio Santa Luzia, Drogasil, Supermercado Rede Mix,\nOutras informações relevantes\n• Hospital Aliança, Ceasa Rio Vermelho e diversas academias e delicatessens.",
+    "localizacao": "Endereço e acessos\n• Rua da Sapucáia, 219 – Horto Florestal, Salvador – BA.\n• Entorno e Referências: Situado em rua arborizada no Horto Florestal, próximo\n• ao Almacen Pepe, Pátio Santa Luzia, Drogasil, Supermercado Rede Mix,\nOutras informações relevantes\n• Hospital Aliança, Ceasa Rio Vermelho e diversas academias e delicatessens.",
     "statusObra": "Conclusão de Obra: NOVEMBRO/2027",
     "metragens": "Terreno e áreas gerais\n• Área do Terreno: 3.226,68 m².\nÁreas Comuns Específicas\n• Lobby de entrada: 86 m².\n• Salão de Festas: 173 m².\n• Fitness com espaço funcional: 137 m².\n• Salão de Jogos: 70 m².\n• Piscina Adulto: Raia de 25 metros.\nÁreas privativas das unidades\n• Área Privativa Unidade Coluna 1: 173,18 m².\n• Área Privativa Unidade Coluna 2: 203,91 m².\n• Depósito Privativo: Unidades com até 6 m².\nOutras informações relevantes\n• Espaço Gourmet: 63 m².\n• Brinquedoteca: 38 m².",
     "tipologia": "Produto e configuração\n• Apartamento residencial de alto padrão.\n• Configuração Técnica: 4 suítes com dependência completa de serviço.\n• Total de Unidades: 72 apartamentos (36 de 173,18 m² e 36 de 203,91 m²).\nEstrutura, torres e distribuição\n• Estrutura do Edifício: 1 torre única; 36 pavimentos tipo; 2 unidades por\n• pavimento.",
@@ -1625,8 +1622,7 @@
           "Projeto com arquitetura de Cássio Santana, paisagismo de Benedito Abbud, ambientação/interiores da Bossa Arquitetura e conceito inspirado na topografia e no verde do Horto Florestal."
         ]
       }
-    ],
-    "_verificar": "<!-- VERIFICAR --> Endereço idêntico ao Horto Essence (Rua da Sapucaia, Quadra 2, Lote 22 – Horto Florestal). Confirmar endereço correto deste empreendimento."
+    ]
   },
   {
     "slug": "rive",
