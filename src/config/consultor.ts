@@ -10,7 +10,7 @@ export const consultor = {
   whatsappFormatado: '(71) 99954-9495',
   email: 'jaime-construtora.mouradubeux@proton.me',
   cidade: 'Salvador, Bahia',
-  foto: '/images/consultor/jaime.jpg',
+  foto: '/images/consultor/jaime-construcao.webp',
 };
 
 /**
