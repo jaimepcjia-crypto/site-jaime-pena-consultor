@@ -17,46 +17,18 @@ const nowrap = lang === 'pt' ? 'whitespace-nowrap' : '';
 
 <Base lang={lang}>
   <!-- ════════════════════════ HERO ════════════════════════ -->
-  <section data-hero-ocean class="relative h-[100svh] min-h-[640px] max-h-[900px] w-full overflow-hidden bg-ink">
+  <section class="relative h-[100svh] min-h-[640px] max-h-[900px] w-full overflow-hidden bg-ink">
     <div class="absolute inset-0">
-      <picture>
-        <source media="(min-width: 768px)" srcset="/images/empreendimentos/salvador-220/05.jpg" />
+      <picture class="block h-full">
+        <source media="(min-width: 768px)" srcset="/images/hero/salvador-220-night-desktop.webp" />
         <img
-          src="/images/empreendimentos/salvador-220/01.jpg"
-          alt="Salvador 220 — vista aérea com mar — Moura Dubeux"
+          src="/images/hero/salvador-220-night-mobile.webp"
+          alt="Salvador 220 à noite, com o mar em primeiro plano"
           class="hero-img w-full h-full object-cover"
           loading="eager"
           fetchpriority="high"
         />
       </picture>
-      <video
-        data-hero-video
-        class="hero-video hero-video-mobile"
-        poster="/images/empreendimentos/salvador-220/01.jpg"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="metadata"
-        aria-hidden="true"
-      >
-        <source media="(max-width: 767px)" src="/videos/hero/ocean-mobile.webm" type="video/webm" />
-        <source media="(max-width: 767px)" src="/videos/hero/ocean-mobile.mp4" type="video/mp4" />
-      </video>
-      <video
-        data-hero-video
-        class="hero-video hero-video-desktop"
-        poster="/images/empreendimentos/salvador-220/05.jpg"
-        autoplay
-        muted
-        loop
-        playsinline
-        preload="metadata"
-        aria-hidden="true"
-      >
-        <source media="(min-width: 768px)" src="/videos/hero/ocean-desktop.webm" type="video/webm" />
-        <source media="(min-width: 768px)" src="/videos/hero/ocean-desktop.mp4" type="video/mp4" />
-      </video>
     </div>
     <div class="absolute inset-0 bg-gradient-to-b from-ink/40 via-ink/45 to-ink/85"></div>
 
@@ -277,28 +249,14 @@ const nowrap = lang === 'pt' ? 'whitespace-nowrap' : '';
 
 <style>
   /* ── HERO ───────────────────────────────────────── */
-  .hero-img,
-  .hero-video {
+  .hero-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: 43% center;
   }
-  .hero-img,
-  .hero-video-mobile { object-position: 30% center; }
-  .hero-video {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-  }
-  .hero-video-desktop { display: none; }
   @media (min-width: 768px) {
-    .hero-img,
-    .hero-video-desktop { object-position: center center; }
-    .hero-video-mobile { display: none; }
-    .hero-video-desktop { display: block; }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .hero-video { display: none; }
+    .hero-img { object-position: center center; }
   }
 
   .hero-title {
@@ -423,38 +381,3 @@ const nowrap = lang === 'pt' ? 'whitespace-nowrap' : '';
   /* ── SMOOTH SCROLL ──────────────────────────────── */
   :global(html) { scroll-behavior: smooth; }
 </style>
-
-<script>
-  const hero = document.querySelector('[data-hero-ocean]');
-  const videos = Array.from(document.querySelectorAll<HTMLVideoElement>('[data-hero-video]'));
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  let heroVisible = true;
-
-  function updatePlayback() {
-    for (const video of videos) {
-      if (reducedMotion.matches || !heroVisible) {
-        video.pause();
-        if (reducedMotion.matches) video.currentTime = 0;
-      } else if (getComputedStyle(video).display !== 'none') {
-        video.play().catch(() => {
-          // The poster image remains visible if autoplay is blocked.
-        });
-      }
-    }
-  }
-
-  if (hero) {
-    const heroObserver = new IntersectionObserver(
-      ([entry]) => {
-        heroVisible = entry.isIntersecting;
-        updatePlayback();
-      },
-      { threshold: 0.05 }
-    );
-    heroObserver.observe(hero);
-  }
-
-  reducedMotion.addEventListener('change', updatePlayback);
-  window.addEventListener('resize', updatePlayback, { passive: true });
-  updatePlayback();
-</script>
