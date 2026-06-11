@@ -1,5 +1,14 @@
 ---
 import { consultor, whatsappUrl } from '../config/consultor';
+import { useTranslations, localizePath, type Lang } from '../i18n/utils';
+import LangSwitcher from './LangSwitcher.astro';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'pt' } = Astro.props;
+const t = useTranslations(lang);
+const home = localizePath('/', lang);
 ---
 
 <header
@@ -17,23 +26,24 @@ import { consultor, whatsappUrl } from '../config/consultor';
   ></div>
 
   <div class="relative container-x flex items-center justify-between py-5 md:py-6 transition-all [.is-scrolled_&]:py-3">
-    <a href="/" class="group flex flex-col leading-none relative z-10" style="text-shadow: var(--header-shadow);">
+    <a href={home} class="group flex flex-col leading-none relative z-10" style="text-shadow: var(--header-shadow);">
       <span class="font-serif text-xl md:text-2xl tracking-tight transition-colors">Jaime Pena</span>
       <span
         class="font-sans text-[10px] md:text-[11px] uppercase tracking-widest mt-1 transition-colors
           text-cream-50/80 [.is-scrolled_&]:text-ink-500"
       >
-        Especialista · Moura Dubeux
+        {t('brand_tagline')}
       </span>
     </a>
 
     <nav class="hidden lg:flex items-center gap-10" style="text-shadow: var(--header-shadow);">
-      <a href="/" class="link-underline [.is-scrolled_&]:[text-shadow:none]">Início</a>
-      <a href="/#empreendimentos" class="link-underline [.is-scrolled_&]:[text-shadow:none]">Empreendimentos</a>
-      <a href="/#sobre" class="link-underline [.is-scrolled_&]:[text-shadow:none]">Sobre</a>
-      <a href="/#contato" class="link-underline [.is-scrolled_&]:[text-shadow:none]">Contato</a>
+      <a href={home} class="link-underline [.is-scrolled_&]:[text-shadow:none]">{t('nav_home')}</a>
+      <a href={`${home}#empreendimentos`} class="link-underline [.is-scrolled_&]:[text-shadow:none]">{t('nav_empreendimentos')}</a>
+      <a href={`${home}#sobre`} class="link-underline [.is-scrolled_&]:[text-shadow:none]">{t('nav_sobre')}</a>
+      <a href={`${home}#contato`} class="link-underline [.is-scrolled_&]:[text-shadow:none]">{t('nav_contato')}</a>
+      <LangSwitcher lang={lang} variant="header" />
       <a
-        href={whatsappUrl()}
+        href={whatsappUrl(lang)}
         target="_blank"
         rel="noopener"
         class="inline-flex items-center gap-3 px-5 py-3 uppercase text-xs tracking-wider font-medium transition-all
@@ -77,16 +87,19 @@ import { consultor, whatsappUrl } from '../config/consultor';
   data-menu
   class="lg:hidden fixed inset-0 bg-ink text-cream-50 opacity-0 pointer-events-none transition-opacity duration-400 [&.is-open]:opacity-100 [&.is-open]:pointer-events-auto z-[90] flex flex-col items-center justify-center gap-8 text-center"
 >
-  <a href="/" class="font-serif text-3xl">Início</a>
-  <a href="/#empreendimentos" class="font-serif text-3xl">Empreendimentos</a>
-  <a href="/#sobre" class="font-serif text-3xl">Sobre</a>
-  <a href="/#contato" class="font-serif text-3xl">Contato</a>
+  <a href={home} class="font-serif text-3xl">{t('nav_home')}</a>
+  <a href={`${home}#empreendimentos`} class="font-serif text-3xl">{t('nav_empreendimentos')}</a>
+  <a href={`${home}#sobre`} class="font-serif text-3xl">{t('nav_sobre')}</a>
+  <a href={`${home}#contato`} class="font-serif text-3xl">{t('nav_contato')}</a>
   <a
-    href={whatsappUrl()}
+    href={whatsappUrl(lang)}
     target="_blank"
     rel="noopener"
     class="mt-4 inline-flex items-center gap-3 bg-gold text-ink px-7 py-4 uppercase text-xs tracking-wider hover:bg-gold-400 transition-colors"
   >
     WhatsApp · {consultor.whatsappFormatado}
   </a>
+  <div class="mt-6">
+    <LangSwitcher lang={lang} variant="menu" />
+  </div>
 </div>

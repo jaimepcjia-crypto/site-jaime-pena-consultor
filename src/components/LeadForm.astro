@@ -1,40 +1,50 @@
 ---
+import { useTranslations, localizePath, type Lang } from '../i18n/utils';
+
 interface Props {
   empreendimento?: string;
+  lang?: Lang;
 }
-const { empreendimento } = Astro.props;
-// SINGLE form name for Netlify Forms detection; empreendimento goes as hidden field
+const { empreendimento, lang = 'pt' } = Astro.props;
+const t = useTranslations(lang);
+// SINGLE form name for Netlify Forms detection across all locales;
+// empreendimento goes as hidden field, action redirects to the localized page.
 const FORM_NAME = 'contato';
+const action = localizePath('/obrigado/', lang);
+const msgPlaceholder = empreendimento
+  ? t('form_msg_ph_emp').replace('{emp}', empreendimento)
+  : t('form_msg_ph_general');
 ---
 
 <form
   name={FORM_NAME}
   method="POST"
-  action="/obrigado/"
+  action={action}
   data-netlify="true"
   netlify-honeypot="bot-field"
   class="space-y-6"
 >
   <input type="hidden" name="form-name" value={FORM_NAME} />
   <input type="hidden" name="empreendimento" value={empreendimento ?? 'Geral'} />
+  <input type="hidden" name="lang" value={lang} />
   <p class="hidden">
     <label>Não preencha: <input name="bot-field" /></label>
   </p>
 
   <div class="grid md:grid-cols-2 gap-6">
     <div>
-      <label class="block text-[11px] uppercase tracking-widest text-ink-500 mb-2" for="nome">Nome completo</label>
+      <label class="block text-[11px] uppercase tracking-widest text-ink-500 mb-2" for="nome">{t('form_nome_label')}</label>
       <input
         id="nome"
         type="text"
         name="nome"
         required
         class="w-full bg-transparent border-b border-ink/20 py-3 focus:border-ink focus:outline-none transition-colors placeholder:text-ink-500/50"
-        placeholder="Seu nome"
+        placeholder={t('form_nome_ph')}
       />
     </div>
     <div>
-      <label class="block text-[11px] uppercase tracking-widest text-ink-500 mb-2" for="telefone">Telefone / WhatsApp</label>
+      <label class="block text-[11px] uppercase tracking-widest text-ink-500 mb-2" for="telefone">{t('form_tel_label')}</label>
       <input
         id="telefone"
         type="tel"
@@ -47,31 +57,31 @@ const FORM_NAME = 'contato';
   </div>
 
   <div>
-    <label class="block text-[11px] uppercase tracking-widest text-ink-500 mb-2" for="email">E-mail</label>
+    <label class="block text-[11px] uppercase tracking-widest text-ink-500 mb-2" for="email">{t('form_email_label')}</label>
     <input
       id="email"
       type="email"
       name="email"
       required
       class="w-full bg-transparent border-b border-ink/20 py-3 focus:border-ink focus:outline-none transition-colors placeholder:text-ink-500/50"
-      placeholder="seu@email.com"
+      placeholder={t('form_email_ph')}
     />
   </div>
 
   <div>
-    <label class="block text-[11px] uppercase tracking-widest text-ink-500 mb-2" for="mensagem">Mensagem</label>
+    <label class="block text-[11px] uppercase tracking-widest text-ink-500 mb-2" for="mensagem">{t('form_msg_label')}</label>
     <textarea
       id="mensagem"
       name="mensagem"
       rows="4"
       class="w-full bg-transparent border-b border-ink/20 py-3 focus:border-ink focus:outline-none transition-colors placeholder:text-ink-500/50 resize-none"
-      placeholder={empreendimento ? `Gostaria de mais informações sobre o ${empreendimento}` : 'Como posso ajudar?'}
+      placeholder={msgPlaceholder}
     ></textarea>
   </div>
 
   <div class="pt-4">
     <button type="submit" class="btn-primary w-full md:w-auto">
-      Enviar Solicitação
+      {t('form_submit')}
       <span aria-hidden="true">→</span>
     </button>
   </div>

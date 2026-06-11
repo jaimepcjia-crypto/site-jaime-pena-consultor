@@ -1,12 +1,20 @@
 ---
 import { whatsappUrl, consultor } from '../config/consultor';
+import { useTranslations, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'pt' } = Astro.props;
+const t = useTranslations(lang);
+const aria = t('whatsapp_aria').replace('{nome}', consultor.nome);
 ---
 
 <a
-  href={whatsappUrl()}
+  href={whatsappUrl(lang)}
   target="_blank"
   rel="noopener"
-  aria-label={`Conversar com ${consultor.nome} no WhatsApp`}
+  aria-label={aria}
   class="fixed bottom-5 right-5 md:bottom-7 md:right-7 z-50 group"
 >
   <span

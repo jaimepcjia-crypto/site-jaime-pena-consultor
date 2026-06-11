@@ -4,22 +4,39 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WhatsAppFloat from '../components/WhatsAppFloat.astro';
 import { consultor } from '../config/consultor';
+import { useTranslations, htmlLang, LOCALES, localizePath, type Lang } from '../i18n/utils';
 
 interface Props {
   title?: string;
   description?: string;
   ogImage?: string;
+  lang?: Lang;
 }
 
+const { lang = 'pt', ogImage = '/images/consultor/jaime.jpg' } = Astro.props;
+const t = useTranslations(lang);
+
 const {
-  title = `${consultor.nome} · Especialista Moura Dubeux`,
-  description = consultor.bio,
-  ogImage = '/images/consultor/jaime.jpg',
+  title = `${consultor.nome} · ${t('seo_title_suffix')}`,
+  description = t('consultor_bio'),
 } = Astro.props;
+
+// Canonical path = current path with the locale prefix stripped (PT form).
+let canonical = Astro.url.pathname;
+if (canonical === '/en' || canonical === '/es') canonical = '/';
+else if (canonical.startsWith('/en/') || canonical.startsWith('/es/')) canonical = canonical.slice(3);
+if (!canonical.startsWith('/')) canonical = `/${canonical}`;
+
+const hreflangs = LOCALES.map((l) => ({
+  lang: htmlLang[l],
+  href: new URL(localizePath(canonical, l), Astro.site).href,
+}));
+const xDefault = new URL(localizePath(canonical, 'pt'), Astro.site).href;
+const canonicalUrl = new URL(localizePath(canonical, lang), Astro.site).href;
 ---
 
 <!doctype html>
-<html lang="pt-BR">
+<html lang={htmlLang[lang]}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
@@ -30,7 +47,11 @@ const {
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:type" content="website" />
+    <meta property="og:locale" content={htmlLang[lang]} />
     <meta name="theme-color" content="#0A0A0A" />
+    <link rel="canonical" href={canonicalUrl} />
+    {hreflangs.map((h) => <link rel="alternate" hreflang={h.lang} href={h.href} />)}
+    <link rel="alternate" hreflang="x-default" href={xDefault} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -40,12 +61,12 @@ const {
     />
   </head>
   <body class="bg-cream-50 text-ink antialiased overflow-x-hidden">
-    <Header />
+    <Header lang={lang} />
     <main>
       <slot />
     </main>
-    <Footer />
-    <WhatsAppFloat />
+    <Footer lang={lang} />
+    <WhatsAppFloat lang={lang} />
 
     <script>
       // Reveal on scroll

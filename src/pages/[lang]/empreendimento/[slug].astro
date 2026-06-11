@@ -1,0 +1,15 @@
+---
+import PropertyPage from '../../../components/pages/PropertyPage.astro';
+import { empreendimentos } from '../../../lib/properties';
+import type { Lang } from '../../../i18n/utils';
+
+export function getStaticPaths() {
+  return ['en', 'es'].flatMap((lang) =>
+    empreendimentos.map((e) => ({ params: { lang, slug: e.slug } }))
+  );
+}
+
+const { lang, slug } = Astro.params as { lang: Lang; slug: string };
+---
+
+<PropertyPage slug={slug} lang={lang} />
