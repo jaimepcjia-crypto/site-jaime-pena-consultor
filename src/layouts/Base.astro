@@ -32,6 +32,7 @@ const hreflangs = LOCALES.map((l) => ({
   href: new URL(localizePath(canonical, l), Astro.site).href,
 }));
 const xDefault = new URL(localizePath(canonical, 'pt'), Astro.site).href;
+const canonicalUrl = new URL(localizePath(canonical, lang), Astro.site).href;
 ---
 
 <!doctype html>
@@ -48,6 +49,7 @@ const xDefault = new URL(localizePath(canonical, 'pt'), Astro.site).href;
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={htmlLang[lang]} />
     <meta name="theme-color" content="#0A0A0A" />
+    <link rel="canonical" href={canonicalUrl} />
     {hreflangs.map((h) => <link rel="alternate" hreflang={h.lang} href={h.href} />)}
     <link rel="alternate" hreflang="x-default" href={xDefault} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />

@@ -1,0 +1,12 @@
+---
+import ThankYouPage from '../../components/pages/ThankYouPage.astro';
+import type { Lang } from '../../i18n/utils';
+
+export function getStaticPaths() {
+  return ['en', 'es'].map((lang) => ({ params: { lang } }));
+}
+
+const { lang } = Astro.params as { lang: Lang };
+---
+
+<ThankYouPage lang={lang} />
