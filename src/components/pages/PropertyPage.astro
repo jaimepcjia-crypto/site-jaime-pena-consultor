@@ -1,0 +1,518 @@
+---
+import Base from '../../layouts/Base.astro';
+import LeadForm from '../LeadForm.astro';
+import PropertyCard from '../PropertyCard.astro';
+import {
+  getEmpreendimento,
+  getEmpreendimentos,
+  statusBadgeFor,
+  shortLocationFor,
+  getLocalizedSections,
+  findSection,
+} from '../../lib/properties';
+import { consultor, whatsappUrl } from '../../config/consultor';
+import { useTranslations, localizePath, type Lang } from '../../i18n/utils';
+
+interface Props {
+  slug: string;
+  lang?: Lang;
+}
+const { slug, lang = 'pt' } = Astro.props;
+const t = useTranslations(lang);
+const home = localizePath('/', lang);
+
+const e = getEmpreendimento(slug, lang)!;
+const status = statusBadgeFor(slug, lang);
+const local = shortLocationFor(slug);
+const heroImg = e.heroImage ?? e.images[0];
+const galleryImages = e.images;
+const others = getEmpreendimentos(lang).filter((x) => x.slug !== e.slug).slice(0, 3);
+
+const wppMsg = t('whatsapp_msg_emp').replace('{title}', e.title);
+
+const toneClass =
+  status.tone === 'ready' ? 'text-emerald-700 border-emerald-700/40' :
+  status.tone === 'sold' ? 'text-cream-50 border-cream-50/40' :
+  status.tone === 'building' ? 'text-gold border-gold/50' :
+  'text-cream-50/80 border-cream-50/40';
+
+const sections = getLocalizedSections(slug, lang);
+
+// Group sections for layout variety (lookup by canonical PT heading key)
+const exclusividade = findSection(sections, 'Exclusividade');
+const vagas = findSection(sections, 'Vagas e Acessos');
+const areasLazer = findSection(sections, 'Áreas Comuns e Lazer');
+const saude = findSection(sections, 'Saúde e Bem-Estar');
+const servicos = findSection(sections, 'Serviços e Conveniências');
+const business = findSection(sections, 'Business e Corporativo');
+const distribuicao = findSection(sections, 'Distribuição e Estrutura');
+const sustent = findSection(sections, 'Sustentabilidade');
+const seguranca = findSection(sections, 'Segurança e Tecnologia');
+const projeto = findSection(sections, 'Projeto, Conceito e Autoria');
+const difUnidades = findSection(sections, 'Diferenciais das Unidades e Personalização');
+const difMercado = findSection(sections, 'Diferenciais de Mercado');
+---
+
+<Base
+  lang={lang}
+  title={`${e.title} · Moura Dubeux · ${local}`}
+  description={`${e.title} — ${local}, Salvador. ${e.statusObra}. ${t('pp_seo_specialist')}: ${consultor.nome}.`}
+  ogImage={heroImg}
+>
+  <!-- HERO -->
+  <section class="relative h-[85vh] min-h-[600px] w-full overflow-hidden bg-ink">
+    <div class="absolute inset-0">
+      <img src={heroImg} alt={e.title} class="w-full h-full object-cover opacity-80" loading="eager" fetchpriority="high" />
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/20 to-ink/85"></div>
+
+    <div class="relative h-full container-x flex flex-col justify-end pb-16 md:pb-20">
+      <div class="flex items-center gap-4 mb-6">
+        <span class={`text-[10px] uppercase tracking-widest font-medium px-3 py-1.5 border ${toneClass}`}>
+          {status.label}
+        </span>
+        <span class="text-cream-50/60 text-[11px] uppercase tracking-widest">{local} · Salvador</span>
+      </div>
+      <h1 class="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-cream-50 leading-[0.95] max-w-5xl">
+        {e.title}
+      </h1>
+      <p class="mt-6 max-w-2xl text-cream-50/75 text-sm md:text-base font-light">
+        {e.construtora} · {local}
+      </p>
+    </div>
+  </section>
+
+  <!-- QUICK FACTS -->
+  <section class="bg-ink text-cream-50 border-t border-cream-50/10">
+    <div class="container-x py-10 grid grid-cols-2 md:grid-cols-4 gap-8">
+      <div>
+        <p class="eyebrow text-gold/80 mb-2">{t('pp_quick_construtora')}</p>
+        <p class="font-serif text-xl md:text-2xl">{e.construtora}</p>
+      </div>
+      <div>
+        <p class="eyebrow text-gold/80 mb-2">{t('pp_quick_local')}</p>
+        <p class="font-serif text-xl md:text-2xl">{local}</p>
+      </div>
+      <div>
+        <p class="eyebrow text-gold/80 mb-2">{t('pp_quick_status')}</p>
+        <p class="font-serif text-xl md:text-2xl">{status.label}</p>
+      </div>
+      <div class="flex items-end">
+        <a href={whatsappUrl(lang, wppMsg)} target="_blank" rel="noopener" class="inline-flex items-center gap-3 border-b border-gold text-gold pb-1 uppercase text-xs tracking-wider hover:gap-4 transition-all">
+          {t('pp_saber_mais')}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXCLUSIVIDADE — premium dark-gold band -->
+  {exclusividade && (
+    <section class="relative py-20 md:py-24 bg-gradient-to-br from-ink via-ink-700 to-ink text-cream-50 overflow-hidden">
+      <span class="absolute top-0 left-1/2 -translate-x-1/2 w-px h-16 bg-gradient-to-b from-transparent to-gold"></span>
+      <div class="container-x max-w-4xl text-center reveal">
+        <p class="eyebrow text-gold mb-6">{exclusividade.heading}</p>
+        <div class="space-y-6 font-serif text-2xl md:text-4xl leading-tight">
+          {exclusividade.items.map((it) => <p>{it}</p>)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- TIPOLOGIA & METRAGENS (legacy fields - still useful) -->
+  {(e.tipologia || e.metragens) && (
+    <section class="py-20 md:py-28 bg-cream-50">
+      <div class="container-x grid lg:grid-cols-2 gap-16 lg:gap-24">
+        {e.tipologia && (
+          <div class="reveal">
+            <p class="eyebrow mb-5">{t('pp_tipologia_eyebrow')}</p>
+            <h2 class="font-serif text-3xl md:text-4xl mb-10 leading-tight">{t('pp_tipologia_title')}</h2>
+            <div class="space-y-3 text-ink-700 leading-relaxed whitespace-pre-line">{e.tipologia.replace(/^•\s*/gm, '— ')}</div>
+          </div>
+        )}
+        {e.metragens && (
+          <div class="reveal">
+            <p class="eyebrow mb-5">{t('pp_areas_eyebrow')}</p>
+            <h2 class="font-serif text-3xl md:text-4xl mb-10 leading-tight">{t('pp_areas_title')}</h2>
+            <div class="space-y-3 text-ink-700 leading-relaxed whitespace-pre-line">{e.metragens.replace(/^•\s*/gm, '— ')}</div>
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  <!-- VAGAS E ACESSOS + SEGURANÇA — two-col -->
+  {(vagas || seguranca) && (
+    <section class="py-20 md:py-24 bg-cream-100">
+      <div class="container-x grid lg:grid-cols-2 gap-12 lg:gap-20">
+        {vagas && (
+          <div class="reveal">
+            <p class="eyebrow mb-5">01 · {vagas.heading}</p>
+            <h2 class="font-serif text-3xl md:text-4xl mb-8 leading-tight">{t('pp_vagas_title')}</h2>
+            <ul class="space-y-3 text-ink-700 leading-relaxed">
+              {vagas.items.map((i) => <li class="flex gap-3"><span class="text-gold mt-2 w-1 h-1 rounded-full bg-current shrink-0"></span><span>{i}</span></li>)}
+            </ul>
+          </div>
+        )}
+        {seguranca && (
+          <div class="reveal">
+            <p class="eyebrow mb-5">02 · {seguranca.heading}</p>
+            <h2 class="font-serif text-3xl md:text-4xl mb-8 leading-tight">{t('pp_seg_title')}</h2>
+            <ul class="space-y-3 text-ink-700 leading-relaxed">
+              {seguranca.items.map((i) => <li class="flex gap-3"><span class="text-gold mt-2 w-1 h-1 rounded-full bg-current shrink-0"></span><span>{i}</span></li>)}
+            </ul>
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  <!-- ÁREAS COMUNS E LAZER — hero band -->
+  {areasLazer && (
+    <section class="py-24 md:py-32 bg-ink text-cream-50 overflow-hidden">
+      <div class="container-x">
+        <div class="mb-14 md:mb-20 max-w-3xl reveal">
+          <p class="eyebrow text-gold mb-5">03 · {areasLazer.heading}</p>
+          <h2 class="font-serif text-4xl md:text-6xl leading-[1.02]">
+            {t('pp_lazer_title_l1')}<br />{t('pp_lazer_title_l2')}
+          </h2>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-3 text-cream-50/85">
+          {areasLazer.items.map((it, idx) => (
+            <p
+              class="reveal flex gap-3 py-3 border-b border-cream-50/10 leading-snug"
+              style={`transition-delay:${(idx % 12) * 40}ms`}
+            >
+              <span class="text-gold/70 shrink-0">—</span>
+              <span>{it}</span>
+            </p>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- SAÚDE E BEM-ESTAR + SERVIÇOS — two-col cream -->
+  {(saude || servicos) && (
+    <section class="py-20 md:py-24 bg-cream-50">
+      <div class="container-x grid lg:grid-cols-2 gap-12 lg:gap-20">
+        {saude && (
+          <div class="reveal">
+            <p class="eyebrow mb-5">04 · {saude.heading}</p>
+            <h2 class="font-serif text-3xl md:text-4xl mb-8 leading-tight">{t('pp_saude_title')}</h2>
+            <ul class="space-y-3 text-ink-700 leading-relaxed">
+              {saude.items.map((i) => <li class="flex gap-3"><span class="text-gold mt-2 w-1 h-1 rounded-full bg-current shrink-0"></span><span>{i}</span></li>)}
+            </ul>
+          </div>
+        )}
+        {servicos && (
+          <div class="reveal">
+            <p class="eyebrow mb-5">05 · {servicos.heading}</p>
+            <h2 class="font-serif text-3xl md:text-4xl mb-8 leading-tight">{t('pp_servicos_title')}</h2>
+            <ul class="space-y-3 text-ink-700 leading-relaxed">
+              {servicos.items.map((i) => <li class="flex gap-3"><span class="text-gold mt-2 w-1 h-1 rounded-full bg-current shrink-0"></span><span>{i}</span></li>)}
+            </ul>
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  <!-- VIDEOS -->
+  {e.videos && e.videos.length > 0 && (
+    <section id="videos" class="py-20 md:py-28 bg-cream-50">
+      <div class="container-x">
+        <div class="mb-12 md:mb-16 reveal">
+          <p class="eyebrow mb-4">{t('pp_videos_eyebrow')}</p>
+          <h2 class="font-serif text-4xl md:text-5xl leading-tight">{e.title} {t('pp_videos_title_suffix')}</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+          {e.videos.map((v, i) => {
+            const src = v.provider === 'youtube'
+              ? `https://www.youtube-nocookie.com/embed/${v.id}?rel=0&modestbranding=1`
+              : `https://player.vimeo.com/video/${v.id}?dnt=1`;
+            return (
+              <div class="reveal" style={`transition-delay:${(i % 4) * 70}ms`}>
+                <div class="relative aspect-video w-full overflow-hidden bg-ink-900 shadow-lg">
+                  <iframe
+                    src={src}
+                    title={v.title}
+                    class="absolute inset-0 w-full h-full"
+                    loading="lazy"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                    allowfullscreen
+                  ></iframe>
+                </div>
+                <p class="mt-3 text-[11px] md:text-xs uppercase tracking-[0.16em] text-ink-500">
+                  {v.title}
+                </p>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- GALLERY -->
+  {galleryImages.length > 0 && (
+    <section id="galeria" class="py-20 md:py-28 bg-cream-100">
+      <div class="container-x">
+        <div class="mb-12 md:mb-16 reveal">
+          <p class="eyebrow mb-4">{t('pp_galeria_eyebrow')}</p>
+          <h2 class="font-serif text-4xl md:text-5xl leading-tight">{e.title} {t('pp_galeria_title_suffix')}</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-5">
+          {galleryImages.map((img, i) => (
+            <div
+              class="reveal"
+              style={`transition-delay:${(i % 4) * 70}ms`}
+            >
+              <button
+                type="button"
+                class="gallery-frame group relative aspect-[16/9] w-full cursor-zoom-in overflow-hidden bg-ink-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-cream-100"
+                data-lightbox-src={img}
+                data-lightbox-alt={`${e.title} ${i + 1}`}
+                aria-label={t('pp_ampliar_aria').replace('{i}', String(i + 1)).replace('{title}', e.title)}
+              >
+                <img src={img} alt={`${e.title} ${i + 1}`} loading="lazy" decoding="async" class="w-full h-full object-contain p-1.5 md:p-2" />
+                <span class="pointer-events-none absolute bottom-3 right-3 bg-ink/80 px-3 py-1.5 text-[10px] uppercase tracking-widest text-cream-50 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
+                  {t('pp_ampliar')}
+                </span>
+              </button>
+              <p class="mt-2 text-[10px] md:text-[11px] uppercase tracking-[0.16em] text-ink-500">
+                {e.title} · {t('img_label')} {String(i + 1).padStart(2, '0')}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <div
+    id="gallery-lightbox"
+    class="fixed inset-0 z-[120] hidden bg-ink/95 p-4 md:p-8"
+    role="dialog"
+    aria-modal="true"
+    aria-label={t('pp_lightbox_label')}
+  >
+    <button
+      type="button"
+      data-lightbox-close
+      class="absolute right-4 top-4 z-10 border border-cream-50/30 bg-ink/70 px-4 py-3 text-xs uppercase tracking-widest text-cream-50 transition-colors hover:border-gold hover:text-gold"
+      aria-label={t('pp_lightbox_close_aria')}
+    >
+      {t('pp_lightbox_close')}
+    </button>
+    <button type="button" data-lightbox-backdrop class="absolute inset-0 cursor-zoom-out" aria-label={t('pp_lightbox_close_aria')}></button>
+    <div class="pointer-events-none relative z-[1] flex h-full w-full items-center justify-center">
+      <img data-lightbox-image src="" alt="" class="pointer-events-auto max-h-full max-w-full object-contain" />
+    </div>
+  </div>
+
+  <!-- BUSINESS E CORPORATIVO (Infinity only) -->
+  {business && (
+    <section class="py-20 md:py-24 bg-ink text-cream-50">
+      <div class="container-x grid lg:grid-cols-12 gap-12 lg:gap-20">
+        <div class="lg:col-span-5 reveal">
+          <p class="eyebrow text-gold mb-5">{business.heading}</p>
+          <h2 class="font-serif text-4xl md:text-5xl leading-tight">{t('pp_business_title')}</h2>
+        </div>
+        <ul class="lg:col-span-7 space-y-3 text-cream-50/85 reveal">
+          {business.items.map((i) => <li class="flex gap-3"><span class="text-gold shrink-0">—</span><span>{i}</span></li>)}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <!-- DISTRIBUIÇÃO E ESTRUTURA -->
+  {distribuicao && (
+    <section class="py-20 md:py-24 bg-cream-50">
+      <div class="container-x">
+        <div class="mb-12 reveal">
+          <p class="eyebrow mb-5">{t('pp_distribuicao_eyebrow')}</p>
+          <h2 class="font-serif text-3xl md:text-5xl leading-tight max-w-3xl">{distribuicao.heading}.</h2>
+        </div>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-3 text-ink-700 reveal">
+          {distribuicao.items.map((i) => (
+            <p class="flex gap-3 py-3 border-b border-ink/10 leading-snug"><span class="text-gold/70 shrink-0">—</span><span>{i}</span></p>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- SUSTENTABILIDADE — leaf-themed band -->
+  {sustent && (
+    <section class="py-20 md:py-24 bg-cream-100 relative overflow-hidden">
+      <div class="container-x grid lg:grid-cols-12 gap-12 lg:gap-20">
+        <div class="lg:col-span-5 reveal">
+          <p class="eyebrow mb-5">06 · {sustent.heading}</p>
+          <h2 class="font-serif text-3xl md:text-5xl leading-tight">{t('pp_sustent_title')}</h2>
+        </div>
+        <ul class="lg:col-span-7 grid sm:grid-cols-2 gap-x-8 gap-y-3 text-ink-700 reveal">
+          {sustent.items.map((i) => <li class="flex gap-3"><span class="text-emerald-700 shrink-0 mt-2 w-1 h-1 rounded-full bg-current"></span><span class="leading-snug">{i}</span></li>)}
+        </ul>
+      </div>
+    </section>
+  )}
+
+  <!-- PROJETO, CONCEITO E AUTORIA — editorial spread -->
+  {projeto && (
+    <section class="py-24 md:py-32 bg-cream-50">
+      <div class="container-x">
+        <div class="text-center mb-14 max-w-3xl mx-auto reveal">
+          <p class="eyebrow mb-5">07 · {projeto.heading}</p>
+          <h2 class="font-serif text-4xl md:text-6xl leading-[1.04]">
+            {t('pp_projeto_title_pre')} <em class="text-gold italic">{t('pp_projeto_title_em')}</em>
+          </h2>
+        </div>
+        <div class="max-w-3xl mx-auto space-y-5 text-ink-700 leading-relaxed reveal">
+          {projeto.items.map((i) => {
+            const colonIdx = i.indexOf(':');
+            const role = colonIdx > -1 ? i.slice(0, colonIdx) : '';
+            const value = colonIdx > -1 ? i.slice(colonIdx + 1).trim() : i;
+            return role ? (
+              <p class="border-b border-ink/10 pb-4 last:border-0 last:pb-0">
+                <span class="block text-[11px] uppercase tracking-widest text-gold-600 mb-1">{role}</span>
+                <span class="block text-lg font-serif text-ink">{value}</span>
+              </p>
+            ) : (
+              <p class="text-base italic text-ink/80 border-l-2 border-gold/40 pl-5">{value}</p>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- DIFERENCIAIS DAS UNIDADES + LOCALIZAÇÃO (legacy) -->
+  {(difUnidades || e.localizacao) && (
+    <section class="py-20 md:py-24 bg-cream-100">
+      <div class="container-x grid lg:grid-cols-2 gap-12 lg:gap-20">
+        {difUnidades && (
+          <div class="reveal">
+            <p class="eyebrow mb-5">08 · {difUnidades.heading}</p>
+            <h2 class="font-serif text-3xl md:text-4xl mb-8 leading-tight">{t('pp_difUnidades_title')}</h2>
+            <ul class="space-y-3 text-ink-700 leading-relaxed">
+              {difUnidades.items.map((i) => <li class="flex gap-3"><span class="text-gold mt-2 w-1 h-1 rounded-full bg-current shrink-0"></span><span>{i}</span></li>)}
+            </ul>
+          </div>
+        )}
+        {e.localizacao && (
+          <div class="reveal">
+            <p class="eyebrow mb-5">09 · {t('pp_local_eyebrow')}</p>
+            <h2 class="font-serif text-3xl md:text-4xl mb-8 leading-tight">{t('pp_local_title')}</h2>
+            <div class="space-y-3 text-ink-700 leading-relaxed whitespace-pre-line">{e.localizacao.replace(/^•\s*/gm, '— ')}</div>
+          </div>
+        )}
+      </div>
+    </section>
+  )}
+
+  <!-- DIFERENCIAIS DE MERCADO — final highlight, dark + gold -->
+  {difMercado && (
+    <section class="py-24 md:py-32 bg-gradient-to-b from-ink-700 to-ink text-cream-50 relative overflow-hidden">
+      <span class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold to-transparent"></span>
+      <div class="container-x">
+        <div class="text-center max-w-3xl mx-auto mb-16 reveal">
+          <p class="eyebrow text-gold mb-5">10 · {difMercado.heading}</p>
+          <h2 class="font-serif text-4xl md:text-6xl leading-[1.04]">
+            {t('pp_difMercado_l1')}<br />{t('pp_difMercado_l2_pre')}<em class="text-gold italic">{e.title}</em>?
+          </h2>
+        </div>
+        <div class="grid md:grid-cols-2 gap-x-12 gap-y-6 max-w-5xl mx-auto">
+          {difMercado.items.map((i, idx) => (
+            <div class="reveal flex gap-5" style={`transition-delay:${(idx % 4) * 70}ms`}>
+              <span class="font-serif text-3xl text-gold leading-none">{String(idx + 1).padStart(2, '0')}</span>
+              <p class="text-cream-50/85 leading-relaxed text-sm md:text-base">{i}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- CTA + FORM -->
+  <section class="py-24 md:py-32 bg-cream-50" id="interesse">
+    <div class="container-x grid lg:grid-cols-12 gap-12 lg:gap-20">
+      <div class="lg:col-span-5 reveal">
+        <p class="eyebrow mb-5">{t('pp_interesse_eyebrow')}</p>
+        <h2 class="font-serif text-4xl md:text-5xl leading-tight mb-8">
+          {t('pp_interesse_title_l1')}<br />{t('pp_interesse_title_l2_pre')}{e.title}?
+        </h2>
+        <p class="text-ink-500 leading-relaxed mb-10 max-w-md">
+          {t('pp_interesse_desc')}
+        </p>
+        <a href={whatsappUrl(lang, wppMsg)} target="_blank" rel="noopener" class="btn-primary">
+          {t('cta_wpp')}
+          <span aria-hidden="true">→</span>
+        </a>
+        <div class="mt-10 pt-8 border-t border-ink/10">
+          <p class="eyebrow mb-2">{t('label_especialista')}</p>
+          <p class="font-serif text-2xl">{consultor.nome}</p>
+          <p class="text-xs uppercase tracking-widest text-ink-500 mt-1">{consultor.creci}</p>
+        </div>
+      </div>
+      <div class="lg:col-span-7 reveal">
+        <LeadForm empreendimento={e.title} lang={lang} />
+      </div>
+    </div>
+  </section>
+
+  <!-- OTHER PROPERTIES -->
+  <section class="py-20 md:py-28 bg-cream-100">
+    <div class="container-x">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12 md:mb-16">
+        <h2 class="font-serif text-3xl md:text-5xl leading-tight max-w-2xl">{t('pp_outros_title')}</h2>
+        <a href={`${home}#empreendimentos`} class="link-underline">{t('pp_ver_todos')}</a>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-5">
+        {others.map((o, i) => <PropertyCard e={o} index={i} lang={lang} />)}
+      </div>
+    </div>
+  </section>
+</Base>
+
+<script>
+  const lightbox = document.getElementById('gallery-lightbox');
+  const lightboxImage = lightbox?.querySelector('[data-lightbox-image]');
+  const closeTargets = lightbox?.querySelectorAll('[data-lightbox-close], [data-lightbox-backdrop]');
+  const galleryTriggers = document.querySelectorAll('[data-lightbox-src]');
+  let previousFocus = null;
+
+  function openLightbox(trigger) {
+    if (!(lightbox instanceof HTMLElement) || !(lightboxImage instanceof HTMLImageElement)) return;
+    previousFocus = document.activeElement;
+    lightboxImage.src = trigger.dataset.lightboxSrc || '';
+    lightboxImage.alt = trigger.dataset.lightboxAlt || '';
+    lightbox.classList.remove('hidden');
+    document.body.classList.add('overflow-hidden');
+    const closeButton = lightbox.querySelector('[data-lightbox-close]');
+    if (closeButton instanceof HTMLElement) closeButton.focus();
+  }
+
+  function closeLightbox() {
+    if (!(lightbox instanceof HTMLElement) || !(lightboxImage instanceof HTMLImageElement)) return;
+    lightbox.classList.add('hidden');
+    document.body.classList.remove('overflow-hidden');
+    lightboxImage.src = '';
+    if (previousFocus instanceof HTMLElement) previousFocus.focus();
+    previousFocus = null;
+  }
+
+  galleryTriggers.forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      if (trigger instanceof HTMLElement) openLightbox(trigger);
+    });
+  });
+
+  closeTargets?.forEach((target) => target.addEventListener('click', closeLightbox));
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && lightbox instanceof HTMLElement && !lightbox.classList.contains('hidden')) {
+      closeLightbox();
+    }
+  });
+</script>

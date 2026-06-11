@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import { consultor, whatsappUrl } from '../../config/consultor';
+import { useTranslations, localizePath, type Lang } from '../../i18n/utils';
+
+interface Props {
+  lang?: Lang;
+}
+const { lang = 'pt' } = Astro.props;
+const t = useTranslations(lang);
+const home = localizePath('/', lang);
+---
+
+<Base lang={lang} title={`${t('seo_ty_prefix')} · ${consultor.nome}`} description={t('seo_ty_desc')}>
+  <section class="min-h-screen flex items-center justify-center bg-cream-50 pt-32 pb-20">
+    <div class="container-x max-w-3xl text-center">
+      <p class="eyebrow text-gold-600 mb-6">{t('ty_eyebrow')}</p>
+
+      <h1 class="font-serif text-5xl md:text-7xl leading-[1.02] mb-8">
+        {t('ty_title_pre')}<br />
+        <em class="text-gold italic">{t('ty_title_em')}</em>
+      </h1>
+
+      <p class="text-lg md:text-xl text-ink-700 leading-relaxed max-w-xl mx-auto mb-12">
+        {t('ty_desc')}
+      </p>
+
+      <div class="inline-flex flex-col items-center gap-6">
+        <a href={whatsappUrl(lang)} target="_blank" rel="noopener" class="btn-primary">
+          {t('ty_cta')}
+          <span aria-hidden="true">→</span>
+        </a>
+        <a href={home} class="link-underline">{t('ty_back')}</a>
+      </div>
+
+      <div class="mt-20 pt-10 border-t border-ink/10 max-w-md mx-auto">
+        <p class="eyebrow mb-3">{t('label_especialista')}</p>
+        <p class="font-serif text-2xl">{consultor.nome}</p>
+        <p class="text-xs uppercase tracking-widest text-ink-500 mt-1">{consultor.creci}</p>
+      </div>
+    </div>
+  </section>
+</Base>

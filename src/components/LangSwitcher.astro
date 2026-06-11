@@ -1,0 +1,89 @@
+---
+import { LOCALES, localizePath, langLabel, type Lang } from '../i18n/utils';
+
+interface Props {
+  lang: Lang;
+  variant?: 'header' | 'menu';
+}
+const { lang, variant = 'header' } = Astro.props;
+
+// Canonical (locale-stripped) path of the current page, so each flag points to
+// the SAME page in the target language.
+let canonical = Astro.url.pathname;
+if (canonical === '/en' || canonical === '/es') canonical = '/';
+else if (canonical.startsWith('/en/') || canonical.startsWith('/es/')) canonical = canonical.slice(3);
+if (!canonical.startsWith('/')) canonical = `/${canonical}`;
+
+const flagCode: Record<Lang, 'br' | 'us' | 'es'> = { pt: 'br', en: 'us', es: 'es' };
+const sizeClass = variant === 'menu' ? 'w-9 h-6' : 'w-7 h-5';
+---
+
+<div
+  class={`lang-switcher flex items-center ${variant === 'menu' ? 'gap-4' : 'gap-2.5'}`}
+  role="group"
+  aria-label="Idioma / Language / Idioma"
+>
+  {LOCALES.map((l) => {
+    const active = l === lang;
+    const code = flagCode[l];
+    return (
+      <a
+        href={localizePath(canonical, l)}
+        hreflang={l}
+        aria-label={langLabel[l]}
+        title={langLabel[l]}
+        aria-current={active ? 'true' : undefined}
+        class={`lang-flag ${sizeClass} ${active ? 'is-active' : ''}`}
+      >
+        {code === 'br' && (
+          <svg viewBox="0 0 28 20" class="w-full h-full" aria-hidden="true">
+            <rect width="28" height="20" fill="#009b3a" />
+            <path d="M14 2.2 26 10 14 17.8 2 10Z" fill="#fedf00" />
+            <circle cx="14" cy="10" r="4.1" fill="#002776" />
+          </svg>
+        )}
+        {code === 'us' && (
+          <svg viewBox="0 0 28 20" class="w-full h-full" aria-hidden="true">
+            <rect width="28" height="20" fill="#fff" />
+            <g fill="#b22234">
+              <rect width="28" height="1.54" y="0" />
+              <rect width="28" height="1.54" y="3.08" />
+              <rect width="28" height="1.54" y="6.16" />
+              <rect width="28" height="1.54" y="9.24" />
+              <rect width="28" height="1.54" y="12.32" />
+              <rect width="28" height="1.54" y="15.4" />
+              <rect width="28" height="1.54" y="18.46" />
+            </g>
+            <rect width="12" height="10.78" fill="#3c3b6e" />
+          </svg>
+        )}
+        {code === 'es' && (
+          <svg viewBox="0 0 28 20" class="w-full h-full" aria-hidden="true">
+            <rect width="28" height="20" fill="#c60b1e" />
+            <rect y="5" width="28" height="10" fill="#ffc400" />
+          </svg>
+        )}
+      </a>
+    );
+  })}
+</div>
+
+<style>
+  .lang-flag {
+    display: block;
+    overflow: hidden;
+    border-radius: 3px;
+    box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.12);
+    opacity: 0.6;
+    transition: opacity 220ms ease, transform 220ms ease, box-shadow 220ms ease;
+  }
+  .lang-flag:hover {
+    opacity: 1;
+    transform: translateY(-1px);
+  }
+  .lang-flag.is-active {
+    opacity: 1;
+    box-shadow: 0 0 0 1.5px #c9a961;
+  }
+  .lang-flag svg { display: block; }
+</style>

@@ -1,14 +1,18 @@
 ---
 import type { Empreendimento } from '../lib/properties';
-import { statusBadge, shortLocation } from '../lib/properties';
+import { statusBadgeFor, shortLocationFor } from '../lib/properties';
+import { useTranslations, localizePath, type Lang } from '../i18n/utils';
 
 interface Props {
   e: Empreendimento;
   index: number;
+  lang?: Lang;
 }
-const { e, index } = Astro.props;
-const status = statusBadge(e.statusObra);
-const local = shortLocation(e.localizacao);
+const { e, index, lang = 'pt' } = Astro.props;
+const t = useTranslations(lang);
+const status = statusBadgeFor(e.slug, lang);
+const local = shortLocationFor(e.slug);
+const href = localizePath(`/empreendimento/${e.slug}/`, lang);
 
 const toneClass =
   status.tone === 'ready' ? 'text-emerald-700' :
@@ -21,7 +25,7 @@ const baseDelay = (index % 6) * 60;
 ---
 
 <a
-  href={`/empreendimento/${e.slug}/`}
+  href={href}
   class="reveal property-card group relative block bg-cream-50 overflow-hidden"
   style={`--base:${baseDelay}ms`}
 >
@@ -64,7 +68,7 @@ const baseDelay = (index % 6) * 60;
 
     <!-- BOTTOM -->
     <div class="bloom-fade flex items-center gap-3 text-[11px] uppercase tracking-widest text-ink-500" style="--bloom-d:1100ms">
-      <span class="font-medium group-hover:text-ink transition-colors">Conhecer</span>
+      <span class="font-medium group-hover:text-ink transition-colors">{t('card_conhecer')}</span>
       <span class="relative block h-px w-10 bg-ink-500/40 overflow-hidden">
         <span class="absolute inset-y-0 left-0 w-full bg-gold origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-out"></span>
       </span>
