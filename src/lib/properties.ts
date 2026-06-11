@@ -14,6 +14,8 @@ export interface VideoBlock {
   title: string;
 }
 
+export type StatusClassification = 'last_units' | 'delivery_first_half_2031';
+
 export interface Empreendimento {
   slug: string;
   title: string;
@@ -23,6 +25,7 @@ export interface Empreendimento {
   metragens: string;
   tipologia: string;
   description: string;
+  statusClassifications?: StatusClassification[];
   heroImage?: string;
   images: string[];
   videos?: VideoBlock[];
@@ -59,14 +62,18 @@ export function getEmpreendimentos(lang: Lang = 'pt'): Empreendimento[] {
   return empreendimentos.map((e) => getEmpreendimento(e.slug, lang)!);
 }
 
-export type StatusTone = 'soon' | 'ready' | 'sold' | 'building';
+export type StatusTone = 'soon' | 'ready' | 'sold' | 'building' | 'available';
+export interface StatusBadge {
+  label: string;
+  tone: StatusTone;
+}
 
 /**
  * Status badge derived ALWAYS from the canonical PT `statusObra` text
  * (the parser keys on PT words), with the label localized per `lang`.
  * The PT branch reproduces the original output exactly.
  */
-export function statusBadge(rawPt: string, lang: Lang = 'pt'): { label: string; tone: StatusTone } {
+export function statusBadge(rawPt: string, lang: Lang = 'pt'): StatusBadge {
   const t = ui[lang];
   const s = rawPt.toUpperCase();
   if (s.includes('PRONTO')) return { label: t.status_pronto, tone: 'ready' };
@@ -83,10 +90,21 @@ export function statusBadge(rawPt: string, lang: Lang = 'pt'): { label: string; 
   return { label: rawPt, tone: 'soon' };
 }
 
-/** Convenience: status badge for a slug, always parsing the canonical PT status. */
-export function statusBadgeFor(slug: string, lang: Lang = 'pt') {
+/** Status badges for a slug, supporting explicit multiple classifications. */
+export function statusBadgesFor(slug: string, lang: Lang = 'pt'): StatusBadge[] {
   const base = ptBySlug.get(slug);
-  return statusBadge(base?.statusObra ?? '', lang);
+  const t = ui[lang];
+  const explicit: Record<StatusClassification, StatusBadge> = {
+    last_units: { label: t.status_ultimas_unidades, tone: 'available' },
+    delivery_first_half_2031: { label: t.status_entrega_primeiro_semestre_2031, tone: 'building' },
+  };
+  return base?.statusClassifications?.map((classification) => explicit[classification])
+    ?? [statusBadge(base?.statusObra ?? '', lang)];
+}
+
+/** Primary status retained for consumers that only support one badge. */
+export function statusBadgeFor(slug: string, lang: Lang = 'pt') {
+  return statusBadgesFor(slug, lang)[0];
 }
 
 const PT_MONTHS = ['JANEIRO', 'FEVEREIRO', 'MARÇO', 'ABRIL', 'MAIO', 'JUNHO', 'JULHO', 'AGOSTO', 'SETEMBRO', 'OUTUBRO', 'NOVEMBRO', 'DEZEMBRO'];

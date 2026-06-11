@@ -5,7 +5,7 @@ import PropertyCard from '../PropertyCard.astro';
 import {
   getEmpreendimento,
   getEmpreendimentos,
-  statusBadgeFor,
+  statusBadgesFor,
   shortLocationFor,
   getLocalizedSections,
   findSection,
@@ -22,7 +22,7 @@ const t = useTranslations(lang);
 const home = localizePath('/', lang);
 
 const e = getEmpreendimento(slug, lang)!;
-const status = statusBadgeFor(slug, lang);
+const statuses = statusBadgesFor(slug, lang);
 const local = shortLocationFor(slug);
 const heroImg = e.heroImage ?? e.images[0];
 const galleryImages = e.images;
@@ -30,10 +30,11 @@ const others = getEmpreendimentos(lang).filter((x) => x.slug !== e.slug).slice(0
 
 const wppMsg = t('whatsapp_msg_emp').replace('{title}', e.title);
 
-const toneClass =
-  status.tone === 'ready' ? 'text-emerald-700 border-emerald-700/40' :
-  status.tone === 'sold' ? 'text-cream-50 border-cream-50/40' :
-  status.tone === 'building' ? 'text-gold border-gold/50' :
+const toneClass = (tone: (typeof statuses)[number]['tone']) =>
+  tone === 'ready' ? 'text-emerald-700 border-emerald-700/40' :
+  tone === 'available' ? 'text-gold border-gold/70' :
+  tone === 'sold' ? 'text-cream-50 border-cream-50/40' :
+  tone === 'building' ? 'text-gold border-gold/50' :
   'text-cream-50/80 border-cream-50/40';
 
 const sections = getLocalizedSections(slug, lang);
@@ -67,10 +68,12 @@ const difMercado = findSection(sections, 'Diferenciais de Mercado');
     <div class="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/20 to-ink/85"></div>
 
     <div class="relative h-full container-x flex flex-col justify-end pb-16 md:pb-20">
-      <div class="flex items-center gap-4 mb-6">
-        <span class={`text-[10px] uppercase tracking-widest font-medium px-3 py-1.5 border ${toneClass}`}>
-          {status.label}
-        </span>
+      <div class="flex flex-wrap items-center gap-3 mb-6">
+        {statuses.map((status) => (
+          <span class={`text-[10px] uppercase tracking-widest font-medium px-3 py-1.5 border ${toneClass(status.tone)}`}>
+            {status.label}
+          </span>
+        ))}
         <span class="text-cream-50/60 text-[11px] uppercase tracking-widest">{local} · Salvador</span>
       </div>
       <h1 class="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-cream-50 leading-[0.95] max-w-5xl">
@@ -95,7 +98,9 @@ const difMercado = findSection(sections, 'Diferenciais de Mercado');
       </div>
       <div>
         <p class="eyebrow text-gold/80 mb-2">{t('pp_quick_status')}</p>
-        <p class="font-serif text-xl md:text-2xl">{status.label}</p>
+        <div class="space-y-1">
+          {statuses.map((status) => <p class="font-serif text-xl md:text-2xl">{status.label}</p>)}
+        </div>
       </div>
       <div class="flex items-end">
         <a href={whatsappUrl(lang, wppMsg)} target="_blank" rel="noopener" class="inline-flex items-center gap-3 border-b border-gold text-gold pb-1 uppercase text-xs tracking-wider hover:gap-4 transition-all">
