@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import PropertyCard from '../PropertyCard.astro';
 import LeadForm from '../LeadForm.astro';
+import LangSwitcher from '../LangSwitcher.astro';
 import { getEmpreendimentos } from '../../lib/properties';
 import { consultor, whatsappUrl } from '../../config/consultor';
 import { useTranslations, type Lang } from '../../i18n/utils';
@@ -68,6 +69,14 @@ const nowrap = lang === 'pt' ? 'whitespace-nowrap' : '';
     <div class="hidden md:flex absolute bottom-8 right-6 lg:right-10 flex-col items-center gap-3 text-cream-50/55 animate-fade-in opacity-0" style="animation-delay:1.4s">
       <span class="text-[10px] uppercase tracking-[0.35em]">{t('scroll')}</span>
       <span class="block w-px h-14 bg-gradient-to-b from-gold/70 to-transparent"></span>
+    </div>
+
+    <!-- Idiomas visíveis na primeira tela mobile -->
+    <div class="md:hidden absolute inset-x-0 bottom-0 z-20 pointer-events-none">
+      <span class="block h-px bg-gradient-to-r from-transparent via-gold/35 to-transparent"></span>
+      <div class="absolute bottom-7 left-6 pointer-events-auto rounded-md border border-gold/20 bg-ink/35 px-3 py-2 backdrop-blur-sm">
+        <LangSwitcher lang={lang} variant="header" />
+      </div>
     </div>
   </section>
 
