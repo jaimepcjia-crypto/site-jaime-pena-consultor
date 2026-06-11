@@ -1,6 +1,6 @@
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
+import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
   site: 'https://www.jaimepena-mouradubeux.com',
@@ -13,7 +13,6 @@ export default defineConfig({
     },
   },
   integrations: [
-    tailwind(),
     sitemap({
       i18n: {
         defaultLocale: 'pt',
@@ -21,6 +20,9 @@ export default defineConfig({
       },
     }),
   ],
+  vite: {
+    plugins: [tailwindcss()],
+  },
   build: {
     inlineStylesheets: 'auto',
   },
