@@ -1,6 +1,8 @@
 [
   {
     "slug": "beach-class-bahia",
+    "quartos": [1, 2],
+    "studio": true,
     "title": "Beach Class Bahia",
     "construtora": "Moura Dubeux",
     "localizacao": "Endereço e acessos\n• Endereços de Acesso: Rua Clarival do Prado Valadares e Rua da Alfazema – Caminho das Árvores, Salvador – BA.\n• Entorno e Referências: Localizado ao lado do polo empresarial da Avenida Tancredo Neves e do Shopping da Bahia. Proximidade com o Iguatemi Business Flat, Edifício Capemi e Avenida Antônio Carlos Magalhães.",
@@ -186,6 +188,7 @@
   },
   {
     "slug": "beach-class-jaguaribe",
+    "quartos": [1, 2],
     "title": "Beach Class Jaguaribe",
     "construtora": "Moura Dubeux",
     "localizacao": "Endereço e acessos\n• Rua Desembargador Lafayette Velloso, 80 – Jaguaribe, Salvador – BA, entre a Avenida Octávio Mangabeira e a Rua Desembargador Lafayette\nReferências e entorno\n• Ponto de referência: Localizado em frente à Praia de Jaguaribe",
@@ -347,6 +350,8 @@
   },
   {
     "slug": "beach-class-rio-vermelho",
+    "quartos": [1, 2],
+    "studio": true,
     "title": "Beach Class Rio Vermelho",
     "construtora": "Moura Dubeux",
     "localizacao": "Endereço e acessos\n• Avenida Cardeal da Silva, s/n – Rio Vermelho, Salvador – BA (com acessos e proximidades à Rua João Gomes, Rua Conselheiro Pedro Luiz, Rua Guedes Cabral e Rua da Paciência).\nReferências e entorno\n• Entorno e Pontos de Interesse: Próximo ao Largo de Santana (Largo da Dinha), Praia do Rio Vermelho, Praia da Paciência, Paróquia de Sant'Ana, Casa do Rio Vermelho, Hospital Mater Dei e Farol da Barra.",
@@ -511,6 +516,7 @@
   },
   {
     "slug": "casa-sombreiros",
+    "quartos": [3, 4],
     "title": "Casa Sombreiros",
     "construtora": "Moura Dubeux",
     "localizacao": "Endereço e acessos\n• Alameda dos Sombreiros – Caminho das Árvores, Salvador – BA.\n• Referências de Entorno: Situado no coração do Caminho das Árvores, a poucos passos da Praça dos Eucaliptos. Próximo ao Salvador Shopping, Avenida Tancredo Neves, Colégio Bernoulli, Praça Aquarius e Avenida Paulo VI.",
@@ -668,6 +674,7 @@
   },
   {
     "slug": "dumare",
+    "quartos": [2, 3],
     "title": "Dumare",
     "construtora": "Moura Dubeux",
     "localizacao": "Endereço e acessos\n• Avenida Octávio Mangabeira, 10.205 – Jaguaribe, Salvador – BA.\n• Contexto: Localizado em uma região cercada de serviços, com fácil acesso e diversas opções de lazer ao ar livre na orla.\nOutras informações relevantes\n• Posicionamento: Em frente ao mar (pé na areia) na Orla de Jaguaribe, com vista panorâmica para o Farol de Itapuã e para a região de Pituaçu.",
@@ -828,6 +835,7 @@
   },
   {
     "slug": "elleve-horto",
+    "quartos": [3, 4],
     "title": "Elleve Horto",
     "construtora": "Moura Dubeux",
     "localizacao": "Endereço e acessos\n• Rua Piratancará – Horto Florestal, Salvador – BA.\n• Acesso pela Rua Piratancará e acesso controlado pelo Jardim Teresópolis.\nReferências e entorno\n• Localizado em um dos pontos mais valorizados do Horto Florestal, próximo ao Parque da Cidade, Hospital Aliança, Hospital Mater Dei, Centro Médico Salvador, Horto Office e Horto Empresarial.\n• Fácil acesso pelas avenidas Juracy Magalhães Júnior, Vasco da Gama e Antônio Carlos Magalhães.",
@@ -984,6 +992,7 @@
   },
   {
     "slug": "horto-essence",
+    "quartos": [3, 4],
     "title": "Horto Essence",
     "construtora": "Moura Dubeux",
     "localizacao": "Endereço e acessos\n• Rua da Sapucaia, quadra 2, lote 22 – Horto Florestal, Salvador – BA.\nReferências e entorno\n• Entorno e Conveniências: Localizado no coração do Horto Florestal, com\n• proximidade e vista para o Parque Lucaia. Vizinho a estabelecimentos como\nOutras informações relevantes\n• Almacen Pepe, Pátio Santa Luzia (Restaurante Ori e Domino's), Supermercado\n• Rede Mix, Drogasil, Hospital Aliança, Ceasa Rio Vermelho, Escolas Bilíngues\n• e Petshops (Vilacani e Mundo MPET).",
@@ -1132,6 +1141,7 @@
   },
   {
     "slug": "infinity-salvador",
+    "quartos": [1, 2],
     "title": "Infinity Salvador",
     "construtora": "Moura Dubeux",
     "localizacao": "Endereço e acessos\n• Avenida Oceânica – Ondina, Salvador – BA (Localizado na icônica estrutura do antigo Salvador Othon Palace).\n• Ponto de Referência: Cruzamento com a Avenida Milton Santos, posicionado estrategicamente na orla de Ondina com vista permanente para o mar.",
@@ -1283,6 +1293,7 @@
   },
   {
     "slug": "mirat-martins-de-sa",
+    "quartos": [3, 4],
     "title": "Mirat Martins de Sá",
     "construtora": "Moura Dubeux",
     "localizacao": "Endereço e acessos\n• Horto Florestal – Salvador, BA.\nReferências e entorno\n• Contexto: Localizado em uma das áreas mais valorizadas e arborizadas da cidade, conhecida pela infraestrutura completa, facilidade de acesso e mobilidade.",
@@ -1419,6 +1430,7 @@
   },
   {
     "slug": "mood-club",
+    "quartos": [2, 3],
     "title": "Mood Club",
     "construtora": "Mood Moura Dubeux",
     "localizacao": "Endereço e acessos\n• Endereço: Rua Arthur de Azevedo Machado, S/N – Costa Azul, Salvador – BA.\n• Entorno e Conveniências: Localizado no coração do Costa Azul, com fácil acesso às Avenidas Magalhães Neto e Octávio Mangabeira. Próximo ao Hospital da Bahia, Salvador Shopping, Shopping da Bahia, Supermercado G.Barbosa, Academia Selfit, Academia Alpha Fitness, Colégios (Módulo, Gregor Mendel, Anchietinha, Land School Gurilândia e Oficina), além de farmácias, padarias e restaurantes.\nReferências e entorno\n• Referência Histórica: Situado no terreno do lendário antigo Clube BANEB.",
@@ -1568,6 +1580,7 @@
   },
   {
     "slug": "mood-colina",
+    "quartos": [2, 3],
     "title": "Mood Colina",
     "construtora": "Moura Dubeux",
     "localizacao": "Endereço e acessos\n• Endereço: Rua Monsenhor Gaspar Sadoc, S/N – Patamares (Colina A), Salvador – BA.\n• Acessos: O terreno possui confrontações e acessos pela Rua Mangalô, Rua Monsenhor Gaspar Sadoc e Rua Bicuíba.\n• Logística: Fácil acesso via Avenida Pinto de Aguiar e Avenida Otávio Mangabeira.\nReferências e entorno\n• Entorno e Conveniências: Localizado em região elevada (Colina A), cercado por áreas verdes e a poucos metros da praia de Patamares. Próximo ao Centro Universitário UNIRB, Mercado Hiperideal, Parque de Pituaçu, Academia Hammer, Escola Pan Americana, Colégio Anglo Brasileiro, Colégio Marista e polos gastronômicos.",
@@ -1719,6 +1732,7 @@
   },
   {
     "slug": "mood-costa-azul",
+    "quartos": [3],
     "title": "Mood Costa Azul",
     "construtora": "Moura Dubeux",
     "localizacao": "Endereço e acessos\n• Endereço Principal: Rua Professor Isaías Alves de Almeida, 1315 – Costa Azul, Salvador – BA.\n• Acessos Secundários: O terreno possui confrontação com a Rua Arthur de Azevedo Machado e Rua Monsenhor Gaspar Sadoc.\n• Logística: Fácil ligação com as avenidas Magalhães Neto e Octávio Mangabeira.\nReferências e entorno\n• Vizinhança e Facilidades: Posicionado em bairro residencial seguro, próximo ao Hospital da Bahia, Salvador Shopping, Shopping da Bahia, Supermercado G. Barbosa, Academias Selfit e Alpha Fitness, e diversas instituições de ensino (Colégios Módulo, Gregor Mendel, Anchietinha, Oficina e Land School Gurilândia).\nOutras informações relevantes\n• Proximidade do Mar: Localizado a apenas 170 metros da praia.",
@@ -1866,6 +1880,7 @@
   },
   {
     "slug": "poeme-horto",
+    "quartos": [4],
     "title": "Poème Horto",
     "construtora": "Moura Dubeux",
     "localizacao": "Endereço e acessos\n• Rua da Sapucáia, 219 – Horto Florestal, Salvador – BA.\n• Entorno e Referências: Situado em rua arborizada no Horto Florestal, próximo\n• ao Almacen Pepe, Pátio Santa Luzia, Drogasil, Supermercado Rede Mix,\nOutras informações relevantes\n• Hospital Aliança, Ceasa Rio Vermelho e diversas academias e delicatessens.",
@@ -2010,6 +2025,7 @@
   },
   {
     "slug": "rive",
+    "quartos": [3, 4],
     "title": "Rivê",
     "construtora": "Moura Dubeux",
     "localizacao": "Endereço e acessos\n• Avenida Juracy Magalhães Júnior, 188 – Rio Vermelho, Salvador – BA.\n• Referências: Localizado a 200 metros do mar, com proximidade à Rua\nOutras informações relevantes\n• Potiguares, Praia do Buracão, Largo de Santana (Dinha), Largo da Mariquita,\n• Vila Caramuru e Hospital Aliança.",
@@ -2146,6 +2162,7 @@
   },
   {
     "slug": "vivant-caminho-das-arvores",
+    "quartos": [2, 3],
     "title": "Vivant Caminho das Árvores",
     "construtora": "Moura Dubeux",
     "localizacao": "Endereço e acessos\n• Alameda das Catabas / Rua Clara Nunes – Caminho das Árvores, Salvador – BA (Loteamento Aquarius).\nReferências e entorno\n• Referências do Entorno: Localizado próximo à Avenida Tancredo Neves e Avenida Professor Magalhães Neto. Vizinho ao Salvador Shopping, Shopping da Bahia, Hospital da Bahia, Praça Aquarius, McDonald's e futuras escolas.",
@@ -2287,6 +2304,7 @@
   },
   {
     "slug": "salvador-220",
+    "quartos": [1, 2],
     "title": "Salvador 220",
     "construtora": "Moura Dubeux",
     "localizacao": "Endereço e acessos\n• Endereço: Rua Fonte do Boi, 220 – Rio Vermelho, Salvador – BA.\n• Contexto: Localizado em frente ao mar no bairro do Rio Vermelho, com vista panorâmica para a orla e acesso direto à costa.\nOutras informações relevantes\n• Posicionamento Histórico: Empreendimento de retrofit de um edifício histórico em uma das regiões mais cobiçadas de Salvador, próximo a marcos como Farol da Barra, Morro do Cristo, Shopping Barra, Praia do Porto da Barra, Clube Espanhol, Pedra da Providência e Casa do Rio Vermelho.\n• Infraestrutura no Entorno: Hospital Cardio Pulmonar, Rede Mater Dei, restaurantes consagrados e cena cultural ativa.",
@@ -2445,6 +2463,7 @@
   },
   {
     "slug": "cyano",
+    "quartos": [3, 4],
     "title": "Cyano",
     "construtora": "Moura Dubeux",
     "localizacao": "Endereço e acessos\n• Endereço: Rua da Fonte do Boi – Rio Vermelho, Salvador – BA.\n• Contexto: Localizado em frente ao mar no bairro do Rio Vermelho, em terreno adjacente ao Salvador 220, com vista panorâmica para a orla.\nOutras informações relevantes\n• Posicionamento Privilegiado: Empreendimento de luxo \"Salvador Luxury Residence\" em uma das regiões mais cobiçadas de Salvador, próximo a marcos como Farol da Barra, Morro do Cristo, Shopping Barra, Praia do Porto da Barra, Clube Espanhol, Praia da Paciência e Casa do Rio Vermelho.\n• Infraestrutura no Entorno: Hospital Cardio Pulmonar, Rede Mater Dei, restaurantes consagrados e cena cultural ativa do Rio Vermelho.",

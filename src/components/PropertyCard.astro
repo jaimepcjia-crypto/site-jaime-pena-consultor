@@ -23,6 +23,17 @@ const toneClass = (tone: (typeof statuses)[number]['tone']) =>
 
 const words = e.title.split(/\s+/);
 const baseDelay = (index % 6) * 60;
+
+// Tipologias de quartos (ex.: "Studio · 1 · 2 quartos")
+const quartos = e.quartos ?? [];
+const quartosParts = [
+  ...(e.studio ? [t('card_studio')] : []),
+  ...quartos.map((q) => String(q)),
+];
+const quartosWord = quartos.length === 1 && quartos[0] === 1 ? t('card_quarto') : t('card_quartos');
+const quartosLabel = quartosParts.length
+  ? `${quartosParts.join(' · ')}${quartos.length ? ` ${quartosWord}` : ''}`
+  : '';
 ---
 
 <a
@@ -70,6 +81,14 @@ const baseDelay = (index % 6) * 60;
         })}
       </h3>
     </div>
+
+    <!-- TIPOLOGIAS (quartos) -->
+    {quartosLabel && (
+      <div class="bloom-fade mb-4" style="--bloom-d:1000ms">
+        <span class="block h-px w-6 bg-gold/50 mb-2.5"></span>
+        <span class="text-[11px] uppercase tracking-widest text-gold-700 font-medium">{quartosLabel}</span>
+      </div>
+    )}
 
     <!-- BOTTOM -->
     <div class="bloom-fade flex items-center gap-3 text-[11px] uppercase tracking-widest text-ink-500" style="--bloom-d:1100ms">

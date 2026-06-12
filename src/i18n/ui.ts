@@ -95,6 +95,9 @@ const pt = {
 
   // ── Property card ─────────────────────────────────────────
   card_conhecer: 'Conhecer',
+  card_quarto: 'quarto',
+  card_quartos: 'quartos',
+  card_studio: 'Studio',
 
   // ── Status badge ──────────────────────────────────────────
   status_pronto: 'Pronto para Morar',
@@ -252,6 +255,9 @@ const en: Record<keyof typeof pt, string> = {
   form_box_sub: 'Reply within 24 business hours.',
 
   card_conhecer: 'Explore',
+  card_quarto: 'bedroom',
+  card_quartos: 'bedrooms',
+  card_studio: 'Studio',
 
   status_pronto: 'Move-in Ready',
   status_entregue: 'Delivered',
@@ -403,6 +409,9 @@ const es: Record<keyof typeof pt, string> = {
   form_box_sub: 'Respuesta en hasta 24h hábiles.',
 
   card_conhecer: 'Conocer',
+  card_quarto: 'dormitorio',
+  card_quartos: 'dormitorios',
+  card_studio: 'Studio',
 
   status_pronto: 'Listo para Habitar',
   status_entregue: 'Entregado',

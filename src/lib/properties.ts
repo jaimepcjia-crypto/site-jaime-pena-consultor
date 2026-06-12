@@ -25,6 +25,10 @@ export interface Empreendimento {
   metragens: string;
   tipologia: string;
   description: string;
+  /** Bedroom typologies offered (e.g. [1, 2] → 1 and 2 quartos). */
+  quartos?: number[];
+  /** Whether the development also offers Studio units. */
+  studio?: boolean;
   statusClassifications?: StatusClassification[];
   heroImage?: string;
   images: string[];
