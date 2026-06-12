@@ -647,6 +647,126 @@
       }
     ]
   },
+  "elleve-horto": {
+    "localizacao": "Dirección y accesos\n• Rua Piratancará – Horto Florestal, Salvador – BA.\n• Acceso por Rua Piratancará y acceso controlado por Jardim Teresópolis.\nReferencias y entorno\n• Ubicado en una de las zonas más valoradas de Horto Florestal, cerca de Parque da Cidade, Hospital Aliança, Hospital Mater Dei, Centro Médico Salvador, Horto Office y Horto Empresarial.\n• Fácil acceso por las avenidas Juracy Magalhães Júnior, Vasco da Gama y Antônio Carlos Magalhães.",
+    "statusObra": "Finalización de obra: ENERO/2030",
+    "metragens": "Terreno y áreas generales\n• Área total del terreno: 2.508,64 m².\n• Piscina para adultos con carril de 25 metros.\nÁreas privadas de las unidades\n• Columna 01 – 3 suites: 119,06 m², con 2 plazas de garaje.\n• Columna 02 – 4 suites: 150,54 m², con 3 plazas de garaje.\n• 1.er piso – Columna 01, con balcón ampliado: 141,04 m².\n• 1.er piso – Columna 02, con balcón ampliado: 168,92 m².",
+    "tipologia": "Producto y configuración\n• Desarrollo residencial de alto nivel.\n• Torre única con 38 pisos y 2 apartamentos por piso.\n• Total de 76 apartamentos.\n• Tipologías de 3 suites y 4 suites.\n• 6 opciones de planta.",
+    "description": "Garaje y accesos\n• 191 plazas internas, plazas externas para visitantes y bicicletero.\n• 2 plazas para apartamentos de 3 suites y 3 plazas para apartamentos de 4 suites, además de 1 plaza común del condominio.\nOcio y áreas comunes\n• Piscinas para adultos con carril de 25 m e infantil, solárium, deck, Gourmet Piscina, lounge exterior con cascada, gimnasio, Salón de Fiestas, Ludoteca, Sala de Juegos, cancha recreativa y parque infantil.\nServicios, seguridad y tecnología\n• Espacio de delivery y comercio electrónico, Pet Care, garita con vidrios blindados y esclusa, cerraduras electrónicas e infraestructura para seguridad y Wi-Fi en áreas comunes.\nSostenibilidad\n• Acera 100% drenante, soluciones de ahorro de agua y energía, reutilización de agua de condensación y generación de energía renovable para parte de las áreas comunes.\nProyecto y personalización\n• Arquitectura de GAM Arquitetos, paisajismo de Benedito Abbud e interiores de Taís Abreu y Luiza Buratto.\n• 6 opciones de planta y personalización mediante MD Store.",
+    "sections": [
+      {
+        "heading": "Garaje y Accesos",
+        "items": [
+          "Acceso por Rua Piratancará y acceso controlado por Jardim Teresópolis.",
+          "191 plazas internas.",
+          "2 plazas para apartamentos de 3 suites y 3 plazas para apartamentos de 4 suites, además de 1 plaza común del condominio.",
+          "Plazas externas para visitantes.",
+          "Bicicletero.",
+          "Niveles de garaje G1 y G2, con rampa de acceso, ascensores sociales y ascensor de servicio."
+        ]
+      },
+      {
+        "heading": "Áreas Comunes y Ocio",
+        "items": [
+          "Piscina para adultos con carril de 25 m.",
+          "Piscina infantil.",
+          "Solárium y deck.",
+          "Gourmet Piscina.",
+          "Lounge exterior con cascada.",
+          "Salón de Fiestas con cocina de apoyo.",
+          "Ludoteca.",
+          "Sala de Juegos.",
+          "Cancha recreativa con área de apoyo.",
+          "Parque infantil.",
+          "Plaza arbolada con parque infantil en el entorno inmediato."
+        ]
+      },
+      {
+        "heading": "Salud y Bienestar",
+        "items": [
+          "Gimnasio desarrollado por especialista.",
+          "Piscina para adultos con carril de 25 m.",
+          "Espacios al aire libre integrados al paisajismo sensorial.",
+          "Lounge exterior con cascada e islas de vegetación iluminada."
+        ]
+      },
+      {
+        "heading": "Servicios y Comodidades",
+        "items": [
+          "Espacio de delivery y comercio electrónico.",
+          "Pet Care.",
+          "Calle segura con acceso controlado.",
+          "Plazas externas para visitantes.",
+          "Fácil acceso a restaurantes, escuelas, farmacias, hospitales y servicios esenciales."
+        ]
+      },
+      {
+        "heading": "Distribución y Estructura",
+        "items": [
+          "Torre única con 38 pisos y 2 apartamentos por piso.",
+          "Total de 76 apartamentos.",
+          "Niveles G2 y G1 destinados a garajes.",
+          "Piso completo de ocio.",
+          "Apartamentos del 1.er piso con balcones ampliados.",
+          "37 pisos tipo.",
+          "Piso de cubierta destinado a áreas técnicas."
+        ]
+      },
+      {
+        "heading": "Sostenibilidad",
+        "items": [
+          "Rejas perimetrales permeables que fortalecen la integración visual con el entorno.",
+          "Base con piedras naturales y jardines orientados hacia Rua Piratancará.",
+          "Pavimentación de la acera 100% drenante.",
+          "Dispositivos de reducción de caudal en grifos e inodoros.",
+          "Reutilización del agua de condensación de los equipos de aire acondicionado de las áreas comunes.",
+          "Generación de energía mediante fuentes renovables para parte de las áreas comunes.",
+          "Iluminación automatizada y/o con sensores en las áreas comunes.",
+          "Personalización directa con Moura Dubeux para evitar futuras reformas y residuos adicionales."
+        ]
+      },
+      {
+        "heading": "Seguridad y Tecnología",
+        "items": [
+          "Garita con vidrios blindados y esclusa.",
+          "Cerradura electrónica en la puerta social de todos los apartamentos.",
+          "Infraestructura preparada para sistemas de seguridad del condominio.",
+          "Infraestructura preparada para Wi-Fi en áreas comunes.",
+          "Calle segura con acceso controlado."
+        ]
+      },
+      {
+        "heading": "Proyecto, Concepto y Autoría",
+        "items": [
+          "Arquitectura: GAM Arquitetos.",
+          "Paisajismo: Benedito Abbud.",
+          "Interiores: Taís Abreu, Taís Abreu Arquitetura Interiores, y Luiza Buratto.",
+          "Concepto: proyecto de alto nivel en Horto Florestal, con arquitectura atemporal, volúmenes bien proporcionados, ventilación cruzada e iluminación natural.",
+          "Paisajismo sensorial con destacado conjunto acuático, decks mojados e islas de vegetación iluminada."
+        ]
+      },
+      {
+        "heading": "Diferenciales de las Unidades y Personalización",
+        "items": [
+          "6 opciones de planta para apartamentos de 3 o 4 suites.",
+          "Opciones de 2 o 3 suites con sala de TV o despacho.",
+          "Opciones con cocina integrada o ampliada y suite principal ampliada.",
+          "Unidades del 1.er piso con balcones ampliados.",
+          "Personalización mediante MD Store de revestimientos, encimeras, metales, sanitarios, acabados eléctricos y accesorios de baño."
+        ]
+      },
+      {
+        "heading": "Diferenciales de Mercado",
+        "items": [
+          "Torre única con solo 2 apartamentos por piso en Horto Florestal.",
+          "Apartamentos de 3 o 4 suites, con 6 opciones de planta y áreas de 119,06 m² a 168,92 m².",
+          "Piscina para adultos con carril de 25 m, lounge con cascada y ocio completo para todas las edades.",
+          "Proyecto firmado por GAM Arquitetos, Benedito Abbud, Taís Abreu y Luiza Buratto.",
+          "Personalización mediante MD Store y soluciones sostenibles integradas al desarrollo."
+        ]
+      }
+    ]
+  },
   "horto-essence": {
     "localizacao": "Dirección y acceso\n• Rua da Sapucaia, bloque 2, lote 22 – Horto Florestal, Salvador – BA.\nReferencias y entorno\n• Entorno y Comodidades: Ubicado en el corazón de Horto Florestal, con\n• proximidad y vistas al Parque Lucaia. Vecino a establecimientos como\nOtra información relevante\n• Almacén Pepe, Pátio Santa Luzia (Restaurante Ori y Domino's), Supermercado\n• Rede Mix, Drogasil, Hospital Aliança, Ceasa Rio Vermelho, Escuelas Bilingües\n• y Petshops (Vilacani y Mundo MPET).",
     "statusObra": "COMPLETAMENTE VENDIDO",

@@ -732,6 +732,144 @@
     ]
   },
   {
+    "slug": "elleve-horto",
+    "title": "Elleve Horto",
+    "construtora": "Moura Dubeux",
+    "localizacao": "Endereço e acessos\n• Rua Piratancará – Horto Florestal, Salvador – BA.\n• Acesso pela Rua Piratancará e acesso controlado pelo Jardim Teresópolis.\nReferências e entorno\n• Localizado em um dos pontos mais valorizados do Horto Florestal, próximo ao Parque da Cidade, Hospital Aliança, Hospital Mater Dei, Centro Médico Salvador, Horto Office e Horto Empresarial.\n• Fácil acesso pelas avenidas Juracy Magalhães Júnior, Vasco da Gama e Antônio Carlos Magalhães.",
+    "statusObra": "Conclusão de Obra: JANEIRO/2030",
+    "metragens": "Terreno e áreas gerais\n• Área total do terreno: 2.508,64 m².\n• Piscina adulto com raia de 25 metros.\nÁreas privativas das unidades\n• Coluna 01 – 3 suítes: 119,06 m², com 2 vagas de garagem.\n• Coluna 02 – 4 suítes: 150,54 m², com 3 vagas de garagem.\n• 1º pavimento – Coluna 01, com varanda ampliada: 141,04 m².\n• 1º pavimento – Coluna 02, com varanda ampliada: 168,92 m².",
+    "tipologia": "Produto e configuração\n• Empreendimento residencial de alto padrão.\n• Torre única com 38 pavimentos e 2 apartamentos por andar.\n• Total de 76 apartamentos.\n• Tipologias de 3 suítes e 4 suítes.\n• 6 opções de planta.",
+    "description": "Vagas, garagem e acessos\n• 191 vagas internas, vagas externas para visitantes e bicicletário.\n• 2 vagas para apartamentos de 3 suítes e 3 vagas para apartamentos de 4 suítes, além de 1 vaga condominial.\nLazer e áreas comuns\n• Piscinas adulto com raia de 25 m e infantil, solário, deck, Gourmet Piscina, lounge externo com cascata, academia, Salão de Festas, Brinquedoteca, Sala de Jogos, quadra recreativa e parque infantil.\nServiços, segurança e tecnologia\n• Espaço delivery e e-commerce, Pet Care, guarita com vidros blindados e clausura, fechadura eletrônica e infraestrutura seca para segurança e Wi-Fi nas áreas comuns.\nSustentabilidade\n• Calçada 100% drenante, soluções de economia de água e energia, reutilização de água de condensação e geração de energia renovável para parte das áreas comuns.\nProjeto e personalização\n• Arquitetura da GAM Arquitetos, paisagismo de Benedito Abbud e interiores de Taís Abreu e Luiza Buratto.\n• 6 opções de planta e personalização via MD Store.",
+    "heroImage": "/images/empreendimentos/elleve-horto/01.jpg",
+    "images": [
+      "/images/empreendimentos/elleve-horto/01.jpg",
+      "/images/empreendimentos/elleve-horto/02.jpg",
+      "/images/empreendimentos/elleve-horto/03.jpg",
+      "/images/empreendimentos/elleve-horto/04.jpg",
+      "/images/empreendimentos/elleve-horto/05.jpg",
+      "/images/empreendimentos/elleve-horto/06.jpg",
+      "/images/empreendimentos/elleve-horto/07.jpg",
+      "/images/empreendimentos/elleve-horto/08.jpg",
+      "/images/empreendimentos/elleve-horto/09.jpg",
+      "/images/empreendimentos/elleve-horto/10.jpg",
+      "/images/empreendimentos/elleve-horto/11.jpg",
+      "/images/empreendimentos/elleve-horto/12.jpg"
+    ],
+    "sections": [
+      {
+        "heading": "Vagas e Acessos",
+        "items": [
+          "Acesso pela Rua Piratancará e acesso controlado pelo Jardim Teresópolis.",
+          "191 vagas internas.",
+          "2 vagas para apartamentos de 3 suítes e 3 vagas para apartamentos de 4 suítes, além de 1 vaga condominial.",
+          "Vagas externas para visitantes.",
+          "Bicicletário.",
+          "Pavimentos de garagem G1 e G2, com rampa de acesso, elevadores sociais e elevador de serviço."
+        ]
+      },
+      {
+        "heading": "Áreas Comuns e Lazer",
+        "items": [
+          "Piscina adulto com raia de 25 m.",
+          "Piscina infantil.",
+          "Solário e deck.",
+          "Gourmet Piscina.",
+          "Lounge externo com cascata.",
+          "Salão de Festas com copa.",
+          "Brinquedoteca.",
+          "Sala de Jogos.",
+          "Quadra recreativa com apoio de quadra.",
+          "Parque infantil.",
+          "Praça arborizada com parque infantil no entorno imediato."
+        ]
+      },
+      {
+        "heading": "Saúde e Bem-Estar",
+        "items": [
+          "Academia desenvolvida por especialista.",
+          "Piscina adulto com raia de 25 m.",
+          "Espaços ao ar livre integrados ao paisagismo sensorial.",
+          "Lounge externo com cascata e ilhas de vegetação iluminada."
+        ]
+      },
+      {
+        "heading": "Serviços e Conveniências",
+        "items": [
+          "Espaço delivery e e-commerce.",
+          "Pet Care.",
+          "Rua segura com controle de acesso.",
+          "Vagas externas para visitantes.",
+          "Fácil acesso a restaurantes, escolas, farmácias, hospitais e serviços essenciais."
+        ]
+      },
+      {
+        "heading": "Distribuição e Estrutura",
+        "items": [
+          "Torre única com 38 pavimentos e 2 apartamentos por andar.",
+          "Total de 76 apartamentos.",
+          "Pavimentos G2 e G1 destinados às garagens.",
+          "Pavimento de lazer completo.",
+          "1º pavimento com apartamentos de varanda ampliada.",
+          "37 pavimentos tipo.",
+          "Pavimento de cobertura destinado às áreas técnicas."
+        ]
+      },
+      {
+        "heading": "Sustentabilidade",
+        "items": [
+          "Gradis de fechamento com permeabilidade visual e integração com o entorno.",
+          "Embasamento com pedras naturais e jardins voltados para a Rua Piratancará.",
+          "Pavimentação 100% drenante na calçada.",
+          "Dispositivos de redução de vazão em torneiras e bacias sanitárias.",
+          "Reutilização da água de condensação dos aparelhos de ar-condicionado das áreas comuns.",
+          "Geração de energia por fontes renováveis para parte das áreas comuns.",
+          "Iluminação automatizada e/ou com sensores nas áreas comuns.",
+          "Personalização direta com a Moura Dubeux para evitar reformas futuras e resíduos adicionais."
+        ]
+      },
+      {
+        "heading": "Segurança e Tecnologia",
+        "items": [
+          "Guarita com vidros blindados e clausura.",
+          "Fechadura eletrônica na porta social dos apartamentos.",
+          "Infraestrutura seca para instalação de segurança condominial.",
+          "Infraestrutura seca para Wi-Fi nas áreas comuns.",
+          "Rua segura com controle de acesso."
+        ]
+      },
+      {
+        "heading": "Projeto, Conceito e Autoria",
+        "items": [
+          "Arquitetura: GAM Arquitetos.",
+          "Paisagismo: Benedito Abbud.",
+          "Ambientação e Interiores: Taís Abreu, Taís Abreu Arquitetura Interiores, e Luiza Buratto.",
+          "Conceito: projeto de alto padrão no Horto Florestal, com linguagem arquitetônica atemporal, volumes bem proporcionados, ventilação cruzada e iluminação natural.",
+          "Paisagismo sensorial com conjunto aquático de destaque, decks molhados e ilhas de vegetação iluminada."
+        ]
+      },
+      {
+        "heading": "Diferenciais das Unidades e Personalização",
+        "items": [
+          "6 opções de planta para apartamentos de 3 ou 4 suítes.",
+          "Opções de 2 ou 3 suítes com sala de TV ou gabinete.",
+          "Opções com cozinha integrada ou ampliada e suíte master ampliada.",
+          "Unidades do 1º pavimento com varanda ampliada.",
+          "Personalização via MD Store de revestimentos, bancadas, metais, louças, acabamentos elétricos e acessórios para banheiro."
+        ]
+      },
+      {
+        "heading": "Diferenciais de Mercado",
+        "items": [
+          "Torre única com apenas 2 apartamentos por andar, no Horto Florestal.",
+          "Apartamentos de 3 ou 4 suítes, com 6 opções de planta e áreas de 119,06 m² a 168,92 m².",
+          "Piscina adulto com raia de 25 m, lounge com cascata e lazer completo para todas as faixas etárias.",
+          "Projeto assinado por GAM Arquitetos, Benedito Abbud, Taís Abreu e Luiza Buratto.",
+          "Personalização via MD Store e soluções sustentáveis integradas ao empreendimento."
+        ]
+      }
+    ]
+  },
+  {
     "slug": "horto-essence",
     "title": "Horto Essence",
     "construtora": "Moura Dubeux",
