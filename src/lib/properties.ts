@@ -31,6 +31,7 @@ export interface Empreendimento {
   studio?: boolean;
   statusClassifications?: StatusClassification[];
   heroImage?: string;
+  heroImageMobile?: string;
   images: string[];
   videos?: VideoBlock[];
   sections?: SectionBlock[];

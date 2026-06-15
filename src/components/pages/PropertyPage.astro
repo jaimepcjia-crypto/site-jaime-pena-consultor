@@ -25,6 +25,7 @@ const e = getEmpreendimento(slug, lang)!;
 const statuses = statusBadgesFor(slug, lang);
 const local = shortLocationFor(slug);
 const heroImg = e.heroImage ?? e.images[0];
+const heroImgMobile = e.heroImageMobile ?? heroImg;
 const galleryImages = e.images;
 const others = getEmpreendimentos(lang).filter((x) => x.slug !== e.slug).slice(0, 3);
 
@@ -63,7 +64,10 @@ const difMercado = findSection(sections, 'Diferenciais de Mercado');
   <!-- HERO -->
   <section class="relative h-[85vh] min-h-[600px] w-full overflow-hidden bg-ink">
     <div class="absolute inset-0">
-      <img src={heroImg} alt={e.title} class="w-full h-full object-cover opacity-80" loading="eager" fetchpriority="high" />
+      <picture class="block h-full w-full">
+        <source media="(max-width: 767px)" srcset={heroImgMobile} />
+        <img src={heroImg} alt={e.title} class="w-full h-full object-cover opacity-80" loading="eager" fetchpriority="high" />
+      </picture>
     </div>
     <div class="absolute inset-0 bg-gradient-to-b from-ink/30 via-ink/20 to-ink/85"></div>
 
