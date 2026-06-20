@@ -13,16 +13,11 @@ const t = useTranslations(lang);
 const statuses = statusBadgesFor(e.slug, lang);
 const local = shortLocationFor(e.slug);
 const href = localizePath(`/empreendimento/${e.slug}/`, lang);
+const img = e.heroImage ?? e.images?.[0];
 
+// Acento dourado para "Últimas Unidades"; demais em creme sobre a foto.
 const toneClass = (tone: (typeof statuses)[number]['tone']) =>
-  tone === 'ready' ? 'text-emerald-700' :
-  tone === 'available' ? 'text-gold-700' :
-  tone === 'sold' ? 'text-ink-500' :
-  tone === 'building' ? 'text-gold-600' :
-  'text-ink-500';
-
-const words = e.title.split(/\s+/);
-const baseDelay = (index % 6) * 60;
+  tone === 'available' ? 'text-gold-300' : 'text-cream-50/90';
 
 // Tipologias de quartos (ex.: "Studio · 1 · 2 quartos")
 const quartos = e.quartos ?? [];
@@ -34,152 +29,86 @@ const quartosWord = quartos.length === 1 && quartos[0] === 1 ? t('card_quarto') 
 const quartosLabel = quartosParts.length
   ? `${quartosParts.join(' · ')}${quartos.length ? ` ${quartosWord}` : ''}`
   : '';
+
+const baseDelay = (index % 10) * 50;
 ---
 
 <a
   href={href}
-  class="reveal property-card group relative block bg-cream-50 overflow-hidden"
+  class="reveal property-card group relative block overflow-hidden bg-ink-900"
   style={`--base:${baseDelay}ms`}
 >
-  <!-- Pulsing gold accent line (top) -->
-  <span class="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-gold to-transparent animate-pulse-line"></span>
-
-  <!-- Hover wash -->
-  <span class="absolute inset-0 bg-gradient-to-b from-transparent to-cream-200/40 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></span>
-
-  <!-- Content — shorter vertical aspect -->
-  <div class="relative aspect-[4/3] sm:aspect-[5/4] md:aspect-[4/3] flex flex-col px-5 sm:px-6 md:px-7 py-5 sm:py-6 md:py-7">
-
-    <!-- TOP -->
-    <div class="space-y-2.5">
-      <div class="flex flex-wrap gap-x-3 gap-y-2">
-        {statuses.map((status) => (
-          <span class={`bloom-fade inline-block text-[10px] uppercase tracking-widest font-medium border-b border-current pb-1 ${toneClass(status.tone)}`} style="--bloom-d:80ms">
-            {status.label}
-          </span>
-        ))}
-      </div>
-      <p class="bloom-fade eyebrow" style="--bloom-d:160ms">{local} · Salvador</p>
-    </div>
-
-    <!-- CENTER: bloom-from-dot title -->
-    <div class="flex-1 flex items-center">
-      <h3 class="font-serif text-[clamp(1.4rem,3vw,2.2rem)] leading-[0.98] tracking-tight text-ink select-none">
-        {words.map((word, wi) => {
-          const wordStartDelay = wi * 90;
-          return (
-            <span class="block">
-              {word.split('').map((ch, ci) => (
-                <span
-                  class="bloom-char inline-block"
-                  style={`--bloom-d:${260 + wordStartDelay + ci * 45}ms`}
-                >{ch}</span>
-              ))}
-              {wi < words.length - 1 && <span class="inline-block w-[0.25em]"></span>}
-            </span>
-          );
-        })}
-      </h3>
-    </div>
-
-    <!-- TIPOLOGIAS (quartos) -->
-    {quartosLabel && (
-      <div class="bloom-fade mb-4" style="--bloom-d:1000ms">
-        <span class="block h-px w-6 bg-gold/50 mb-2.5"></span>
-        <span class="text-[11px] uppercase tracking-widest text-gold-700 font-medium">{quartosLabel}</span>
-      </div>
+  <!-- IMAGEM -->
+  <div class="img-zoom-wrap absolute inset-0">
+    {img && (
+      <img
+        src={img}
+        alt={`${e.title} — ${local}, Salvador`}
+        loading="lazy"
+        decoding="async"
+        class="w-full h-full object-cover"
+      />
     )}
+  </div>
 
-    <!-- BOTTOM -->
-    <div class="bloom-fade flex items-center gap-3 text-[11px] uppercase tracking-widest text-ink-500" style="--bloom-d:1100ms">
-      <span class="font-medium group-hover:text-ink transition-colors">{t('card_conhecer')}</span>
-      <span class="relative block h-px w-10 bg-ink-500/40 overflow-hidden">
-        <span class="absolute inset-y-0 left-0 w-full bg-gold origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-700 ease-out"></span>
-      </span>
-      <span class="opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500 text-gold">→</span>
+  <!-- Gradiente para legibilidade -->
+  <span class="absolute inset-0 bg-gradient-to-t from-ink/85 via-ink/25 to-ink/5 pointer-events-none"></span>
+
+  <!-- Conteúdo sobre a foto -->
+  <div class="relative aspect-[4/5] flex flex-col justify-between p-3.5 sm:p-4 md:p-5">
+
+    <!-- TOPO: status -->
+    <div class="flex flex-wrap gap-x-2.5 gap-y-1.5">
+      {statuses.map((status) => (
+        <span class={`inline-block text-[9px] sm:text-[10px] uppercase tracking-widest font-medium px-2 py-1 bg-ink/45 backdrop-blur-sm ${toneClass(status.tone)}`}>
+          {status.label}
+        </span>
+      ))}
     </div>
 
-    <!-- Corner marks (more visible) -->
-    <span class="absolute top-3 right-3 w-3 h-3 border-t-2 border-r-2 border-gold/60 group-hover:border-gold transition-colors duration-500"></span>
-    <span class="absolute bottom-3 left-3 w-3 h-3 border-b-2 border-l-2 border-gold/60 group-hover:border-gold transition-colors duration-500"></span>
+    <!-- RODAPÉ: local · título · quartos -->
+    <div>
+      <p class="text-[9px] sm:text-[10px] uppercase tracking-widest text-cream-50/70 font-medium mb-1.5">
+        {local} · Salvador
+      </p>
+      <h3 class="font-serif text-cream-50 leading-[1.05] tracking-tight text-[clamp(1rem,3.4vw,1.45rem)] line-clamp-2">
+        {e.title}
+      </h3>
+
+      <span class="block h-px w-7 bg-gold/60 mt-2.5 mb-2 group-hover:w-12 transition-[width] duration-500"></span>
+
+      <div class="flex items-center justify-between gap-2">
+        {quartosLabel && (
+          <span class="text-[10px] sm:text-[11px] uppercase tracking-widest text-gold-300 font-medium">
+            {quartosLabel}
+          </span>
+        )}
+        <span class="ml-auto text-gold opacity-0 -translate-x-1.5 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-500" aria-hidden="true">→</span>
+      </div>
+    </div>
   </div>
 </a>
 
 <style>
-  /* STRONGER BORDER — visible in both light/dark backgrounds */
   .property-card {
-    border: 2px solid rgba(10, 10, 10, 0.18);
-    box-shadow: 0 1px 0 rgba(201,169,97,0.15);
-    transition: border-color 0.5s ease, transform 0.45s ease, box-shadow 0.5s ease;
+    border: 1px solid rgba(201, 169, 97, 0.18);
+    transition: transform 0.45s ease, box-shadow 0.5s ease, border-color 0.5s ease;
   }
   .property-card:hover {
-    border-color: #C9A961; /* solid gold on hover */
-    transform: translateY(-4px);
+    transform: translateY(-3px);
+    border-color: rgba(201, 169, 97, 0.85);
     box-shadow:
-      0 18px 40px -22px rgba(10, 10, 10, 0.4),
-      0 0 0 1px rgba(201, 169, 97, 0.5),
-      0 1px 0 rgba(201, 169, 97, 0.4);
+      0 18px 38px -22px rgba(10, 10, 10, 0.55),
+      0 0 0 1px rgba(201, 169, 97, 0.45);
   }
 
-  /* Pulsing gold accent line */
-  @keyframes pulseLineAnim {
-    0%, 100% { opacity: 0.35; transform: scaleX(0.6); }
-    50%      { opacity: 1;    transform: scaleX(1); }
-  }
-  .animate-pulse-line {
-    animation: pulseLineAnim 4.8s ease-in-out infinite;
-    transform-origin: center;
-  }
-  .property-card:hover .animate-pulse-line { animation-duration: 1.6s; }
-
-  /* BLOOM-FROM-DOT — 2s reveal */
-  .bloom-char {
-    opacity: 0;
-    transform: scale(0.04);
-    filter: blur(6px);
-    transform-origin: center 60%;
-    transition:
-      opacity 1.2s cubic-bezier(0.22, 1, 0.36, 1),
-      transform 2s cubic-bezier(0.16, 1, 0.28, 1),
-      filter 1.6s ease-out;
-    transition-delay: calc(var(--base, 0ms) + var(--bloom-d, 0ms));
-    will-change: transform, opacity, filter;
-  }
-  .property-card.is-visible .bloom-char {
-    opacity: 1;
-    transform: scale(1);
-    filter: blur(0);
-  }
-
-  .bloom-fade {
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 1s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
-    transition-delay: calc(var(--base, 0ms) + var(--bloom-d, 0ms));
-  }
-  .property-card.is-visible .bloom-fade {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* Subtle breath after bloom on hover */
-  @keyframes letterBreath {
-    0%, 100% { transform: scale(1) translateY(0); }
-    50%      { transform: scale(1.015) translateY(-0.5px); }
-  }
-  .property-card:hover.is-visible .bloom-char {
-    animation: letterBreath 1.8s ease-in-out infinite;
-    animation-delay: calc(var(--bloom-d, 0ms) * 0.3);
-  }
-
-  /* Mobile: even shorter and tighter padding */
-  @media (max-width: 639px) {
-    .property-card {
-      border-width: 1.5px;
-    }
-  }
+  /* Zoom da foto no hover do card (o :hover do wrap nao dispara pois fica coberto) */
+  .property-card:hover .img-zoom-wrap img { transform: scale(1.06); }
 
   @media (prefers-reduced-motion: reduce) {
-    .bloom-char, .bloom-fade, .animate-pulse-line { animation: none !important; transition: none !important; opacity: 1 !important; transform: none !important; filter: none !important; }
+    .property-card,
+    .property-card:hover { transform: none; transition: none; }
+    .img-zoom-wrap img,
+    .property-card:hover .img-zoom-wrap img { transition: none; transform: none; }
   }
 </style>
