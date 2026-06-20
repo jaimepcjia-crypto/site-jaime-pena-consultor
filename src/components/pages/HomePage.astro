@@ -4,7 +4,7 @@ import PropertyCard from '../PropertyCard.astro';
 import LeadForm from '../LeadForm.astro';
 import LangSwitcher from '../LangSwitcher.astro';
 import { getEmpreendimentos } from '../../lib/properties';
-import { consultor, whatsappUrl } from '../../config/consultor';
+import { consultor, whatsappUrl, phoneDisplay } from '../../config/consultor';
 import { useTranslations, type Lang } from '../../i18n/utils';
 
 interface Props {
@@ -102,14 +102,8 @@ const nowrap = lang === 'pt' ? 'whitespace-nowrap' : '';
     </div>
   </section>
 
-  <!-- ─── SEPARATOR 03 ─── -->
-  <div class="separator-band bg-cream-100">
-    <span class="separator-line"></span>
-    <span class="separator-num">03 · {t('label_apresentacao')}</span>
-  </div>
-
   <!-- ════════════ APRESENTAÇÃO + SOBRE (mesclado) ════════════ -->
-  <section id="sobre" class="py-20 md:py-28 bg-cream-100">
+  <section id="sobre" class="pt-12 md:pt-16 pb-20 md:pb-28 bg-cream-100">
     <div class="container-x grid lg:grid-cols-12 gap-12 lg:gap-20 items-start">
       <!-- Headline + credenciais -->
       <div class="lg:col-span-5 reveal">
@@ -167,14 +161,8 @@ const nowrap = lang === 'pt' ? 'whitespace-nowrap' : '';
     </div>
   </section>
 
-  <!-- ─── SEPARATOR 04 ─── -->
-  <div class="separator-band bg-ink text-cream-50/55">
-    <span class="separator-line gold"></span>
-    <span class="separator-num">04 · {t('nav_contato')}</span>
-  </div>
-
   <!-- ════════════════════════ CONTATO ════════════════════════ -->
-  <section id="contato" class="py-24 md:py-32 bg-ink text-cream-50">
+  <section id="contato" class="pt-12 md:pt-16 pb-24 md:pb-32 bg-ink text-cream-50">
     <div class="container-x grid lg:grid-cols-12 gap-12 lg:gap-20">
       <div class="lg:col-span-5 reveal">
         <span class="block h-px w-12 bg-gold mb-8"></span>
@@ -189,7 +177,7 @@ const nowrap = lang === 'pt' ? 'whitespace-nowrap' : '';
           <a href={whatsappUrl(lang)} target="_blank" rel="noopener" class="contact-item flex border-l-2 border-gold pl-5 py-1 hover:border-gold-400 transition-colors group">
             <span>
               <span class="block text-[10px] uppercase tracking-[0.3em] text-cream-50/55 mb-1">{t('label_whatsapp')}</span>
-              <span class="block text-lg group-hover:text-gold transition-colors">{consultor.whatsappFormatado}</span>
+              <span class="block text-lg group-hover:text-gold transition-colors">{phoneDisplay(lang)}</span>
             </span>
           </a>
           <a href={`mailto:${consultor.email}`} class="contact-item flex border-l-2 border-gold pl-5 py-1 hover:border-gold-400 transition-colors group">
@@ -283,38 +271,6 @@ const nowrap = lang === 'pt' ? 'whitespace-nowrap' : '';
       margin-top: 2rem;
       white-space: nowrap;
     }
-  }
-
-  /* ── SEPARATOR BAND ─────────────────────────────── */
-  .separator-band {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    padding: 2.5rem 1rem;
-  }
-  .separator-num {
-    font-family: 'Inter', system-ui, sans-serif;
-    text-transform: uppercase;
-    font-size: 10px;
-    letter-spacing: 0.35em;
-    color: #A88B47;
-    font-weight: 500;
-  }
-  .separator-band.bg-ink .separator-num { color: rgba(251, 250, 246, 0.55); }
-  .separator-line {
-    display: block;
-    height: 1px;
-    width: 80px;
-    background-color: rgba(201, 169, 97, 0.4);
-  }
-  .separator-line.gold {
-    background: linear-gradient(to right, transparent, rgba(201, 169, 97, 0.7), transparent);
-  }
-  @media (min-width: 768px) {
-    .separator-band { padding: 3.5rem 1rem; }
-    .separator-line { width: 120px; }
   }
 
   /* ── GLOBAL MICRO-INTERACTIONS (somente nesta página) ── */

@@ -84,7 +84,7 @@ const baseDelay = (index % 10) * 50;
 
       <div class="flex items-center justify-between gap-2">
         {quartosLabel && (
-          <span class="inline-block bg-white text-ink font-semibold text-[10px] sm:text-[11px] uppercase tracking-widest leading-none px-1.5 py-1">
+          <span class="quartos-chip inline-block whitespace-nowrap bg-white text-ink font-semibold uppercase leading-none px-1.5 py-1">
             {quartosLabel}
           </span>
         )}
@@ -98,6 +98,13 @@ const baseDelay = (index % 10) * 50;
   .property-card {
     border: 1px solid rgba(201, 169, 97, 0.18);
     transition: transform 0.45s ease, box-shadow 0.5s ease, border-color 0.5s ease;
+    container-type: inline-size; /* permite dimensionar a tipologia pela largura do card */
+  }
+
+  /* Tipologia: sempre em UMA linha; fonte escala com a largura do card */
+  .quartos-chip {
+    font-size: clamp(0.5rem, 4.8cqi, 0.7rem);
+    letter-spacing: 0.03em;
   }
   .property-card:hover {
     transform: translateY(-3px);

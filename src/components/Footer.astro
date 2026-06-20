@@ -1,5 +1,5 @@
 ---
-import { consultor, whatsappUrl } from '../config/consultor';
+import { consultor, whatsappUrl, phoneDisplay } from '../config/consultor';
 import { useTranslations, localizePath, type Lang } from '../i18n/utils';
 
 interface Props {
@@ -33,7 +33,7 @@ const home = localizePath('/', lang);
       <ul class="space-y-3 text-sm">
         <li>
           <a href={whatsappUrl(lang)} target="_blank" rel="noopener" class="hover:text-gold transition-colors">
-            WhatsApp · {consultor.whatsappFormatado}
+            WhatsApp · {phoneDisplay(lang)}
           </a>
         </li>
         <li>

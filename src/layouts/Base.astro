@@ -4,7 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import WhatsAppFloat from '../components/WhatsAppFloat.astro';
 import { consultor } from '../config/consultor';
-import { useTranslations, htmlLang, LOCALES, localizePath, type Lang } from '../i18n/utils';
+import { useTranslations, htmlLang, LOCALES, localizePath, stripLocalePath, type Lang } from '../i18n/utils';
 
 interface Props {
   title?: string;
@@ -22,10 +22,7 @@ const {
 } = Astro.props;
 
 // Canonical path = current path with the locale prefix stripped (PT form).
-let canonical = Astro.url.pathname;
-if (canonical === '/en' || canonical === '/es') canonical = '/';
-else if (canonical.startsWith('/en/') || canonical.startsWith('/es/')) canonical = canonical.slice(3);
-if (!canonical.startsWith('/')) canonical = `/${canonical}`;
+const canonical = stripLocalePath(Astro.url.pathname);
 
 const hreflangs = LOCALES.map((l) => ({
   lang: htmlLang[l],

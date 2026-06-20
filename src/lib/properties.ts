@@ -1,6 +1,7 @@
 import dataRaw from '../data/empreendimentos.json';
 import dataEn from '../data/empreendimentos.en.json';
 import dataEs from '../data/empreendimentos.es.json';
+import dataDe from '../data/empreendimentos.de.json';
 import { ui, type Lang } from '../i18n/ui';
 
 export interface SectionBlock {
@@ -50,6 +51,7 @@ const overrides: Record<Lang, Record<string, TranslatableFields>> = {
   pt: {},
   en: dataEn as Record<string, TranslatableFields>,
   es: dataEs as Record<string, TranslatableFields>,
+  de: dataDe as Record<string, TranslatableFields>,
 };
 
 /** A property merged with its locale overrides (falls back to PT per-field). */

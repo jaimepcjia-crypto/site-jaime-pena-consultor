@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import LeadForm from '../LeadForm.astro';
-import { consultor, whatsappUrl } from '../../config/consultor';
+import { consultor, whatsappUrl, phoneDisplay } from '../../config/consultor';
 import { useTranslations, localizePath, type Lang } from '../../i18n/utils';
 
 interface Props {
@@ -96,7 +96,7 @@ const difs = [
             <span class="w-10 h-10 border border-cream-50/30 group-hover:border-gold rounded-full flex items-center justify-center text-sm transition-colors">W</span>
             <span>
               <span class="block text-[10px] uppercase tracking-widest text-cream-50/50">{t('label_whatsapp')}</span>
-              <span class="block">{consultor.whatsappFormatado}</span>
+              <span class="block">{phoneDisplay(lang)}</span>
             </span>
           </a>
           <a href={`mailto:${consultor.email}`} class="flex items-center gap-4 hover:text-gold transition-colors group">

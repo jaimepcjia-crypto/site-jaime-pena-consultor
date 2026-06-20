@@ -3,7 +3,7 @@
 // intentionally NOT translated. Placeholders like {nome}/{title}/{i} are filled
 // by the consuming component.
 
-export type Lang = 'pt' | 'en' | 'es';
+export type Lang = 'pt' | 'en' | 'es' | 'de';
 
 const pt = {
   // ── Brand / Nav ───────────────────────────────────────────
@@ -489,4 +489,160 @@ const es: Record<keyof typeof pt, string> = {
   month_09: 'Septiembre', month_10: 'Octubre', month_11: 'Noviembre', month_12: 'Diciembre',
 };
 
-export const ui: Record<Lang, Record<keyof typeof pt, string>> = { pt, en, es };
+const de: Record<keyof typeof pt, string> = {
+  brand_tagline: 'Spezialist · Moura Dubeux',
+  nav_home: 'Start',
+  nav_empreendimentos: 'Immobilien',
+  nav_sobre: 'Über mich',
+  nav_contato: 'Kontakt',
+
+  footer_nav_title: 'Navigation',
+  footer_contact_title: 'Kontakt',
+  footer_rights_suffix: 'Moura Dubeux Immobilien · Salvador / BA',
+
+  whatsapp_aria: 'Mit {nome} auf WhatsApp chatten',
+
+  form_nome_label: 'Vollständiger Name',
+  form_nome_ph: 'Ihr Name',
+  form_tel_label: 'Telefon / WhatsApp',
+  form_email_label: 'E-Mail',
+  form_email_ph: 'sie@email.com',
+  form_msg_label: 'Nachricht',
+  form_msg_ph_general: 'Wie kann ich helfen?',
+  form_msg_ph_emp: 'Ich hätte gerne mehr Informationen über {emp}',
+  form_submit: 'Anfrage senden',
+
+  consultor_cargo: 'Immobilienspezialist · Moura Dubeux',
+  consultor_bio: 'Immobilienspezialist in Salvador, spezialisiert auf die Projekte von Moura Dubeux. Ich kuratiere Residenzen, die erstklassige Lage, architektonische Handschrift und nachhaltige Wertsteigerung vereinen — vom Horto Florestal bis zum Caminho das Árvores, vom Rio Vermelho bis zur Atlantikküste.',
+  consultor_bioCurta: 'Spezialist für Moura-Dubeux-Projekte in Salvador.',
+  consultor_quote: '"Die richtige Immobilie erzählt Ihre Geschichte. Meine Aufgabe ist es, sie zu finden."',
+  whatsapp_msg_default: 'Hallo Jaime, ich habe Ihre Website gesehen und hätte gerne mehr Informationen über die Projekte von Moura Dubeux.',
+  whatsapp_msg_emp: 'Hallo Jaime, ich interessiere mich für {title}. Könnten Sie mir mehr Informationen senden?',
+
+  label_apresentacao: 'Vorstellung',
+  label_portfolio: 'Portfolio',
+  label_especialista: 'Spezialist',
+  label_registro: 'Lizenz',
+  label_atuacao: 'Tätigkeitsgebiet',
+  label_diferencial: 'Vorteil',
+  label_whatsapp: 'WhatsApp',
+  label_email: 'E-Mail',
+  val_salvador_ba: 'Salvador / BA',
+  scroll: 'Scrollen',
+
+  hero_eyebrow: 'Bauträger Moura Dubeux',
+  hero_title_lead: 'Adressen, die',
+  hero_title_em: 'prägen',
+  hero_lead_pre: 'Finden Sie Ihre',
+  hero_lead_gold: 'Moura Dubeux',
+  hero_lead_post: 'Immobilie direkt beim Bauträger — mit fachkundiger Beratung, präzisen Informationen und voller Sicherheit in jeder Phase.',
+  hero_cta_primary: 'Immobilien ansehen',
+  hero_cta_secondary: 'Mit {nome} sprechen',
+
+  apres_title_l1: 'Die richtige Immobilie',
+  apres_title_l2: 'verlangt den richtigen Spezialisten.',
+  apres_p2: 'Ich arbeite Seite an Seite mit jedem Kunden, vom ersten Kontakt bis zur Schlüsselübergabe — und erläutere Grundrisse, Projekte, Zahlungsbedingungen und Personalisierungsmöglichkeiten beim Bauträger.',
+  cta_wpp: 'Auf WhatsApp schreiben',
+  apres_link_sobre: 'Mehr über {nome}',
+
+  sobre_p1: 'Betreuung mit Fokus auf fachkundige Beratung — vom ersten Briefing bis zur Schlüsselübergabe. Kuratierung von Moura-Dubeux-Projekten, Erläuterung von Grundrissen, Projekten, Zahlungsbedingungen und Personalisierungsmöglichkeiten über MD Store.',
+
+  home_dif1_t: 'Persönliche Kuratierung',
+  home_dif1_d: 'Ich kenne jedes Moura-Dubeux-Projekt in Salvador — Grundrisse, Lagen, Ausblicke und Chancen. Ich empfehle, was zu Ihrem Profil passt.',
+  home_dif2_t: 'Einfacher Zugang',
+  home_dif2_d: 'Zügige Verhandlung, Sonderkonditionen und Teilnahme am MD-Store-Programm zur Personalisierung von Grundrissen und Ausstattung.',
+  home_dif3_t: 'Begleitung von Anfang bis Ende',
+  home_dif3_d: 'Ich bin in jeder Phase dabei: Besuch im Showroom, Abschluss, Baubegleitung und Unterstützung nach der Übergabe.',
+
+  portfolio_count_suffix: 'Immobilien',
+  portfolio_title_l1: 'Die begehrtesten',
+  portfolio_title_l2: 'Adressen Salvadors.',
+  portfolio_desc: 'Jedes Projekt unten vereint architektonische Handschrift, erstklassige Lage und den Bauqualitätsstandard von Moura Dubeux. Klicken Sie auf eines, um Details zu entdecken.',
+
+  contato_title_l1: 'Lassen Sie uns',
+  contato_title_l2: 'sprechen.',
+  contato_desc: 'Füllen Sie das Formular aus oder schreiben Sie mir direkt auf WhatsApp. Ich beantworte jede Anfrage persönlich.',
+  form_box_title: 'Informationen anfragen',
+  form_box_sub: 'Antwort innerhalb von 24 Geschäftsstunden.',
+
+  card_conhecer: 'Entdecken',
+  card_quarto: 'Zimmer',
+  card_quartos: 'Zimmer',
+  card_studio: 'Studio',
+  card_and: 'und',
+
+  status_pronto: 'Bezugsfertig',
+  status_entregue: 'Übergeben',
+  status_vendido: 'Verkauft',
+  status_obras: 'Im Bau',
+  status_entrega: 'Übergabe',
+  status_ultimas_unidades: 'Letzte Einheiten',
+  status_entrega_primeiro_semestre_2031: 'Übergabe 1. Halbjahr/31',
+
+  pp_saber_mais: 'Mehr erfahren über WhatsApp →',
+  pp_quick_construtora: 'Bauträger',
+  pp_quick_local: 'Lage',
+  pp_quick_status: 'Status',
+  pp_tipologia_eyebrow: 'Typologie',
+  pp_tipologia_title: 'Produkt und Konfiguration',
+  pp_areas_eyebrow: 'Flächen',
+  pp_areas_title: 'Größen und Maße',
+  pp_vagas_title: 'Mobilität und Zugang.',
+  pp_seg_title: 'Sicherheit & Technik.',
+  pp_lazer_title_l1: 'Freizeit, durchdacht',
+  pp_lazer_title_l2: 'bis ins Detail.',
+  pp_saude_title: 'Tägliches Wohlbefinden.',
+  pp_servicos_title: 'Annehmlichkeiten, die vereinfachen.',
+  pp_videos_eyebrow: 'Videos',
+  pp_videos_title_suffix: 'in Bewegung.',
+  pp_galeria_eyebrow: 'Galerie',
+  pp_galeria_title_suffix: 'in Bildern.',
+  pp_ampliar: 'Vergrößern',
+  pp_ampliar_aria: 'Bild {i} von {title} vergrößern',
+  pp_lightbox_label: 'Vergrößertes Bild',
+  pp_lightbox_close: 'Schließen',
+  pp_lightbox_close_aria: 'Vergrößertes Bild schließen',
+  img_label: 'Bild',
+  pp_business_title: 'Geschäfte mit Meerblick.',
+  pp_distribuicao_eyebrow: 'Aufteilung',
+  pp_sustent_title: 'Gebaut, um zu bleiben — mit Verantwortung.',
+  pp_projeto_title_pre: 'Ein Projekt,',
+  pp_projeto_title_em: 'mit Handschrift.',
+  pp_difUnidades_title: 'Personalisieren Sie Ihre Wohnung.',
+  pp_local_eyebrow: 'Lage & Umgebung',
+  pp_local_title: 'Wo es liegt.',
+  pp_difMercado_l1: 'Warum gerade',
+  pp_difMercado_l2_pre: '',
+  pp_interesse_eyebrow: 'Interesse',
+  pp_interesse_title_l1: 'Interesse an',
+  pp_interesse_title_l2_pre: '',
+  pp_interesse_desc: 'Hinterlassen Sie Ihre Daten oder schreiben Sie mir direkt. Ich habe Zugang zu Grundrissen, besonderen Zahlungsbedingungen und MD-Store-Personalisierungen.',
+  pp_outros_title: 'Weitere herausragende Adressen.',
+  pp_ver_todos: 'Alle Immobilien ansehen',
+  pp_seo_specialist: 'Spezialist',
+
+  about_cta_ver: 'Immobilien ansehen',
+  about_atendimento_eyebrow: 'Betreuung',
+  about_atendimento_title: 'Spezialisierte Betreuung, vom Briefing bis zur Schlüsselübergabe.',
+  about_dif2_t: 'Direkter Zugang zum Bauträger',
+  about_form_title: 'Kontakt anfragen',
+
+  ty_eyebrow: 'Anfrage erhalten',
+  ty_title_pre: 'Danke.',
+  ty_title_em: 'Ich melde mich bald.',
+  ty_desc: 'Ihre Nachricht wurde erfolgreich gesendet. Ich melde mich persönlich innerhalb von 24 Geschäftsstunden mit allen Informationen, die Sie zur Immobilie benötigen.',
+  ty_cta: 'Schneller über WhatsApp',
+  ty_back: 'Zurück zur Startseite',
+
+  seo_title_suffix: 'Moura Dubeux Spezialist',
+  seo_about_prefix: 'Über',
+  seo_ty_prefix: 'Danke',
+  seo_ty_desc: 'Anfrage erfolgreich erhalten.',
+
+  month_01: 'Januar', month_02: 'Februar', month_03: 'März', month_04: 'April',
+  month_05: 'Mai', month_06: 'Juni', month_07: 'Juli', month_08: 'August',
+  month_09: 'September', month_10: 'Oktober', month_11: 'November', month_12: 'Dezember',
+};
+
+
+export const ui: Record<Lang, Record<keyof typeof pt, string>> = { pt, en, es, de };

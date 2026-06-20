@@ -8,6 +8,7 @@ export const consultor = {
   creci: 'CRECI-BA 13959',
   whatsapp: '5571999549495',
   whatsappFormatado: '(71) 99954-9495',
+  whatsappFormatadoIntl: '+55 71 99954-9495',
   email: 'jaime-construtora.mouradubeux@proton.me',
   cidade: 'Salvador, Bahia',
   foto: '/images/consultor/jaime-construcao.webp',
@@ -15,9 +16,19 @@ export const consultor = {
 
 /**
  * Build a wa.me URL with a locale-aware prefilled message.
+ * The wa.me link uses the full international number (55…), so the WhatsApp
+ * button works identically from any country.
  * Pass `extra` to override the default greeting (e.g. a property-specific text).
  */
 export function whatsappUrl(lang: Lang = 'pt', extra?: string) {
   const msg = extra || ui[lang].whatsapp_msg_default;
   return `https://wa.me/${consultor.whatsapp}?text=${encodeURIComponent(msg)}`;
+}
+
+/**
+ * Phone number for display. PT keeps the local Brazilian format;
+ * every other language shows the international format with +55.
+ */
+export function phoneDisplay(lang: Lang = 'pt') {
+  return lang === 'pt' ? consultor.whatsappFormatado : consultor.whatsappFormatadoIntl;
 }
