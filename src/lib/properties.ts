@@ -88,7 +88,8 @@ export function statusBadge(rawPt: string, lang: Lang = 'pt'): StatusBadge {
     const m = rawPt.match(/(JANEIRO|FEVEREIRO|MARÇO|ABRIL|MAIO|JUNHO|JULHO|AGOSTO|SETEMBRO|OUTUBRO|NOVEMBRO|DEZEMBRO)[\/\s]*(\d{2,4})/i);
     if (m) {
       const month = lang === 'pt' ? m[1] : localizeMonth(m[1], lang);
-      return { label: `${t.status_entrega} ${month}/${m[2]}`, tone: 'building' };
+      const year2 = m[2].slice(-2); // ano sempre com 2 dígitos (ex.: 2027 → 27)
+      return { label: `${t.status_entrega} ${month}/${year2}`, tone: 'building' };
     }
     return { label: t.status_obras, tone: 'building' };
   }

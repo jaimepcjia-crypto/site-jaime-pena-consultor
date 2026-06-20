@@ -107,7 +107,7 @@ const pt = {
   status_obras: 'Em Obras',
   status_entrega: 'Entrega',
   status_ultimas_unidades: 'Últimas Unidades',
-  status_entrega_primeiro_semestre_2031: 'Entrega 1º semestre/2031',
+  status_entrega_primeiro_semestre_2031: 'Entrega 1º semestre/31',
 
   // ── Property page ─────────────────────────────────────────
   pp_saber_mais: 'Saber mais via WhatsApp →',
@@ -267,7 +267,7 @@ const en: Record<keyof typeof pt, string> = {
   status_obras: 'Under Construction',
   status_entrega: 'Delivery',
   status_ultimas_unidades: 'Last Units',
-  status_entrega_primeiro_semestre_2031: 'Delivery 1st half/2031',
+  status_entrega_primeiro_semestre_2031: 'Delivery 1st half/31',
 
   pp_saber_mais: 'Learn more via WhatsApp →',
   pp_quick_construtora: 'Developer',
@@ -422,7 +422,7 @@ const es: Record<keyof typeof pt, string> = {
   status_obras: 'En Obras',
   status_entrega: 'Entrega',
   status_ultimas_unidades: 'Últimas Unidades',
-  status_entrega_primeiro_semestre_2031: 'Entrega 1.er semestre/2031',
+  status_entrega_primeiro_semestre_2031: 'Entrega 1.er semestre/31',
 
   pp_saber_mais: 'Saber más por WhatsApp →',
   pp_quick_construtora: 'Constructora',
