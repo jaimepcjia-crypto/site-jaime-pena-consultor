@@ -33,6 +33,8 @@ export interface Empreendimento {
   statusClassifications?: StatusClassification[];
   heroImage?: string;
   heroImageMobile?: string;
+  /** Social-share image (og:image). Use when heroImage is .webp (poor WhatsApp support). Falls back to heroImage. */
+  ogImage?: string;
   images: string[];
   videos?: VideoBlock[];
   sections?: SectionBlock[];

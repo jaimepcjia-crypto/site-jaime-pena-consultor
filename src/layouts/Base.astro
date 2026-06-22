@@ -13,7 +13,7 @@ interface Props {
   lang?: Lang;
 }
 
-const { lang = 'pt', ogImage = '/images/consultor/jaime-construcao.webp' } = Astro.props;
+const { lang = 'pt', ogImage = '/images/og/home.jpg' } = Astro.props;
 const t = useTranslations(lang);
 
 const {
@@ -30,6 +30,9 @@ const hreflangs = LOCALES.map((l) => ({
 }));
 const xDefault = new URL(localizePath(canonical, 'pt'), Astro.site).href;
 const canonicalUrl = new URL(localizePath(canonical, lang), Astro.site).href;
+
+// og:image must be an absolute URL for WhatsApp/social previews to work reliably.
+const ogImageUrl = new URL(ogImage, Astro.site).href;
 ---
 
 <!doctype html>
@@ -42,9 +45,17 @@ const canonicalUrl = new URL(localizePath(canonical, lang), Astro.site).href;
     <meta name="description" content={description} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta property="og:image" content={ogImage} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:secure_url" content={ogImageUrl} />
+    <meta property="og:image:alt" content={title} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:site_name" content={consultor.nome} />
     <meta property="og:locale" content={htmlLang[lang]} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
     <meta name="theme-color" content="#0A0A0A" />
     <link rel="canonical" href={canonicalUrl} />
     {hreflangs.map((h) => <link rel="alternate" hreflang={h.lang} href={h.href} />)}

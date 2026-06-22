@@ -26,6 +26,8 @@ const statuses = statusBadgesFor(slug, lang);
 const local = shortLocationFor(slug);
 const heroImg = e.heroImage ?? e.images[0];
 const heroImgMobile = e.heroImageMobile ?? heroImg;
+// og:image: prefer an explicit jpg (set when heroImage is .webp) for WhatsApp compatibility.
+const ogImg = e.ogImage ?? heroImg;
 const galleryImages = e.images;
 const others = getEmpreendimentos(lang).filter((x) => x.slug !== e.slug).slice(0, 3);
 
@@ -59,7 +61,7 @@ const difMercado = findSection(sections, 'Diferenciais de Mercado');
   lang={lang}
   title={`${e.title} · Moura Dubeux · ${local}`}
   description={`${e.title} — ${local}, Salvador. ${e.statusObra}. ${t('pp_seo_specialist')}: ${consultor.nome}.`}
-  ogImage={heroImg}
+  ogImage={ogImg}
 >
   <!-- HERO -->
   <section class="relative h-[85vh] min-h-[600px] w-full overflow-hidden bg-ink">
