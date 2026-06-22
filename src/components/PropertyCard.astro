@@ -13,7 +13,9 @@ const t = useTranslations(lang);
 const statuses = statusBadgesFor(e.slug, lang);
 const local = shortLocationFor(e.slug);
 const href = localizePath(`/empreendimento/${e.slug}/`, lang);
-const img = e.heroImage ?? e.images?.[0];
+// Card é sempre 4:5 (retrato): usa a imagem vertical limpa (heroImageMobile),
+// evitando o texto de marketing embutido nos renders landscape (heroImage).
+const img = e.heroImageMobile ?? e.heroImage ?? e.images?.[0];
 
 // Status para a tarja: oculta o badge "Últimas Unidades" (tone 'available'),
 // mantendo só a informação de entrega/obra. Ex.: "Entrega 1º semestre/31".
