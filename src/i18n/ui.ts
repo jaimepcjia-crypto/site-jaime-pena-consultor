@@ -99,6 +99,7 @@ const pt = {
   card_quartos: 'quartos',
   card_studio: 'Studio',
   card_and: 'e',
+  card_label_bairro: 'Bairro',
 
   // ── Status badge ──────────────────────────────────────────
   status_pronto: 'Pronto para Morar',
@@ -260,6 +261,7 @@ const en: Record<keyof typeof pt, string> = {
   card_quartos: 'bedrooms',
   card_studio: 'Studio',
   card_and: 'and',
+  card_label_bairro: 'Neighborhood',
 
   status_pronto: 'Move-in Ready',
   status_entregue: 'Delivered',
@@ -415,6 +417,7 @@ const es: Record<keyof typeof pt, string> = {
   card_quartos: 'dormitorios',
   card_studio: 'Studio',
   card_and: 'y',
+  card_label_bairro: 'Barrio',
 
   status_pronto: 'Listo para Habitar',
   status_entregue: 'Entregado',
@@ -570,6 +573,7 @@ const de: Record<keyof typeof pt, string> = {
   card_quartos: 'Zimmer',
   card_studio: 'Studio',
   card_and: 'und',
+  card_label_bairro: 'Stadtteil',
 
   status_pronto: 'Bezugsfertig',
   status_entregue: 'Übergeben',
