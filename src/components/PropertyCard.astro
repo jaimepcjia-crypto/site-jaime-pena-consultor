@@ -15,8 +15,12 @@ const local = shortLocationFor(e.slug);
 const href = localizePath(`/empreendimento/${e.slug}/`, lang);
 const img = e.heroImage ?? e.images?.[0];
 
-// Status (pode ter 1 ou 2 badges, ex.: "Últimas Unidades · Entrega 1º semestre/31").
-const statusLabel = statuses.map((s) => s.label).join(' · ');
+// Status para a tarja: oculta o badge "Últimas Unidades" (tone 'available'),
+// mantendo só a informação de entrega/obra. Ex.: "Entrega 1º semestre/31".
+const statusLabel = statuses
+  .filter((s) => s.tone !== 'available')
+  .map((s) => s.label)
+  .join(' · ');
 
 // Tipologias de quartos (ex.: "Studio, 1 e 2 quartos" / "3 e 4 quartos")
 const quartos = e.quartos ?? [];
