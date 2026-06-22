@@ -13,9 +13,13 @@ const t = useTranslations(lang);
 const statuses = statusBadgesFor(e.slug, lang);
 const local = shortLocationFor(e.slug);
 const href = localizePath(`/empreendimento/${e.slug}/`, lang);
-// Card é sempre 4:5 (retrato): usa a imagem vertical limpa (heroImageMobile),
-// evitando o texto de marketing embutido nos renders landscape (heroImage).
-const img = e.heroImageMobile ?? e.heroImage ?? e.images?.[0];
+// Card é sempre 4:5 (retrato). Prioriza um cardImage curado; senão a imagem
+// vertical limpa (heroImageMobile), evitando texto embutido nos renders landscape.
+const img = e.cardImage ?? e.heroImageMobile ?? e.heroImage ?? e.images?.[0];
+// object-position opcional para manter texto/selo embutido fora do recorte 4:5.
+const imgPos = e.cardImagePosition;
+// Bairro: permite override por imóvel (ex.: argumento de venda).
+const cardLocal = e.cardLocal ?? local;
 
 // Status para a tarja: oculta o badge "Últimas Unidades" (tone 'available'),
 // mantendo só a informação de entrega/obra. Ex.: "Entrega 1º semestre/31".
@@ -58,6 +62,7 @@ const baseDelay = (index % 10) * 50;
           loading="lazy"
           decoding="async"
           class="w-full h-full object-cover"
+          style={imgPos ? `object-position:${imgPos}` : undefined}
         />
       )}
     </div>
@@ -84,10 +89,10 @@ const baseDelay = (index % 10) * 50;
         <span class="card-info-value">{quartosLabel}</span>
       </div>
     )}
-    {local && (
+    {cardLocal && (
       <div class="card-info-row">
         <span class="card-info-label">{t('card_label_bairro')}</span>
-        <span class="card-info-value">{local}</span>
+        <span class="card-info-value">{cardLocal}</span>
       </div>
     )}
   </div>

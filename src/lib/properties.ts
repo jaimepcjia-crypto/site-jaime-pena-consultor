@@ -33,6 +33,12 @@ export interface Empreendimento {
   statusClassifications?: StatusClassification[];
   heroImage?: string;
   heroImageMobile?: string;
+  /** Card-specific image (takes priority in PropertyCard). Use an expressive, text-free crop. */
+  cardImage?: string;
+  /** CSS object-position for the card image (e.g. 'right', 'left') to keep baked-in text out of the 4:5 crop. */
+  cardImagePosition?: string;
+  /** Overrides the neighborhood line shown in the card panel (e.g. a selling point). Translatable. */
+  cardLocal?: string;
   /** Social-share image (og:image). Use when heroImage is .webp (poor WhatsApp support). Falls back to heroImage. */
   ogImage?: string;
   images: string[];
@@ -42,7 +48,7 @@ export interface Empreendimento {
 
 /** Fields that get translated per locale (keyed by slug in the .en/.es JSON). */
 type TranslatableFields = Partial<
-  Pick<Empreendimento, 'localizacao' | 'statusObra' | 'metragens' | 'tipologia' | 'description' | 'sections'>
+  Pick<Empreendimento, 'localizacao' | 'statusObra' | 'metragens' | 'tipologia' | 'description' | 'sections' | 'cardLocal'>
 >;
 
 // PT is the master dataset (full structure incl. images/videos/proper nouns).
