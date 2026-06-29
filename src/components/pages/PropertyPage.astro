@@ -288,9 +288,6 @@ const difMercado = findSection(sections, 'Diferenciais de Mercado');
                 aria-label={t('pp_ampliar_aria').replace('{i}', String(i + 1)).replace('{title}', e.title)}
               >
                 <img src={img} alt={`${e.title} ${i + 1}`} loading="lazy" decoding="async" class="w-full h-full object-contain p-1.5 md:p-2" />
-                <span class="pointer-events-none absolute left-3 top-3 bg-cream-50/85 px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-ink-700 shadow-sm backdrop-blur-sm">
-                  {t('book_page_label')} {String(i + 1).padStart(2, '0')}
-                </span>
                 <span class="pointer-events-none absolute bottom-3 right-3 bg-ink/80 px-3 py-1.5 text-[10px] uppercase tracking-widest text-cream-50 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
                   {t('pp_ampliar')}
                 </span>
