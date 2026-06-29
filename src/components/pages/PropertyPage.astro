@@ -284,15 +284,19 @@ const difMercado = findSection(sections, 'Diferenciais de Mercado');
                 class="gallery-frame group relative aspect-[16/9] w-full cursor-zoom-in overflow-hidden bg-ink-900 focus:outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-cream-100"
                 data-lightbox-src={img}
                 data-lightbox-alt={`${e.title} ${i + 1}`}
+                data-gallery-number={String(i + 1).padStart(2, '0')}
                 aria-label={t('pp_ampliar_aria').replace('{i}', String(i + 1)).replace('{title}', e.title)}
               >
                 <img src={img} alt={`${e.title} ${i + 1}`} loading="lazy" decoding="async" class="w-full h-full object-contain p-1.5 md:p-2" />
+                <span class="pointer-events-none absolute left-3 top-3 bg-cream-50/85 px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-ink-700 shadow-sm backdrop-blur-sm">
+                  {t('book_page_label')} {String(i + 1).padStart(2, '0')}
+                </span>
                 <span class="pointer-events-none absolute bottom-3 right-3 bg-ink/80 px-3 py-1.5 text-[10px] uppercase tracking-widest text-cream-50 opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100">
                   {t('pp_ampliar')}
                 </span>
               </button>
               <p class="mt-2 text-[10px] md:text-[11px] uppercase tracking-[0.16em] text-ink-500">
-                {e.title} · {t('img_label')} {String(i + 1).padStart(2, '0')}
+                {t('book_page_label')} {String(i + 1).padStart(2, '0')} · {e.title}
               </p>
             </div>
           ))}

@@ -1,140 +1,135 @@
-"""Extract images from Moura Dubeux PDF books with MANUALLY CHOSEN facade covers.
+"""Render every page from each Moura Dubeux book into the site galleries.
 
-For each slug, COVER_PAGE specifies the PDF page (1-indexed) to use as the
-property card thumbnail. Remaining gallery pages are filtered by content
-heuristics and ordered by original page number.
+Each PDF page is exported as a full-page JPG, including covers and text pages,
+in the exact order used by the source book. Existing root gallery images are
+left untouched because some are used by hero/card images.
 """
-import fitz
-import io
 import json
-import statistics
+import shutil
+import sys
 from pathlib import Path
-from PIL import Image
 
-BOOKS_ROOT = Path(r"C:\Users\jpcji\OneDrive\Desktop\MOURA DUBEUX\BAHIA")
+import fitz
+
+
+BOOKS_ROOT = Path(r"C:\Users\jpcji\OneDrive\Desktop\Todos os books")
 PROJECT = Path(__file__).parent
 OUTPUT_ROOT = PROJECT / "public" / "images" / "empreendimentos"
 JSON_PATH = PROJECT / "src" / "data" / "empreendimentos.json"
 
-# slug -> (folder_name, cover_page_number_1indexed)
-EMPREENDIMENTOS = {
-    "beach-class-bahia":             ("Beach Class Bahia",        11),
-    "beach-class-jaguaribe":         ("Beach Class Jaguaribe",     5),
-    "beach-class-rio-vermelho":      ("Beach Class Rio Vermelho", 10),
-    "casa-sombreiros":               ("Casa Sombreiros",           8),
-    "dumare":                        ("Dumare",                    8),
-    "elleve-horto":                  ("Elleve",                    3),
-    "horto-essence":                 ("Horto Essence",             8),
-    "infinity-salvador":             ("Infinity Salvador",         8),
-    "mirat-martins-de-sa":           ("Mirat Martins de Sá",       8),
-    "mood-club":                     ("Mood Club",                 7),
-    "mood-colina":                   ("Mood Colina",               6),
-    "mood-costa-azul":               ("Mood Costa Azul",           6),
-    "poeme-horto":                   ("Poème Horto",              11),
-    "rive":                          ("Rivê",                     14),
-    "vivant-caminho-das-arvores":    ("Vivant",                   19),
+DPI = 216
+JPG_QUALITY = 95
+
+# slug -> PDF filename
+BOOKS = {
+    "beach-class-bahia": "Beach Class Bahia.pdf",
+    "beach-class-jaguaribe": "Beach Class Jaguaribe.pdf",
+    "beach-class-rio-vermelho": "Beach Class Rio Vermelho.pdf",
+    "casa-sombreiros": "Casa Sombreiros.pdf",
+    "cyano": "CYANO.pdf",
+    "dumare": "Dumare.pdf",
+    "elleve-horto": "ELLEVE.pdf",
+    "horto-essence": "HORTO ESSENCE.pdf",
+    "infinity-salvador": "Infinity.pdf",
+    "mirat-martins-de-sa": "Mirat.pdf",
+    "mood-club": "Mood Club.pdf",
+    "mood-colina": "Mood Colina.pdf",
+    "mood-costa-azul": "Mood Costa Azul.pdf",
+    "poeme-horto": "Poème.pdf",
+    "rive": "RIVE.pdf",
+    "salvador-220": "SALVADOR 220.pdf",
+    "vivant-caminho-das-arvores": "Vivant.pdf",
 }
 
-MAX_GALLERY = 11   # gallery images (in addition to cover = 12 total)
-DPI = 130
+SOURCE_OVERRIDES = {
+    "elleve-horto": Path(r"C:\Users\jpcji\OneDrive\Desktop\MOURA DUBEUX\Empreendimentos\Elleve\ELLEVE.pdf"),
+    "mood-club": Path(r"C:\Users\jpcji\OneDrive\Desktop\MOURA DUBEUX\Empreendimentos\Mood Club\MOOD CLUB.pdf"),
+    "mood-colina": Path(r"C:\Users\jpcji\OneDrive\Desktop\MOURA DUBEUX\Empreendimentos\Mood Colina\MOOD COLINA.pdf"),
+    "mood-costa-azul": Path(r"C:\Users\jpcji\OneDrive\Desktop\MOURA DUBEUX\Empreendimentos\Mood Costa Azul\MOOD COSTA AZUL.pdf"),
+}
 
-def is_content_page(pix_bytes: bytes) -> tuple[bool, str]:
-    img = Image.open(io.BytesIO(pix_bytes)).convert("RGB")
-    img.thumbnail((300, 420))
-    pixels = list(img.getdata())
-    n = len(pixels)
-    grays = [int(0.299*r + 0.587*g + 0.114*b) for (r, g, b) in pixels]
-    stdev = statistics.pstdev(grays)
-    near_white = sum(1 for g in grays if g >= 235) / n
-    near_black = sum(1 for g in grays if g <= 25) / n
-    uniform = near_white + near_black
-    buckets = set()
-    for (r, g, b) in pixels[::13]:
-        buckets.add((r >> 4, g >> 4, b >> 4))
-    bucket_ratio = len(buckets) / (n / 13)
-    if stdev < 38: return False, f"low-var({stdev:.0f})"
-    if uniform > 0.78: return False, f"uniform({uniform:.2f})"
-    if bucket_ratio < 0.06: return False, f"few-colors({bucket_ratio:.2f})"
-    return True, "OK"
-
-def pick_pdf(folder: Path, slug: str) -> Path | None:
-    pdfs = list(folder.glob("*.pdf"))
-    if not pdfs: return None
-    kw = slug.replace("-", " ").split()[0].lower()
-    def score(p: Path) -> int:
-        n = p.name.lower(); s = 0
-        if "esp" in n or "especif" in n or "memorial" in n: s -= 100
-        if "book" in n: s += 10
-        if "digital" in n: s += 5
-        if kw in n: s += 8
-        return s
-    return max(pdfs, key=score)
+# These pages currently depend on images[0] as the hero fallback. Pin them
+# before replacing images with the full book-page sequence.
+HERO_FALLBACKS = {
+    "dumare": "/images/empreendimentos/dumare/01.jpg",
+    "mood-costa-azul": "/images/empreendimentos/mood-costa-azul/01.jpg",
+}
 
 
-OUTPUT_ROOT.mkdir(parents=True, exist_ok=True)
-mat = fitz.Matrix(DPI/72, DPI/72)
-preview_mat = fitz.Matrix(60/72, 60/72)
-results = {}
+def pdf_path_for(slug: str, pdf_name: str) -> Path:
+    return SOURCE_OVERRIDES.get(slug, BOOKS_ROOT / pdf_name)
 
-for slug, (folder_name, cover_page) in EMPREENDIMENTOS.items():
-    folder = BOOKS_ROOT / folder_name
-    if not folder.exists():
-        for p in BOOKS_ROOT.iterdir():
-            if p.is_dir() and slug.split("-")[0].lower() in p.name.lower():
-                folder = p; break
-    pdf = pick_pdf(folder, slug) if folder.exists() else None
-    if not pdf:
-        print(f"  ! NO PDF {slug}"); continue
 
-    out_dir = OUTPUT_ROOT / slug
+def render_book(slug: str, pdf_name: str) -> list[str]:
+    pdf_path = pdf_path_for(slug, pdf_name)
+    if not pdf_path.exists():
+        raise FileNotFoundError(f"Missing PDF for {slug}: {pdf_path}")
+
+    out_dir = OUTPUT_ROOT / slug / "book-pages"
     if out_dir.exists():
-        for f in out_dir.glob("*.jpg"): f.unlink()
+        shutil.rmtree(out_dir)
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    doc = fitz.open(pdf)
-    print(f"\n>> {slug}  (cover=p{cover_page}, pdf={pdf.name})")
+    doc = fitz.open(pdf_path)
+    matrix = fitz.Matrix(DPI / 72, DPI / 72)
+    images = []
 
-    # 1) Cover (forced page)
-    cover_idx = cover_page - 1
-    cover_pix = doc[cover_idx].get_pixmap(matrix=mat, alpha=False)
-    cover_pix.save(str(out_dir / "01.jpg"), jpg_quality=82)
-    images = [f"/images/empreendimentos/{slug}/01.jpg"]
+    try:
+        print(f">> {slug}: {pdf_path.name} ({len(doc)} pages)")
+        for page_index, page in enumerate(doc, start=1):
+            file_name = f"{page_index:02d}.jpg"
+            output_path = out_dir / file_name
+            pix = page.get_pixmap(matrix=matrix, alpha=False)
+            pix.save(str(output_path), jpg_quality=JPG_QUALITY)
+            images.append(f"/images/empreendimentos/{slug}/book-pages/{file_name}")
+    finally:
+        doc.close()
 
-    # 2) Gallery — filtered pages, excluding the cover page
-    gallery = []
-    for i in range(len(doc)):
-        if i == cover_idx: continue
-        if len(gallery) >= MAX_GALLERY: break
-        prev = doc[i].get_pixmap(matrix=preview_mat, alpha=False)
-        keep, reason = is_content_page(prev.tobytes("png"))
-        # also exclude first 2 pages (book covers/title spreads) from gallery
-        if not keep or i < 2: continue
-        pix = doc[i].get_pixmap(matrix=mat, alpha=False)
-        idx = len(gallery) + 2
-        fn = f"{idx:02d}.jpg"
-        pix.save(str(out_dir / fn), jpg_quality=82)
-        gallery.append(f"/images/empreendimentos/{slug}/{fn}")
+    return images
 
-    # FALLBACK: if filter rejected everything, take pages 3+ unconditionally
-    if len(gallery) == 0:
-        for i in range(2, len(doc)):
-            if i == cover_idx: continue
-            if len(gallery) >= MAX_GALLERY: break
-            pix = doc[i].get_pixmap(matrix=mat, alpha=False)
-            idx = len(gallery) + 2
-            fn = f"{idx:02d}.jpg"
-            pix.save(str(out_dir / fn), jpg_quality=82)
-            gallery.append(f"/images/empreendimentos/{slug}/{fn}")
 
-    doc.close()
-    images.extend(gallery)
-    results[slug] = images
-    print(f"   total={len(images)} (cover + {len(gallery)} gallery)")
+def update_data(results: dict[str, list[str]]) -> None:
+    data = json.loads(JSON_PATH.read_text(encoding="utf-8"))
+    known_slugs = set(results)
 
-# Update JSON
-data = json.loads(JSON_PATH.read_text(encoding="utf-8"))
-for entry in data:
-    if entry["slug"] in results:
-        entry["images"] = results[entry["slug"]]
-JSON_PATH.write_text(json.dumps(data, ensure_ascii=False, indent=2), encoding="utf-8")
-print(f"\n[DONE] {sum(len(v) for v in results.values())} images across {len(results)} empreendimentos")
+    for entry in data:
+        slug = entry["slug"]
+        if slug not in known_slugs:
+            continue
+        if slug in HERO_FALLBACKS and not entry.get("heroImage"):
+            entry["heroImage"] = HERO_FALLBACKS[slug]
+        entry["images"] = results[slug]
+
+    missing = known_slugs - {entry["slug"] for entry in data}
+    if missing:
+        raise ValueError(f"Mapped books without data entries: {sorted(missing)}")
+
+    JSON_PATH.write_text(
+        json.dumps(data, ensure_ascii=False, indent=2) + "\n",
+        encoding="utf-8",
+    )
+
+
+def selected_books() -> dict[str, str]:
+    requested = sys.argv[1:]
+    if not requested:
+        return BOOKS
+
+    unknown = sorted(set(requested) - set(BOOKS))
+    if unknown:
+        raise ValueError(f"Unknown slug(s): {unknown}")
+
+    return {slug: BOOKS[slug] for slug in requested}
+
+
+def main() -> None:
+    books = selected_books()
+    results = {slug: render_book(slug, pdf_name) for slug, pdf_name in books.items()}
+    update_data(results)
+
+    total = sum(len(images) for images in results.values())
+    print(f"\n[DONE] {total} rendered book pages across {len(results)} empreendimentos")
+
+
+if __name__ == "__main__":
+    main()
