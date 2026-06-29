@@ -318,8 +318,17 @@ const difMercado = findSection(sections, 'Diferenciais de Mercado');
       {t('pp_lightbox_close')}
     </button>
     <button type="button" data-lightbox-backdrop class="absolute inset-0 cursor-zoom-out" aria-label={t('pp_lightbox_close_aria')}></button>
-    <div class="pointer-events-none relative z-[1] flex h-full w-full items-center justify-center">
-      <img data-lightbox-image src="" alt="" class="pointer-events-auto max-h-full max-w-full object-contain" />
+    <div
+      data-lightbox-stage
+      class="relative z-[1] flex h-full w-full touch-none select-none items-center justify-center overflow-hidden"
+    >
+      <img
+        data-lightbox-image
+        src=""
+        alt=""
+        draggable="false"
+        class="max-h-full max-w-full cursor-zoom-in object-contain will-change-transform"
+      />
     </div>
   </div>
 
@@ -490,15 +499,109 @@ const difMercado = findSection(sections, 'Diferenciais de Mercado');
 <script>
   const lightbox = document.getElementById('gallery-lightbox');
   const lightboxImage = lightbox?.querySelector('[data-lightbox-image]');
+  const lightboxStage = lightbox?.querySelector('[data-lightbox-stage]');
   const closeTargets = lightbox?.querySelectorAll('[data-lightbox-close], [data-lightbox-backdrop]');
   const galleryTriggers = document.querySelectorAll('[data-lightbox-src]');
+  const minScale = 1;
+  const maxScale = 5;
   let previousFocus = null;
+  let scale = 1;
+  let translateX = 0;
+  let translateY = 0;
+  let isDragging = false;
+  let dragStartX = 0;
+  let dragStartY = 0;
+  let dragTranslateX = 0;
+  let dragTranslateY = 0;
+  let activePointers = new Map();
+  let pinchStartDistance = 0;
+  let pinchStartScale = 1;
+
+  function isLightboxOpen() {
+    return lightbox instanceof HTMLElement && !lightbox.classList.contains('hidden');
+  }
+
+  function clamp(value, min, max) {
+    return Math.min(max, Math.max(min, value));
+  }
+
+  function getPanLimits() {
+    if (!(lightboxStage instanceof HTMLElement) || !(lightboxImage instanceof HTMLImageElement)) {
+      return { maxX: 0, maxY: 0 };
+    }
+
+    const stageRect = lightboxStage.getBoundingClientRect();
+    const imageWidth = lightboxImage.offsetWidth * scale;
+    const imageHeight = lightboxImage.offsetHeight * scale;
+
+    return {
+      maxX: Math.max(0, (imageWidth - stageRect.width) / 2),
+      maxY: Math.max(0, (imageHeight - stageRect.height) / 2),
+    };
+  }
+
+  function clampPan() {
+    const { maxX, maxY } = getPanLimits();
+    translateX = clamp(translateX, -maxX, maxX);
+    translateY = clamp(translateY, -maxY, maxY);
+  }
+
+  function applyLightboxTransform() {
+    if (!(lightboxImage instanceof HTMLImageElement)) return;
+
+    clampPan();
+    lightboxImage.style.transform = `translate3d(${translateX}px, ${translateY}px, 0) scale(${scale})`;
+    lightboxImage.style.cursor = scale > 1 ? (isDragging ? 'grabbing' : 'grab') : 'zoom-in';
+  }
+
+  function resetLightboxTransform() {
+    scale = 1;
+    translateX = 0;
+    translateY = 0;
+    isDragging = false;
+    activePointers.clear();
+    pinchStartDistance = 0;
+    pinchStartScale = 1;
+    applyLightboxTransform();
+  }
+
+  function zoomAt(clientX, clientY, nextScale) {
+    if (!(lightboxStage instanceof HTMLElement)) return;
+
+    const clampedScale = clamp(nextScale, minScale, maxScale);
+    const stageRect = lightboxStage.getBoundingClientRect();
+    const focusX = clientX - stageRect.left - stageRect.width / 2;
+    const focusY = clientY - stageRect.top - stageRect.height / 2;
+
+    translateX = focusX - ((focusX - translateX) / scale) * clampedScale;
+    translateY = focusY - ((focusY - translateY) / scale) * clampedScale;
+    scale = clampedScale;
+
+    if (scale === minScale) {
+      translateX = 0;
+      translateY = 0;
+    }
+
+    applyLightboxTransform();
+  }
+
+  function getPointerDistance(first, second) {
+    return Math.hypot(first.clientX - second.clientX, first.clientY - second.clientY);
+  }
+
+  function getPointerCenter(first, second) {
+    return {
+      x: (first.clientX + second.clientX) / 2,
+      y: (first.clientY + second.clientY) / 2,
+    };
+  }
 
   function openLightbox(trigger) {
     if (!(lightbox instanceof HTMLElement) || !(lightboxImage instanceof HTMLImageElement)) return;
     previousFocus = document.activeElement;
     lightboxImage.src = trigger.dataset.lightboxSrc || '';
     lightboxImage.alt = trigger.dataset.lightboxAlt || '';
+    resetLightboxTransform();
     lightbox.classList.remove('hidden');
     document.body.classList.add('overflow-hidden');
     const closeButton = lightbox.querySelector('[data-lightbox-close]');
@@ -509,6 +612,7 @@ const difMercado = findSection(sections, 'Diferenciais de Mercado');
     if (!(lightbox instanceof HTMLElement) || !(lightboxImage instanceof HTMLImageElement)) return;
     lightbox.classList.add('hidden');
     document.body.classList.remove('overflow-hidden');
+    resetLightboxTransform();
     lightboxImage.src = '';
     if (previousFocus instanceof HTMLElement) previousFocus.focus();
     previousFocus = null;
@@ -521,6 +625,96 @@ const difMercado = findSection(sections, 'Diferenciais de Mercado');
   });
 
   closeTargets?.forEach((target) => target.addEventListener('click', closeLightbox));
+
+  lightboxStage?.addEventListener('click', (event) => {
+    if (event.target === lightboxStage) closeLightbox();
+  });
+
+  lightboxStage?.addEventListener('wheel', (event) => {
+    if (!isLightboxOpen()) return;
+
+    event.preventDefault();
+    const zoomStep = event.deltaY < 0 ? 1.12 : 1 / 1.12;
+    zoomAt(event.clientX, event.clientY, scale * zoomStep);
+  }, { passive: false });
+
+  lightboxStage?.addEventListener('pointerdown', (event) => {
+    if (!isLightboxOpen() || !(lightboxStage instanceof HTMLElement)) return;
+
+    activePointers.set(event.pointerId, event);
+    lightboxStage.setPointerCapture(event.pointerId);
+
+    if (activePointers.size === 1 && scale > 1) {
+      isDragging = true;
+      dragStartX = event.clientX;
+      dragStartY = event.clientY;
+      dragTranslateX = translateX;
+      dragTranslateY = translateY;
+      applyLightboxTransform();
+    }
+
+    if (activePointers.size === 2) {
+      const [first, second] = Array.from(activePointers.values());
+      pinchStartDistance = getPointerDistance(first, second);
+      pinchStartScale = scale;
+      isDragging = false;
+      applyLightboxTransform();
+    }
+  });
+
+  lightboxStage?.addEventListener('pointermove', (event) => {
+    if (!isLightboxOpen() || !activePointers.has(event.pointerId)) return;
+
+    activePointers.set(event.pointerId, event);
+
+    if (activePointers.size === 2 && pinchStartDistance > 0) {
+      event.preventDefault();
+      const [first, second] = Array.from(activePointers.values());
+      const nextDistance = getPointerDistance(first, second);
+      const center = getPointerCenter(first, second);
+      zoomAt(center.x, center.y, pinchStartScale * (nextDistance / pinchStartDistance));
+      return;
+    }
+
+    if (isDragging && scale > 1) {
+      event.preventDefault();
+      translateX = dragTranslateX + event.clientX - dragStartX;
+      translateY = dragTranslateY + event.clientY - dragStartY;
+      applyLightboxTransform();
+    }
+  });
+
+  function releasePointer(event) {
+    if (!(lightboxStage instanceof HTMLElement)) return;
+
+    activePointers.delete(event.pointerId);
+    if (lightboxStage.hasPointerCapture(event.pointerId)) {
+      lightboxStage.releasePointerCapture(event.pointerId);
+    }
+
+    if (activePointers.size < 2) {
+      pinchStartDistance = 0;
+      pinchStartScale = scale;
+    }
+
+    if (activePointers.size === 1 && scale > 1) {
+      const [remaining] = Array.from(activePointers.values());
+      isDragging = true;
+      dragStartX = remaining.clientX;
+      dragStartY = remaining.clientY;
+      dragTranslateX = translateX;
+      dragTranslateY = translateY;
+    } else {
+      isDragging = false;
+    }
+
+    applyLightboxTransform();
+  }
+
+  lightboxStage?.addEventListener('pointerup', releasePointer);
+  lightboxStage?.addEventListener('pointercancel', releasePointer);
+  lightboxImage?.addEventListener('load', applyLightboxTransform);
+  window.addEventListener('resize', applyLightboxTransform);
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && lightbox instanceof HTMLElement && !lightbox.classList.contains('hidden')) {
